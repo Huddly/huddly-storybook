@@ -1,4 +1,4 @@
-FROM node:16 AS builder
+FROM node:14 AS builder
 
 WORKDIR /app
 COPY . .
@@ -13,7 +13,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy static assets from builder stage
-COPY --from=builder /app/build .
+COPY --from=builder /app/storybook-static .
 
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
