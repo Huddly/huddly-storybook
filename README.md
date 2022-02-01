@@ -3,7 +3,6 @@
 A React component library.
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook-huddly.azurewebsites.net/)
-
 [![Docker Image CI](https://github.com/Huddly/huddly-storybook/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Huddly/huddly-storybook/actions/workflows/docker-image.yml)
 
 ## Development
