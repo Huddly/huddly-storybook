@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-eveningTaupe: #BA7F6B;
     --color-petitePink: #E39994;
     --color-springGreen: #B6B77E;
+
     /* Shades */
     --color-background-card: rgba(245, 245, 245, 1);
     --color-hairlines: rgba(0, 0, 0, 0.2);
@@ -21,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-darkBg: rgba(255, 255, 255, 0.12);
     --color-lightGrey: rgba(0, 0, 0, 0.04);
     --color-borderGrey: rgba(0, 0, 0, 0.12);
+
   }
   html, body {
     margin: 0;
@@ -30,17 +32,17 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Messina sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
   @font-face {
-    font-family: "Messina sans bold";
+    font-family: "Messina sans";
     src: url("/fonts/Messina-sans/MessinaSansWeb-Bold.woff2") format('woff2');
     font-style: bold;
     font-weight: 700;
     font-display: swap;
   }
   @font-face {
-    font-family: "Messina sans regular";
+    font-family: "Messina sans";
     src: url("/fonts/Messina-sans/MessinaSansWeb-Regular.woff2") format('woff2');
     font-style: regular;
     font-weight: 400;

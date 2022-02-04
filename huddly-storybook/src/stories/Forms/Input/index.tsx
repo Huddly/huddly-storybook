@@ -34,6 +34,7 @@ const Wrapper = styled.div<WrapperProps>`
     justify-content: center;
     max-width: 600px;
     height: 56px;
+    margin-bottom: 1rem;
     padding: 0 15px;
     border: 1px solid black;
     border-radius: 4px;
@@ -42,7 +43,6 @@ const Wrapper = styled.div<WrapperProps>`
     transition: all 0.2s ease-in-out;
 
     label {
-        padding: var(--padding);
         cursor: inherit;
         transition: inherit;
 
