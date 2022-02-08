@@ -21,7 +21,7 @@ interface Props {
         | 'space-around';
     rowGap?: Spacing8;
     columnGap?: Spacing8;
-    children: React.ReactChildren;
+    children: JSX.Element | JSX.Element[];
 }
 
 const Wrapper = styled.div<Props>`
