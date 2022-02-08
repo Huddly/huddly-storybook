@@ -2,14 +2,36 @@ import { Flex } from '.';
 
 export default { component: Flex };
 
-export const FlexComponent = {
+const placeholderStyles = {
+    display: 'grid',
+    width: '100px',
+    height: '100px',
+    color: 'var(--color-white)',
+    backgroundColor: 'var(--color-lavender)',
+    placeItems: 'center',
+};
+
+export const DirectionRow = {
     args: {
-        columnGap: 16,
         children: (
             <>
-                <div>block 1</div>
-                <div>block 2</div>
-                <div>block 3</div>
+                <div style={placeholderStyles}>1</div>
+                <div style={placeholderStyles}>2</div>
+                <div style={placeholderStyles}>3</div>
+            </>
+        ),
+        columnGap: 16,
+        direction: 'row',
+    },
+};
+
+export const DirectionColumn = {
+    args: {
+        children: (
+            <>
+                <div style={placeholderStyles}>1</div>
+                <div style={placeholderStyles}>2</div>
+                <div style={placeholderStyles}>3</div>
             </>
         ),
         rowGap: 16,
