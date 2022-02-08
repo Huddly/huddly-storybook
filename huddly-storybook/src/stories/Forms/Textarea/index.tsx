@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 interface TextAreaProps {
     /**
-     * label description.
+     * Label text
      */
     label?: string;
 
     /**
-     * isRequired description.
+     * Is input required?
      */
     isRequired?: boolean;
 
