@@ -96,7 +96,7 @@ export const Input = ({ type, label, isRequired }: InputProps) => {
             {label && (
                 <label>
                     {label}
-                    <i>{!isRequired && '(optional)'}</i>
+                    {!isRequired && <i>(optional)</i>}
                 </label>
             )}
             <input

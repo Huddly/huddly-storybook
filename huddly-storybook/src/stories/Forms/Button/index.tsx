@@ -41,7 +41,7 @@ export const Button = ({
                 as={handleHtmlTag()}
                 disabled={disabled}
                 onClick={() => {}}
-                type={type === 'submit' && 'submit'}
+                type={type === 'submit' && ('submit' as any)}
                 {...props}
             >
                 {label && type !== 'submit' ? label : children}
