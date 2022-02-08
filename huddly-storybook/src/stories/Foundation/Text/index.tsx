@@ -6,8 +6,8 @@ export const Wrapper = styled.p<Props>`
     line-height: 1.2em;
     font-size: ${(p) => `var(--font-size-${p.size})`};
     color: ${(p) => `var(--color-${p.color})`};
-    font-family: ${(p) =>
-        p.bold ? 'Messina sans bold' : 'Messina sans regular'};
+    font-family: 'Messina sans', Arial, Helvetica, sans-serif;
+    font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
 `;
 interface Props {
     size?: '14' | '18' | '22' | '28' | '48' | '68' | '98';
