@@ -28,6 +28,7 @@ const Wrapper = styled.div<Props>`
     display: flex;
     flex-direction: ${(p) => p.direction};
     flex-wrap: ${(p) => p.wrap};
+    align-items: ${(p) => p.align};
     justify-content: ${(p) => p.justify};
     row-gap: ${(p) => `var(--spacing-${p.rowGap})`};
     column-gap: ${(p) => `var(--spacing-${p.columnGap})`};
