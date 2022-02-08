@@ -3,17 +3,17 @@ import styled from 'styled-components';
 
 interface InputProps {
     /**
-     * type description.
+     * Input type
      */
     type: string;
 
     /**
-     * label description.
+     * Label text
      */
     label?: string;
 
     /**
-     * isRequired description.
+     * Is input required?
      */
     isRequired?: boolean;
 }
@@ -36,11 +36,16 @@ const Wrapper = styled.div<WrapperProps>`
     height: 56px;
     margin-bottom: 1rem;
     padding: 0 15px;
-    border: 1px solid black;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
     cursor: text;
     transition: all 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    ${({ focused, expanded }) =>
+        (focused || expanded) &&
+        `border: 1px solid black; 
+        background-color: var(--color-white);`}
 
     label {
         cursor: inherit;

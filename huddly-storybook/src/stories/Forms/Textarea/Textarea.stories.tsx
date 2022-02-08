@@ -1,11 +1,11 @@
-import { Input } from '.';
+import { TextArea } from '.';
 
-export default { component: Input };
+export default { component: TextArea };
 
 export const Primary = {
     args: {
-        type: 'text',
         label: 'Your name',
         isRequired: true,
+        baseHeight: 136,
     },
 };
