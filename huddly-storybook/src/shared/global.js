@@ -42,6 +42,9 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-48: 48px;
     --spacing-56: 56px;
     --spacing-64: 64px;
+
+    /* Fonts */
+    --font-family: "Messina sans", Helvetica, Arial, sans-serif;
   }
 
   html, body {
@@ -52,7 +55,7 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: "Messina sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: var(--font-family);
   }
   @font-face {
     font-family: "Messina sans";
