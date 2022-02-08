@@ -5,8 +5,14 @@ export default { component: Button };
 export const Primary = {
     args: {
         type: 'button',
-        label: 'Sample string',
-        disabled: false,
-        href: '#',
+        children: 'Click me',
+    },
+};
+
+export const Secondary = {
+    args: {
+        type: 'button',
+        children: 'Click me',
+        secondary: true,
     },
 };
