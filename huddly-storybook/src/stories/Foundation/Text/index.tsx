@@ -6,7 +6,7 @@ export const Wrapper = styled.p<Props>`
     line-height: 1.2em;
     font-size: ${(p) => `var(--font-size-${p.size})`};
     color: ${(p) => `var(--color-${p.color})`};
-    font-family: 'Messina sans', Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
 `;
 interface Props {
@@ -33,7 +33,12 @@ export const Text = ({
     children,
 }: Props) => {
     return (
-        <Wrapper as={type as any} bold={bold} size={size} color={color}>
+        <Wrapper
+            as={type as Props['type']}
+            bold={bold}
+            size={size}
+            color={color}
+        >
             {children}
         </Wrapper>
     );
