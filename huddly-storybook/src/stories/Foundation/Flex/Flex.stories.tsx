@@ -1,5 +1,7 @@
+import React from 'react';
 import { Flex } from '.';
 
+// @ts-ignore
 export default { component: Flex };
 
 const placeholderStyles = {
