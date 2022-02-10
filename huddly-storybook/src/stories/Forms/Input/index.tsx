@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
-interface InputProps {
+export interface InputProps {
     /**
      * type description.
      */

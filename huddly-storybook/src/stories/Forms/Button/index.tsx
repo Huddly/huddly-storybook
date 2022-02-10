@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const ButtonElement = styled.button<Props>`
+const ButtonElement = styled.button<ButtonProps>`
     border: solid 2px ${(p) => `var(--color-${p.color})`};
     border-radius: 30px;
     padding: 0 var(--spacing-24);
@@ -18,7 +18,7 @@ const roleToHtmlTag = {
     submit: 'input',
     anchor: 'a',
 };
-interface Props {
+export interface ButtonProps {
     disabled?: boolean;
     label?: string;
     onClick?: () => void;
@@ -41,7 +41,7 @@ export const Button = ({
     color = 'black',
     secondary,
     href,
-}: Props) => {
+}: ButtonProps) => {
     const isSubmit = role === 'submit';
     return (
         <ButtonElement

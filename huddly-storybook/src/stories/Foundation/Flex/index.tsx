@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Spacing8 } from '../../../shared/types';
 
-interface Props {
+export interface FlexProps {
     direction?: 'row' | 'row-reverse' | 'column' | 'column-revers';
     wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
     justify?:
@@ -24,7 +24,7 @@ interface Props {
     children: JSX.Element | JSX.Element[];
 }
 
-const Wrapper = styled.div<Props>`
+const Wrapper = styled.div<FlexProps>`
     display: flex;
     flex-direction: ${(p) => p.direction};
     flex-wrap: ${(p) => p.wrap};
@@ -45,7 +45,7 @@ export const Flex = ({
     rowGap,
     columnGap,
     children,
-}: Props) => {
+}: FlexProps) => {
     return (
         <Wrapper
             direction={direction}
