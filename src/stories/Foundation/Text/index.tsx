@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Wrapper = styled.p<Props>`
+export const Wrapper = styled.p<TextProps>`
     margin: 0;
     line-height: 1.2em;
     font-size: ${(p) => `var(--font-size-${p.size})`};
     color: ${(p) => `var(--color-${p.color})`};
-    font-family: var(--font-family);
     font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
 `;
-interface Props {
+export interface TextProps {
     size?: '14' | '18' | '22' | '28' | '48' | '68' | '98';
     color?:
         | 'lavender'
@@ -31,10 +30,10 @@ export const Text = ({
     type = 'p',
     bold,
     children,
-}: Props) => {
+}: TextProps) => {
     return (
         <Wrapper
-            as={type as Props['type']}
+            as={type as TextProps['type']}
             bold={bold}
             size={size}
             color={color}

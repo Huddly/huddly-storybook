@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const ButtonElement = styled.button<Props>`
+const ButtonElement = styled.button<ButtonProps>`
     border: solid 2px ${(p) => `var(--color-${p.color})`};
     border-radius: 30px;
     padding: 0 var(--spacing-24);
@@ -10,7 +10,8 @@ export const ButtonElement = styled.button<Props>`
         p.secondary ? 'var(--color-white)' : `var(--color-${p.color})`};
     color: ${(p) =>
         p.secondary ? `var(--color-${p.color})` : 'var(--color-white)'};
-    font-family: 'Messina sans bold';
+    font-weight: bold;
+    font-family: var(--font-family);
 `;
 
 const roleToHtmlTag = {
@@ -18,7 +19,7 @@ const roleToHtmlTag = {
     submit: 'input',
     anchor: 'a',
 };
-interface Props {
+export interface ButtonProps {
     disabled?: boolean;
     label?: string;
     onClick?: () => void;
@@ -41,14 +42,14 @@ export const Button = ({
     color = 'black',
     secondary,
     href,
-}: Props) => {
+}: ButtonProps) => {
     const isSubmit = role === 'submit';
     return (
         <ButtonElement
             as={roleToHtmlTag[role] as any}
             disabled={disabled}
             onClick={onClick}
-            type={isSubmit && 'submit'}
+            type={isSubmit ? 'submit' : undefined}
             color={color}
             secondary={secondary}
             href={href}
