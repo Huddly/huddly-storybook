@@ -10,7 +10,8 @@ const ButtonElement = styled.button<ButtonProps>`
         p.secondary ? 'var(--color-white)' : `var(--color-${p.color})`};
     color: ${(p) =>
         p.secondary ? `var(--color-${p.color})` : 'var(--color-white)'};
-    font-family: 'Messina sans bold';
+    font-weight: bold;
+    font-family: var(--font-family);
 `;
 
 const roleToHtmlTag = {
@@ -48,7 +49,7 @@ export const Button = ({
             as={roleToHtmlTag[role] as any}
             disabled={disabled}
             onClick={onClick}
-            type={isSubmit && 'submit'}
+            type={isSubmit ? 'submit' : undefined}
             color={color}
             secondary={secondary}
             href={href}

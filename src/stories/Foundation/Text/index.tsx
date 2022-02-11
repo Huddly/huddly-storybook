@@ -6,7 +6,6 @@ export const Wrapper = styled.p<TextProps>`
     line-height: 1.2em;
     font-size: ${(p) => `var(--font-size-${p.size})`};
     color: ${(p) => `var(--color-${p.color})`};
-    font-family: var(--font-family);
     font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
 `;
 export interface TextProps {
