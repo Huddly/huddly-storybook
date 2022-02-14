@@ -1,8 +1,8 @@
 {
-    "name": "huddly-storybook",
+    "name": "@huddly/component-library",
     "version": "0.1.0",
     "private": true,
-    "main": "lib/stories",
+    "main": "lib",
     "dependencies": {
         "styled-components": "^5.3.3",
         "web-vitals": "^2.1.4"
