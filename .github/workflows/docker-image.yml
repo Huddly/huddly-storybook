@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build ./huddly-storybook -t acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }}
+          docker build . -t acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }}
           docker push acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }}
           docker tag acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }} acrhuddly.azurecr.io/huddly-storybook:latest
           docker push acrhuddly.azurecr.io/huddly-storybook:latest
