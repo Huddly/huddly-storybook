@@ -4,7 +4,7 @@ export default { component: TextArea };
 
 export const Primary = {
     args: {
-        label: 'Your name',
+        label: 'Your message',
         isRequired: true,
         baseHeight: 136,
     },
