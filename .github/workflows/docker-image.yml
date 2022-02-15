@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: acrhuddly.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - run: |
+          docker build . -t acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }}
+          docker push acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }}
+          docker tag acrhuddly.azurecr.io/huddly-storybook:${{ github.sha }} acrhuddly.azurecr.io/huddly-storybook:latest
+          docker push acrhuddly.azurecr.io/huddly-storybook:latest
