@@ -101,15 +101,14 @@ export const TextArea = ({
         setExpanded(textareaRef.current.value.length > 0);
 
         // Set height of the textarea to the content height
-        const calcHeight = calculateHeight();
+        const calcHeight = getTextareaHeight();
         setHeight(calcHeight > baseHeight ? calcHeight : baseHeight);
     };
 
     /**
      * Set height to auto to allow the textarea to expand
-     * @returns {number}
      */
-    const calculateHeight = () => {
+    const getTextareaHeight = (): number => {
         if (!textareaRef.current) return 0;
         const textarea = textareaRef.current;
         const wrapperHeight = textarea.parentElement?.clientHeight || 0;
