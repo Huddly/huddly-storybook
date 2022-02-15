@@ -1,24 +1,6 @@
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 
-interface TextAreaProps {
-    /**
-     * Label text
-     */
-    label?: string;
-
-    /**
-     * Is input required?
-     */
-    isRequired?: boolean;
-
-    /**
-     * Textarea height in px.
-     * @default '136'
-     */
-    baseHeight?: number;
-}
-
 interface WrapperProps {
     focused: boolean;
     expanded: boolean;
@@ -78,6 +60,24 @@ const Wrapper = styled.div<WrapperProps>`
         resize: none;
     }
 `;
+
+interface TextAreaProps {
+    /**
+     * Label text
+     */
+    label?: string;
+
+    /**
+     * Is input required?
+     */
+    isRequired?: boolean;
+
+    /**
+     * Textarea height in px.
+     * @default '136'
+     */
+    baseHeight?: number;
+}
 
 /**
  * TextArea component
