@@ -1,23 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
-export interface InputProps {
-    /**
-     * Input type
-     */
-    type: string;
-
-    /**
-     * Label text
-     */
-    label?: string;
-
-    /**
-     * Is input required?
-     */
-    isRequired?: boolean;
-}
-
 interface WrapperProps {
     focused: boolean;
     expanded: boolean;
@@ -75,6 +58,23 @@ const Wrapper = styled.div<WrapperProps>`
         ${({ focused, expanded }) => (focused || expanded) && `height: 1.25em;`}
     }
 `;
+
+export interface InputProps {
+    /**
+     * Input type
+     */
+    type: string;
+
+    /**
+     * Label text
+     */
+    label?: string;
+
+    /**
+     * Is input required?
+     */
+    isRequired?: boolean;
+}
 
 /**
  * Input component

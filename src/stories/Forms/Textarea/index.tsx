@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 interface WrapperProps {
@@ -61,7 +61,7 @@ const Wrapper = styled.div<WrapperProps>`
     }
 `;
 
-interface TextAreaProps {
+export interface TextAreaProps {
     /**
      * Label text
      */
