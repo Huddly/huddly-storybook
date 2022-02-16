@@ -1,14 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface BadgeProps {
-    /**
-     * Label text
-     * Example: New
-     */
-    children: React.ReactChild;
-}
-
 const Wrapper = styled.span`
     background-color: var(--color-lavender);
     color: var(--color-white);
@@ -17,6 +9,14 @@ const Wrapper = styled.span`
     padding: 2px 5px;
     height: 100%;
 `;
+
+interface BadgeProps {
+    /**
+     * Label text
+     * Example: New
+     */
+    children: React.ReactChild;
+}
 
 /**
  * Badge component
