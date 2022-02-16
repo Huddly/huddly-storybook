@@ -9,11 +9,3 @@ export const Primary = {
         isRequired: true,
     },
 };
-
-export const Secondary = {
-    args: {
-        type: 'text',
-        label: 'Your name',
-        isRequired: true,
-    },
-};
