@@ -1,4 +1,5 @@
 import React from 'react';
+import { Colors } from '../../../shared/types';
 import styled from 'styled-components';
 
 export const Wrapper = styled.p<TextProps>`
@@ -10,13 +11,7 @@ export const Wrapper = styled.p<TextProps>`
 `;
 export interface TextProps {
   size?: '14' | '18' | '22' | '28' | '48' | '68' | '98';
-  color?:
-    | 'lavender'
-    | 'sunYellow'
-    | 'black'
-    | 'signalOrange'
-    | 'white'
-    | 'signalOrange';
+  color?: Colors;
   type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   bold?: boolean;
   children: React.ReactChild;
