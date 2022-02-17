@@ -25,6 +25,8 @@ export const GlobalStyles = createGlobalStyle`
     --color-darkBg: rgba(255, 255, 255, 0.12);
     --color-lightGrey: rgba(0, 0, 0, 0.04);
     --color-borderGrey: rgba(0, 0, 0, 0.12);
+    --color-lavender30: #CECFFF;
+    --color-hawkes: #EAEEFE;
 
     /* Font sizes */
     --font-size-12: 12px;
