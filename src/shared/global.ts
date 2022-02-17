@@ -14,7 +14,8 @@ export const GlobalStyles = createGlobalStyle`
     --color-petitePink: #E39994;
     --color-springGreen: #B6B77E;
     /* Alert colors */
-    --color-alertRed: #B1060F;
+    --color-warningRed: #B1060F;
+    --color-successGreen: #34C759;
 
     /* Shades */
     --color-background-card: rgba(245, 245, 245, 1);
