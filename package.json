@@ -21,9 +21,11 @@
         "dev": "npm run storybook",
         "build": "npm run build-storybook",
         "build-ts": "tsc --declaration",
-        "prepare": "npm run build-ts"
+        "prepare": "npm run build-ts",
+        "pre-commit-msg": "echo \"Verifying build ...\""
     },
     "pre-commit": [
+        "pre-commit-msg",
         "build-ts"
     ],
     "eslintConfig": {
