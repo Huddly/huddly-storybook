@@ -15,3 +15,4 @@ export { default as TextArea } from './stories/Forms/TextArea';
  */
 export { default as Text } from './stories/Foundation/Text';
 export { default as Flex } from './stories/Foundation/Flex';
+export { default as Badge } from './stories/Foundation/Badge';
