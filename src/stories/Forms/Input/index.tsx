@@ -115,3 +115,5 @@ export const Input = ({ type, label, isRequired }: InputProps) => {
         </Wrapper>
     );
 };
+
+export default Input;

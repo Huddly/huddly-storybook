@@ -140,3 +140,5 @@ export const TextArea = ({
         </Wrapper>
     );
 };
+
+export default TextArea;
