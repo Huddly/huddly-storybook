@@ -11,10 +11,6 @@ const Wrapper = styled.span`
 `;
 
 export interface BadgeProps {
-    /**
-     * Label text
-     * Example: New
-     */
     children: React.ReactChild;
 }
 
