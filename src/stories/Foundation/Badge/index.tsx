@@ -10,7 +10,7 @@ const Wrapper = styled.span`
     height: 100%;
 `;
 
-interface BadgeProps {
+export interface BadgeProps {
     /**
      * Label text
      * Example: New
@@ -24,3 +24,5 @@ interface BadgeProps {
 export const Badge = ({ children }: BadgeProps) => {
     return <Wrapper>{children}</Wrapper>;
 };
+
+export default Badge;
