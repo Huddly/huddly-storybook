@@ -47,7 +47,8 @@ export interface InputProps {
         | 'url'
         | 'week';
     label?: string;
-    defaultValue?: string;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
     error?: string;
     helpLink?: string;
@@ -57,16 +58,20 @@ export interface InputProps {
 /**
  * Input component
  */
-export const Input = ({
-    id,
-    type,
-    label,
-    defaultValue,
-    isRequired,
-    error,
-    helpLink,
-    helpText,
-}: InputProps) => {
+export const Input = (
+    {
+        id,
+        type,
+        label,
+        value,
+        onChange,
+        isRequired,
+        error,
+        helpLink,
+        helpText,
+    }: InputProps,
+    ref: React.RefObject<HTMLInputElement>
+) => {
     return (
         <FormGroup
             hasError={!!error}
@@ -86,10 +91,12 @@ export const Input = ({
 
             <input
                 id={id}
+                ref={ref}
                 name={id}
                 type={type}
+                value={value}
+                onChange={onChange}
                 required={isRequired}
-                defaultValue={defaultValue}
                 aria-invalid={!!error}
                 aria-errormessage={`${id}-error`}
             />

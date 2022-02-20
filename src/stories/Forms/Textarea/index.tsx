@@ -32,7 +32,8 @@ const FormGroup = styled.div<FormGroupProps>`
 export interface TextareaProps {
     id: string;
     label?: string;
-    defaultValue?: string;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     isRequired?: boolean;
     error?: string;
     helpLink?: string;
@@ -42,15 +43,19 @@ export interface TextareaProps {
 /**
  * Input component
  */
-export const Textarea = ({
-    id,
-    label,
-    defaultValue,
-    isRequired,
-    error,
-    helpLink,
-    helpText,
-}: TextareaProps) => {
+export const Textarea = (
+    {
+        id,
+        label,
+        value,
+        onChange,
+        isRequired,
+        error,
+        helpLink,
+        helpText,
+    }: TextareaProps,
+    ref: React.RefObject<HTMLTextAreaElement>
+) => {
     return (
         <FormGroup hasError={!!error}>
             {label && (
@@ -66,9 +71,11 @@ export const Textarea = ({
 
             <textarea
                 id={id}
+                ref={ref}
                 name={id}
                 required={isRequired}
-                defaultValue={defaultValue}
+                value={value}
+                onChange={onChange}
                 aria-invalid={!!error}
                 aria-errormessage={`${id}-error`}
             />
