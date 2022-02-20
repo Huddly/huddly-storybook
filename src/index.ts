@@ -8,6 +8,7 @@ export { GlobalStyles } from './shared/global';
  */
 export { default as Button } from './stories/Forms/Button';
 export { default as Input } from './stories/Forms/Input';
+export { default as Label } from './stories/Forms/Label';
 export { default as Textarea } from './stories/Forms/Textarea';
 
 /**
