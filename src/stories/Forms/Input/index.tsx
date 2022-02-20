@@ -1,118 +1,136 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import AlertText from '../../Foundation/AlertText';
 
-interface WrapperProps {
-    focused: boolean;
-    expanded: boolean;
+interface FormGroupProps {
+    hasError?: boolean;
 }
 
-/**
- * Todo
- * Add focus outline
- * Add color variations
- */
-const Wrapper = styled.div<WrapperProps>`
+const FormGroup = styled.div<FormGroupProps>`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 600px;
-    height: 56px;
-    margin-bottom: 1rem;
-    padding: 0 15px;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: text;
-    transition: all 0.2s ease-in-out;
-    background-color: rgba(0, 0, 0, 0.3);
-
-    ${({ focused, expanded }) =>
-        (focused || expanded) &&
-        `border: 1px solid black; 
-        background-color: var(--color-white);`}
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 400px;
+    margin-bottom: var(--spacing-32);
+    column-gap: var(--spacing-16);
+    align-items: flex-start;
 
     label {
-        cursor: inherit;
-        transition: inherit;
+        display: block;
+        margin-bottom: var(--spacing-8);
+        font-weight: bold;
+        line-height: 1;
+        font-size: var(--font-size-14);
 
-        ${({ focused, expanded }) =>
-            (focused || expanded) &&
-            `font-size: 12px;
-            font-weight: bold;`}
-
-        // required text
-        i {
-            font-style: normal;
-            font-size: 12px;
+        .required-text {
+            font-size: var(--font-size-12);
             font-weight: normal;
-            padding-left: 5px;
+        }
+    }
+
+    .help-link {
+        margin-bottom: var(--spacing-8);
+        color: var(--color-lavender);
+        text-decoration: none;
+        font-size: var(--font-size-12);
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
         }
     }
 
     input {
-        all: unset;
         display: block;
-        height: 0;
-        transition: inherit;
-        will-change: height;
+        width: 100%;
+        height: var(--spacing-48);
+        padding: var(--spacing-16);
+        border: var(--border);
+        border-radius: var(--border-radius);
 
-        ${({ focused, expanded }) => (focused || expanded) && `height: 1.25em;`}
+        // If there is an error, apply the error border
+        ${(p) =>
+            p.hasError &&
+            `border-color: var(--color-alertRed);
+            margin-bottom: var(--spacing-4);`}
     }
 `;
 
 export interface InputProps {
-    /**
-     * Input type
-     */
-    type: string;
-
-    /**
-     * Label text
-     */
+    id: string;
+    type:
+        | 'date'
+        | 'datetime-local'
+        | 'email'
+        | 'hidden'
+        | 'month'
+        | 'number'
+        | 'password'
+        | 'search'
+        | 'tel'
+        | 'text'
+        | 'time'
+        | 'url'
+        | 'week';
     label?: string;
-
-    /**
-     * Is input required?
-     */
+    value?: string;
     isRequired?: boolean;
+    error?: string;
+    helpLink?: string;
+    helpText?: string;
 }
 
 /**
  * Input component
  */
-export const Input = ({ type, label, isRequired }: InputProps) => {
-    const [focused, setFocused] = useState(false);
-    const [expanded, setExpanded] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
-
-    const handleInput = () => {
-        if (!inputRef.current) return;
-        setExpanded(inputRef.current.value.length > 0);
-    };
-
+export const Input = ({
+    id,
+    type,
+    label,
+    value,
+    isRequired,
+    error,
+    helpLink,
+    helpText,
+}: InputProps) => {
     return (
-        <Wrapper
-            focused={focused}
-            expanded={expanded}
-            onClick={() => inputRef?.current?.focus()}
-        >
+        <FormGroup hasError={!!error}>
             {label && (
-                <label>
-                    {label}
-                    {!isRequired && <i>(optional)</i>}
+                <label htmlFor={id}>
+                    {label}{' '}
+                    {!isRequired && (
+                        <span className='required-text'>(optional)</span>
+                    )}
                 </label>
             )}
+
+            {helpLink && helpText && (
+                <a
+                    href={helpLink}
+                    className='help-link'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                >
+                    {helpText}
+                </a>
+            )}
+
             <input
+                id={id}
+                name={id}
                 type={type}
                 required={isRequired}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChange={handleInput}
-                ref={inputRef}
+                value={value}
+                aria-invalid={!!error}
+                aria-errormessage={`${id}-error`}
             />
-        </Wrapper>
+
+            {error && (
+                <AlertText severity='error' id={`${id}-error`}>
+                    {error}
+                </AlertText>
+            )}
+        </FormGroup>
     );
 };
 

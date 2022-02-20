@@ -61,7 +61,7 @@ const Wrapper = styled.div<WrapperProps>`
     }
 `;
 
-export interface TextAreaProps {
+export interface TextareaProps {
     /**
      * Label text
      */
@@ -80,13 +80,13 @@ export interface TextAreaProps {
 }
 
 /**
- * TextArea component
+ * Textarea component
  */
-export const TextArea = ({
+export const Textarea = ({
     label,
     isRequired,
     baseHeight = 136,
-}: TextAreaProps) => {
+}: TextareaProps) => {
     const [focused, setFocused] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [height, setHeight] = useState(baseHeight);
@@ -95,7 +95,7 @@ export const TextArea = ({
     const onFocus = () => setFocused(true);
     const onBlur = () => setFocused(false);
 
-    const handleTextArea = () => {
+    const handleTextarea = () => {
         if (!textareaRef.current) return;
         // Set expanded state to true if textarea has content
         setExpanded(textareaRef.current.value.length > 0);
@@ -134,11 +134,11 @@ export const TextArea = ({
                 required={isRequired}
                 onFocus={onFocus}
                 onBlur={onBlur}
-                onChange={handleTextArea}
+                onChange={handleTextarea}
                 ref={textareaRef}
             ></textarea>
         </Wrapper>
     );
 };
 
-export default TextArea;
+export default Textarea;

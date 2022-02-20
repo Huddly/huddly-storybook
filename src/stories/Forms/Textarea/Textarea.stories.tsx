@@ -1,6 +1,6 @@
-import { TextArea } from '.';
+import { Textarea } from '.';
 
-export default { component: TextArea };
+export default { component: Textarea };
 
 export const Primary = {
     args: {

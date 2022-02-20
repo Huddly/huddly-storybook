@@ -13,6 +13,8 @@ export const GlobalStyles = createGlobalStyle`
     --color-eveningTaupe: #BA7F6B;
     --color-petitePink: #E39994;
     --color-springGreen: #B6B77E;
+    /* Alert colors */
+    --color-alertRed: #B1060F;
 
     /* Shades */
     --color-background-card: rgba(245, 245, 245, 1);
@@ -24,6 +26,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-borderGrey: rgba(0, 0, 0, 0.12);
 
     /* Font sizes */
+    --font-size-12: 12px;
     --font-size-14: 14px;
     --font-size-18: 18px;
     --font-size-22: 22px;
@@ -42,6 +45,12 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-48: 48px;
     --spacing-56: 56px;
     --spacing-64: 64px;
+
+    /* Borders */
+    --border: 1px solid #9E9E9E;
+
+    /* Border radius */
+    --border-radius: 6px;
 
     /* Fonts */
     --font-family: "Messina sans", Helvetica, Arial, sans-serif;
