@@ -43,50 +43,52 @@ export interface TextareaProps {
 /**
  * Input component
  */
-export const Textarea = (
-    {
-        id,
-        label,
-        value,
-        onChange,
-        isRequired,
-        error,
-        helpLink,
-        helpText,
-    }: TextareaProps,
-    ref: React.RefObject<HTMLTextAreaElement>
-) => {
-    return (
-        <FormGroup hasError={!!error}>
-            {label && (
-                <Label
-                    htmlFor={id}
-                    isRequired={isRequired}
-                    helpLink={helpLink}
-                    helpText={helpText}
-                >
-                    {label}
-                </Label>
-            )}
+export const Textarea = React.forwardRef(
+    (
+        {
+            id,
+            label,
+            value,
+            onChange,
+            isRequired,
+            error,
+            helpLink,
+            helpText,
+        }: TextareaProps,
+        ref: React.RefObject<HTMLTextAreaElement>
+    ) => {
+        return (
+            <FormGroup hasError={!!error}>
+                {label && (
+                    <Label
+                        htmlFor={id}
+                        isRequired={isRequired}
+                        helpLink={helpLink}
+                        helpText={helpText}
+                    >
+                        {label}
+                    </Label>
+                )}
 
-            <textarea
-                id={id}
-                ref={ref}
-                name={id}
-                required={isRequired}
-                value={value}
-                onChange={onChange}
-                aria-invalid={!!error}
-                aria-errormessage={`${id}-error`}
-            />
+                <textarea
+                    id={id}
+                    ref={ref}
+                    name={id}
+                    required={isRequired}
+                    value={value}
+                    onChange={onChange}
+                    aria-invalid={!!error}
+                    aria-errormessage={`${id}-error`}
+                />
 
-            {error && (
-                <AlertText severity='error' id={`${id}-error`}>
-                    {error}
-                </AlertText>
-            )}
-        </FormGroup>
-    );
-};
+                {error && (
+                    <AlertText severity='error' id={`${id}-error`}>
+                        {error}
+                    </AlertText>
+                )}
+            </FormGroup>
+        );
+    }
+);
 
-export default React.forwardRef(Textarea);
+export default Textarea;

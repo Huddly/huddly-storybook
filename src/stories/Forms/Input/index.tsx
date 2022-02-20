@@ -58,56 +58,58 @@ export interface InputProps {
 /**
  * Input component
  */
-export const Input = (
-    {
-        id,
-        type,
-        label,
-        value,
-        onChange,
-        isRequired,
-        error,
-        helpLink,
-        helpText,
-    }: InputProps,
-    ref: React.RefObject<HTMLInputElement>
-) => {
-    return (
-        <FormGroup
-            hasError={!!error}
-            isHidden={type === 'hidden'}
-            aria-hidden={type === 'hidden'}
-        >
-            {label && (
-                <Label
-                    htmlFor={id}
-                    isRequired={isRequired}
-                    helpLink={helpLink}
-                    helpText={helpText}
-                >
-                    {label}
-                </Label>
-            )}
+export const Input = React.forwardRef(
+    (
+        {
+            id,
+            type,
+            label,
+            value,
+            onChange,
+            isRequired,
+            error,
+            helpLink,
+            helpText,
+        }: InputProps,
+        ref: React.RefObject<HTMLInputElement>
+    ) => {
+        return (
+            <FormGroup
+                hasError={!!error}
+                isHidden={type === 'hidden'}
+                aria-hidden={type === 'hidden'}
+            >
+                {label && (
+                    <Label
+                        htmlFor={id}
+                        isRequired={isRequired}
+                        helpLink={helpLink}
+                        helpText={helpText}
+                    >
+                        {label}
+                    </Label>
+                )}
 
-            <input
-                id={id}
-                ref={ref}
-                name={id}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required={isRequired}
-                aria-invalid={!!error}
-                aria-errormessage={`${id}-error`}
-            />
+                <input
+                    id={id}
+                    ref={ref}
+                    name={id}
+                    type={type}
+                    value={value}
+                    onChange={onChange}
+                    required={isRequired}
+                    aria-invalid={!!error}
+                    aria-errormessage={`${id}-error`}
+                />
 
-            {error && (
-                <AlertText severity='error' id={`${id}-error`}>
-                    {error}
-                </AlertText>
-            )}
-        </FormGroup>
-    );
-};
+                {error && (
+                    <AlertText severity='error' id={`${id}-error`}>
+                        {error}
+                    </AlertText>
+                )}
+            </FormGroup>
+        );
+    }
+);
 
-export default React.forwardRef(Input);
+export default Input;
