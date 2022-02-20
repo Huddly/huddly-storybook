@@ -1,44 +1,19 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import Label from '../Label';
 import AlertText from '../../Foundation/AlertText';
 
 interface FormGroupProps {
     hasError?: boolean;
+    isHidden?: boolean;
 }
 
 const FormGroup = styled.div<FormGroupProps>`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: block;
     max-width: 400px;
     margin-bottom: var(--spacing-32);
-    column-gap: var(--spacing-16);
-    align-items: flex-start;
-
-    label {
-        display: block;
-        margin-bottom: var(--spacing-8);
-        font-weight: bold;
-        line-height: 1;
-        font-size: var(--font-size-14);
-
-        .required-text {
-            font-size: var(--font-size-12);
-            font-weight: normal;
-        }
-    }
-
-    .help-link {
-        margin-bottom: var(--spacing-8);
-        color: var(--color-lavender);
-        text-decoration: none;
-        font-size: var(--font-size-12);
-
-        &:hover,
-        &:focus {
-            text-decoration: underline;
-        }
-    }
+    // If the type is hidden, hide everything
+    ${(p) => p.isHidden && `display: none;`}
 
     input {
         display: block;
@@ -47,12 +22,11 @@ const FormGroup = styled.div<FormGroupProps>`
         padding: var(--spacing-16);
         border: var(--border);
         border-radius: var(--border-radius);
-
         // If there is an error, apply the error border
         ${(p) =>
             p.hasError &&
-            `border-color: var(--color-alertRed);
-            margin-bottom: var(--spacing-4);`}
+            `margin-bottom: var(--spacing-4);
+            border-color: var(--color-alertRed);`}
     }
 `;
 
@@ -73,7 +47,7 @@ export interface InputProps {
         | 'url'
         | 'week';
     label?: string;
-    value?: string;
+    defaultValue?: string;
     isRequired?: boolean;
     error?: string;
     helpLink?: string;
@@ -87,32 +61,27 @@ export const Input = ({
     id,
     type,
     label,
-    value,
+    defaultValue,
     isRequired,
     error,
     helpLink,
     helpText,
 }: InputProps) => {
     return (
-        <FormGroup hasError={!!error}>
+        <FormGroup
+            hasError={!!error}
+            isHidden={type === 'hidden'}
+            aria-hidden={type === 'hidden'}
+        >
             {label && (
-                <label htmlFor={id}>
-                    {label}{' '}
-                    {!isRequired && (
-                        <span className='required-text'>(optional)</span>
-                    )}
-                </label>
-            )}
-
-            {helpLink && helpText && (
-                <a
-                    href={helpLink}
-                    className='help-link'
-                    target='_blank'
-                    rel='noopener noreferrer'
+                <Label
+                    htmlFor={id}
+                    isRequired={isRequired}
+                    helpLink={helpLink}
+                    helpText={helpText}
                 >
-                    {helpText}
-                </a>
+                    {label}
+                </Label>
             )}
 
             <input
@@ -120,7 +89,7 @@ export const Input = ({
                 name={id}
                 type={type}
                 required={isRequired}
-                value={value}
+                defaultValue={defaultValue}
                 aria-invalid={!!error}
                 aria-errormessage={`${id}-error`}
             />

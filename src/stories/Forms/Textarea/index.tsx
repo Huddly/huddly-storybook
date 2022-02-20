@@ -1,143 +1,84 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-interface WrapperProps {
-    focused: boolean;
-    expanded: boolean;
-    height: number;
+import Label from '../Label';
+import AlertText from '../../Foundation/AlertText';
+interface FormGroupProps {
+    hasError?: boolean;
 }
 
-/**
- * Todo
- * Add focus outline
- * Add color variations
- */
-const Wrapper = styled.div<WrapperProps>`
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    height: ${({ height }) => `${height}px`};
-    margin-bottom: 1rem;
-    padding: 15px;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: text;
-    background-color: rgba(0, 0, 0, 0.3);
-    transition: all 0.2s ease-in-out, height 0s;
-    will-change: height;
-
-    ${({ focused, expanded }) =>
-        (focused || expanded) &&
-        `padding-top: 10px;
-        border: 1px solid black; 
-        background-color: var(--color-white);
-        `}
-
-    label {
-        padding-bottom: 5px;
-        cursor: inherit;
-        transition: inherit;
-
-        ${({ focused, expanded }) =>
-            (focused || expanded) &&
-            `font-size: 12px;
-            font-weight: bold;`}
-
-        // Required text
-        i {
-            padding-left: 5px;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 12px;
-        }
-    }
+const FormGroup = styled.div<FormGroupProps>`
+    display: block;
+    max-width: 400px;
+    margin-bottom: var(--spacing-32);
 
     textarea {
-        all: unset;
-        flex-grow: 1;
-        overflow: hidden;
-        word-wrap: break-word;
-        resize: none;
+        display: block;
+        width: 100%;
+        height: var(--spacing-48);
+        height: 120px;
+        padding: var(--spacing-16);
+        border: var(--border);
+        border-radius: var(--border-radius);
+        font-family: var(--font-family-primary);
+        resize: vertical;
+        // If there is an error, apply the error border
+        ${(p) =>
+            p.hasError &&
+            `margin-bottom: var(--spacing-4);
+            border-color: var(--color-alertRed);`}
     }
 `;
 
 export interface TextareaProps {
-    /**
-     * Label text
-     */
+    id: string;
     label?: string;
-
-    /**
-     * Is input required?
-     */
+    defaultValue?: string;
     isRequired?: boolean;
-
-    /**
-     * Textarea height in px.
-     * @default '136'
-     */
-    baseHeight?: number;
+    error?: string;
+    helpLink?: string;
+    helpText?: string;
 }
 
 /**
- * Textarea component
+ * Input component
  */
 export const Textarea = ({
+    id,
     label,
+    defaultValue,
     isRequired,
-    baseHeight = 136,
+    error,
+    helpLink,
+    helpText,
 }: TextareaProps) => {
-    const [focused, setFocused] = useState(false);
-    const [expanded, setExpanded] = useState(false);
-    const [height, setHeight] = useState(baseHeight);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
-
-    const handleTextarea = () => {
-        if (!textareaRef.current) return;
-        // Set expanded state to true if textarea has content
-        setExpanded(textareaRef.current.value.length > 0);
-
-        // Set height of the textarea to the content height
-        const calcHeight = getTextareaHeight();
-        setHeight(calcHeight > baseHeight ? calcHeight : baseHeight);
-    };
-
-    /**
-     * Set height to auto to allow the textarea to expand
-     */
-    const getTextareaHeight = (): number => {
-        if (!textareaRef.current) return 0;
-        const textarea = textareaRef.current;
-        const wrapperHeight = textarea.parentElement?.clientHeight || 0;
-        const textareaHeight = textarea.clientHeight || 0;
-        const contentHeight = textarea.scrollHeight;
-        return wrapperHeight - textareaHeight + contentHeight;
-    };
-
     return (
-        <Wrapper
-            focused={focused}
-            expanded={expanded}
-            height={height}
-            onClick={() => textareaRef?.current?.focus()}
-        >
+        <FormGroup hasError={!!error}>
             {label && (
-                <label>
+                <Label
+                    htmlFor={id}
+                    isRequired={isRequired}
+                    helpLink={helpLink}
+                    helpText={helpText}
+                >
                     {label}
-                    {!isRequired && <i>(optional)</i>}
-                </label>
+                </Label>
             )}
+
             <textarea
+                id={id}
+                name={id}
                 required={isRequired}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChange={handleTextarea}
-                ref={textareaRef}
-            ></textarea>
-        </Wrapper>
+                defaultValue={defaultValue}
+                aria-invalid={!!error}
+                aria-errormessage={`${id}-error`}
+            />
+
+            {error && (
+                <AlertText severity='error' id={`${id}-error`}>
+                    {error}
+                </AlertText>
+            )}
+        </FormGroup>
     );
 };
 

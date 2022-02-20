@@ -27,7 +27,7 @@ export const Error = {
         id: 'password',
         type: 'password',
         label: 'Your password',
-        value: 'https://youtu.be/dQw4w9WgXcQ',
+        defaultValue: 'https://youtu.be/dQw4w9WgXcQ',
         isRequired: true,
         error: 'Password doesn’t match your email.',
         helpText: 'Forgot your password?',

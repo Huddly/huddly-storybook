@@ -4,8 +4,17 @@ export default { component: Textarea };
 
 export const Primary = {
     args: {
+        id: 'message',
         label: 'Your message',
         isRequired: true,
-        baseHeight: 136,
+    },
+};
+
+export const Error = {
+    args: {
+        id: 'message',
+        label: 'Your message',
+        isRequired: true,
+        error: 'Message is required.',
     },
 };

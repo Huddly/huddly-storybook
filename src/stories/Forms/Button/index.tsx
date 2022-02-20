@@ -11,7 +11,7 @@ const ButtonElement = styled.button<ButtonProps>`
     color: ${(p) =>
         p.secondary ? `var(--color-${p.color})` : 'var(--color-white)'};
     font-weight: bold;
-    font-family: var(--font-family);
+    font-family: var(--font-family-primary);
 `;
 
 const roleToHtmlTag = {

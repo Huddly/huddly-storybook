@@ -53,7 +53,7 @@ export const GlobalStyles = createGlobalStyle`
     --border-radius: 6px;
 
     /* Fonts */
-    --font-family: "Messina sans", Helvetica, Arial, sans-serif;
+    --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;
   }
 
   html, body {
@@ -64,7 +64,7 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: var(--font-family);
+    font-family: var(--font-family-primary);
   }
   @font-face {
     font-family: "Messina sans";
