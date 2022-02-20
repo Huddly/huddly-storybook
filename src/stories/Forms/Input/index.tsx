@@ -110,4 +110,4 @@ export const Input = (
     );
 };
 
-export default Input;
+export default React.forwardRef(Input);

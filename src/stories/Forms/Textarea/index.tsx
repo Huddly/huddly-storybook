@@ -89,4 +89,4 @@ export const Textarea = (
     );
 };
 
-export default Textarea;
+export default React.forwardRef(Textarea);
