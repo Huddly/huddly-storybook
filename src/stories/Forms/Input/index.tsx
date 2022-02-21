@@ -1,119 +1,107 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import InputWrapper from '../InputWrapper';
+import Label from '../Label';
 interface WrapperProps {
-  focused: boolean;
-  expanded: boolean;
+  hasError?: boolean;
+  isHidden?: boolean;
 }
 
-/**
- * Todo
- * Add focus outline
- * Add color variations
- */
-const Wrapper = styled.div<WrapperProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 600px;
-  height: 56px;
-  margin-bottom: 1rem;
-  padding: 0 15px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: text;
-  transition: all 0.2s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.3);
-
-  ${({ focused, expanded }) =>
-    (focused || expanded) &&
-    `border: 1px solid black; 
-        background-color: var(--color-white);`}
-
-  label {
-    cursor: inherit;
-    transition: inherit;
-
-    ${({ focused, expanded }) =>
-      (focused || expanded) &&
-      `font-size: 12px;
-            font-weight: bold;`}
-
-    // required text
-        i {
-      font-style: normal;
-      font-size: 12px;
-      font-weight: normal;
-      padding-left: 5px;
-    }
-  }
+const Wrapper = styled(InputWrapper)<WrapperProps>`
+  display: ${(p) => (p.isHidden ? 'none' : 'block')};
 
   input {
-    all: unset;
     display: block;
-    height: 0;
-    transition: inherit;
-    will-change: height;
-
-    ${({ focused, expanded }) => (focused || expanded) && `height: 1.25em;`}
+    width: 100%;
+    height: var(--spacing-48);
+    padding: var(--spacing-16);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    // If there is an error, apply the error border
+    ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
   }
 `;
 
 export interface InputProps {
-  /**
-   * Input type
-   */
-  type: string;
-
-  /**
-   * Label text
-   */
+  id: string;
+  type:
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'hidden'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'text'
+    | 'time'
+    | 'url'
+    | 'week';
   label?: string;
-
-  /**
-   * Is input required?
-   */
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // eslint-disable-line no-unused-vars
   isRequired?: boolean;
+  alertLabel?: string;
+  helpLink?: string;
+  helpLabel?: string;
+  className?: string;
 }
 
 /**
  * Input component
  */
-export const Input = ({ type, label, isRequired }: InputProps) => {
-  const [focused, setFocused] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+export const Input = React.forwardRef(
+  (
+    {
+      id,
+      type = 'text',
+      label,
+      value,
+      onChange,
+      isRequired,
+      alertLabel,
+      helpLink,
+      helpLabel,
+      className,
+    }: InputProps,
+    ref: React.RefObject<HTMLInputElement>
+  ) => {
+    return (
+      <Wrapper
+        id={id}
+        className={className}
+        hasError={!!alertLabel}
+        isHidden={type === 'hidden'}
+        aria-hidden={type === 'hidden'}
+        alertLabel={alertLabel}
+      >
+        {label && (
+          <Label
+            htmlFor={id}
+            isRequired={isRequired}
+            helpLink={helpLink}
+            helpLabel={helpLabel}
+          >
+            {label}
+          </Label>
+        )}
 
-  const onFocus = () => setFocused(true);
-  const onBlur = () => setFocused(false);
-
-  const handleInput = () => {
-    if (!inputRef.current) return;
-    setExpanded(inputRef.current.value.length > 0);
-  };
-
-  return (
-    <Wrapper
-      focused={focused}
-      expanded={expanded}
-      onClick={() => inputRef?.current?.focus()}
-    >
-      {label && (
-        <label>
-          {label}
-          {!isRequired && <i>(optional)</i>}
-        </label>
-      )}
-      <input
-        type={type}
-        required={isRequired}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={handleInput}
-        ref={inputRef}
-      />
-    </Wrapper>
-  );
-};
+        <input
+          id={id}
+          ref={ref}
+          name={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          required={isRequired}
+          aria-invalid={!!alertLabel}
+          aria-errormessage={!!alertLabel && `${id}-error`}
+        />
+      </Wrapper>
+    );
+  }
+);
 
 export default Input;
