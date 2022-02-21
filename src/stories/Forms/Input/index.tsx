@@ -1,19 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Label from '../Label';
-import AlertText from '../../Foundation/AlertText';
 
-interface FormGroupProps {
+import InputWrapper from '../InputWrapper';
+import Label from '../Label';
+interface WrapperProps {
     hasError?: boolean;
     isHidden?: boolean;
 }
 
-const FormGroup = styled.div<FormGroupProps>`
-    display: block;
-    max-width: 400px;
-    margin-bottom: var(--spacing-32);
-    // If the type is hidden, hide everything
-    ${(p) => p.isHidden && `display: none;`}
+const Wrapper = styled(InputWrapper)<WrapperProps>`
+    display: ${(p) => (p.isHidden ? 'none' : 'block')};
 
     input {
         display: block;
@@ -23,10 +19,7 @@ const FormGroup = styled.div<FormGroupProps>`
         border: var(--border);
         border-radius: var(--border-radius);
         // If there is an error, apply the error border
-        ${(p) =>
-            p.hasError &&
-            `margin-bottom: var(--spacing-4);
-            border-color: var(--color-alertRed);`}
+        ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
     }
 `;
 
@@ -62,7 +55,7 @@ export const Input = React.forwardRef(
     (
         {
             id,
-            type,
+            type = 'text',
             label,
             value,
             onChange,
@@ -74,10 +67,12 @@ export const Input = React.forwardRef(
         ref: React.RefObject<HTMLInputElement>
     ) => {
         return (
-            <FormGroup
+            <Wrapper
+                id={id}
                 hasError={!!error}
                 isHidden={type === 'hidden'}
                 aria-hidden={type === 'hidden'}
+                error={error}
             >
                 {label && (
                     <Label
@@ -101,13 +96,7 @@ export const Input = React.forwardRef(
                     aria-invalid={!!error}
                     aria-errormessage={`${id}-error`}
                 />
-
-                {error && (
-                    <AlertText severity='error' id={`${id}-error`}>
-                        {error}
-                    </AlertText>
-                )}
-            </FormGroup>
+            </Wrapper>
         );
     }
 );

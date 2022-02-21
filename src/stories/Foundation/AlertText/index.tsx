@@ -18,6 +18,7 @@ export interface AlertTextProps {
     severity: 'success' | 'info' | 'warning' | 'error';
     children: React.ReactNode;
     id?: string;
+    className?: string;
 }
 
 /**
@@ -44,9 +45,10 @@ export const AlertText = ({
     severity = 'info',
     children,
     id,
+    className,
 }: AlertTextProps) => {
     return (
-        <Wrapper role='alert' id={id}>
+        <Wrapper role='alert' id={id} className={className}>
             {getIcon(severity)}
             <span>{children}</span>
         </Wrapper>
