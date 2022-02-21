@@ -73,7 +73,7 @@ export interface TextAreaProps {
     isRequired?: boolean;
 
     /**
-     * Textarea height in px.
+     * TextArea height in px.
      * @default '136'
      */
     baseHeight?: number;
@@ -101,14 +101,14 @@ export const TextArea = ({
         setExpanded(textareaRef.current.value.length > 0);
 
         // Set height of the textarea to the content height
-        const calcHeight = getTextareaHeight();
+        const calcHeight = getTextAreaHeight();
         setHeight(calcHeight > baseHeight ? calcHeight : baseHeight);
     };
 
     /**
      * Set height to auto to allow the textarea to expand
      */
-    const getTextareaHeight = (): number => {
+    const getTextAreaHeight = (): number => {
         if (!textareaRef.current) return 0;
         const textarea = textareaRef.current;
         const wrapperHeight = textarea.parentElement?.clientHeight || 0;
