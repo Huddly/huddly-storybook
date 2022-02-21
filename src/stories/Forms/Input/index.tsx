@@ -46,6 +46,7 @@ export interface InputProps {
   alertLabel?: string;
   helpLink?: string;
   helpLabel?: string;
+  className?: string;
 }
 
 /**
@@ -63,12 +64,14 @@ export const Input = React.forwardRef(
       alertLabel,
       helpLink,
       helpLabel,
+      className,
     }: InputProps,
     ref: React.RefObject<HTMLInputElement>
   ) => {
     return (
       <Wrapper
         id={id}
+        className={className}
         hasError={!!alertLabel}
         isHidden={type === 'hidden'}
         aria-hidden={type === 'hidden'}
@@ -94,7 +97,7 @@ export const Input = React.forwardRef(
           onChange={onChange}
           required={isRequired}
           aria-invalid={!!alertLabel}
-          aria-errormessage={`${id}-error`}
+          aria-errormessage={!!alertLabel && `${id}-error`}
         />
       </Wrapper>
     );

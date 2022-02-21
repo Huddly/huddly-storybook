@@ -27,7 +27,7 @@ export const FailedInput = {
     id: 'password',
     type: 'password',
     label: 'Your password',
-    defaultValue: 'https://youtu.be/dQw4w9WgXcQ',
+    value: 'https://youtu.be/dQw4w9WgXcQ',
     isRequired: true,
     alertLabel: 'Password doesn’t match your email.',
     helpLabel: 'Forgot your password?',
