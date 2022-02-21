@@ -3,18 +3,18 @@ import { TextArea } from '.';
 export default { component: TextArea };
 
 export const Primary = {
-    args: {
-        id: 'message',
-        label: 'Your message',
-        isRequired: true,
-    },
+  args: {
+    id: 'message',
+    label: 'Your message',
+    isRequired: true,
+  },
 };
 
-export const Error = {
-    args: {
-        id: 'message',
-        label: 'Your message',
-        isRequired: true,
-        error: 'Message is required.',
-    },
+export const FailedInput = {
+  args: {
+    id: 'message',
+    label: 'Your message',
+    isRequired: true,
+    alertLabel: 'Message is required.',
+  },
 };

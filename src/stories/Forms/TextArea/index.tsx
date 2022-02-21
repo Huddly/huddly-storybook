@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import InputWrapper from '../InputWrapper';
 import Label from '../Label';
 interface WrapperProps {
-    hasError?: boolean;
+  hasError?: boolean;
 }
 
 const Wrapper = styled(InputWrapper)<WrapperProps>`
@@ -21,62 +21,71 @@ const Wrapper = styled(InputWrapper)<WrapperProps>`
         // If there is an error, apply the error border
         ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
     }
+  }
+
+  textarea {
+    all: unset;
+    flex-grow: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+    resize: none;
+  }
 `;
 
 export interface TextAreaProps {
-    id: string;
-    label?: string;
-    value?: string;
-    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    isRequired?: boolean;
-    error?: string;
-    helpLink?: string;
-    helpText?: string;
+  id: string;
+  label?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void; // eslint-disable-line no-unused-vars
+  isRequired?: boolean;
+  alertLabel?: string;
+  helpLink?: string;
+  helpLabel?: string;
 }
 
 /**
  * TextArea component
  */
 export const TextArea = React.forwardRef(
-    (
-        {
-            id,
-            label,
-            value,
-            onChange,
-            isRequired,
-            error,
-            helpLink,
-            helpText,
-        }: TextAreaProps,
-        ref: React.RefObject<HTMLTextAreaElement>
-    ) => {
-        return (
-            <Wrapper id={id} hasError={!!error} error={error}>
-                {label && (
-                    <Label
-                        htmlFor={id}
-                        isRequired={isRequired}
-                        helpLink={helpLink}
-                        helpText={helpText}
-                    >
-                        {label}
-                    </Label>
-                )}
+  (
+    {
+      id,
+      label,
+      value,
+      onChange,
+      isRequired,
+      alertLabel,
+      helpLink,
+      helpLabel,
+    }: TextAreaProps,
+    ref: React.RefObject<HTMLTextAreaElement>
+  ) => {
+    return (
+      <Wrapper id={id} hasError={!!alertLabel} alertLabel={alertLabel}>
+        {label && (
+          <Label
+            htmlFor={id}
+            isRequired={isRequired}
+            helpLink={helpLink}
+            helpLabel={helpLabel}
+          >
+            {label}
+          </Label>
+        )}
 
-                <textarea
-                    id={id}
-                    ref={ref}
-                    name={id}
-                    required={isRequired}
-                    value={value}
-                    onChange={onChange}
-                    aria-invalid={!!error}
-                    aria-errormessage={`${id}-error`}
-                />
-            </Wrapper>
-        );
-    }
+        <textarea
+          id={id}
+          ref={ref}
+          name={id}
+          required={isRequired}
+          value={value}
+          onChange={onChange}
+          aria-invalid={!!alertLabel}
+          aria-errormessage={`${id}-error`}
+        />
+      </Wrapper>
+    );
+  }
 );
 
 export default TextArea;
