@@ -25,6 +25,7 @@
         "tslint": "eslint .",
         "prepare": "npm run build-ts",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+        "prettier-write": "prettier  --config ./.prettierrc --write \"src/**/*{.ts,.tsx}\"",
         "prettier-check": "prettier  --config ./.prettierrc --check \"src/**/*{.ts,.tsx}\"",
         "prettify-staged": "pretty-quick --staged --pattern \"src/**/*{.ts,.tsx}\" --verbose",
         "pre-commit-msg": "echo \"Verifying build ...\""
