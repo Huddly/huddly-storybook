@@ -47,7 +47,8 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: 64px;
 
     /* Borders */
-    --border: 1px solid #9E9E9E;
+    --border-primary: 1px solid #9E9E9E;
+    --border-error: 2px solid var(--color-alertRed);
 
     /* Border radius */
     --border-radius: 6px;

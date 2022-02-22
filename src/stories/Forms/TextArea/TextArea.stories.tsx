@@ -1,4 +1,4 @@
-import { TextArea } from '.';
+import TextArea from '.';
 
 export default { component: TextArea };
 

@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import InputWrapper from '../InputWrapper';
-import Label from '../Label';
 interface WrapperProps {
   hasError?: boolean;
 }
 
-const Wrapper = styled(InputWrapper)<WrapperProps>`
+const Wrapper = styled.div<WrapperProps>`
   textarea {
     display: block;
     width: 100%;
@@ -15,24 +13,23 @@ const Wrapper = styled(InputWrapper)<WrapperProps>`
     height: 120px;
     padding: var(--spacing-16);
     border: var(--border);
+    border: ${(p) =>
+      p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     border-radius: var(--border-radius);
     font-family: var(--font-family-primary);
     resize: vertical;
-    // If there is an error, apply the error border
-    ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
   }
 `;
 
 export interface TextAreaProps {
-  id: string;
-  label?: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void; // eslint-disable-line no-unused-vars
-  isRequired?: boolean;
-  alertLabel?: string;
-  helpLink?: string;
-  helpLabel?: string;
   className?: string;
+  hasError?: boolean;
+  hasHint?: boolean;
+  id?: string;
+  isRequired?: boolean;
+  name?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void; // eslint-disable-line no-unused-vars
+  value?: string;
 }
 
 /**
@@ -41,45 +38,29 @@ export interface TextAreaProps {
 export const TextArea = React.forwardRef(
   (
     {
-      id,
-      label,
-      value,
-      onChange,
-      isRequired,
-      alertLabel,
-      helpLink,
-      helpLabel,
       className,
+      hasError,
+      hasHint,
+      id,
+      isRequired,
+      name,
+      onChange,
+      value,
     }: TextAreaProps,
     ref: React.RefObject<HTMLTextAreaElement>
   ) => {
     return (
-      <Wrapper
-        id={id}
-        hasError={!!alertLabel}
-        alertLabel={alertLabel}
-        className={className}
-      >
-        {label && (
-          <Label
-            htmlFor={id}
-            isRequired={isRequired}
-            helpLink={helpLink}
-            helpLabel={helpLabel}
-          >
-            {label}
-          </Label>
-        )}
-
+      <Wrapper className={className} hasError={hasError}>
         <textarea
+          aria-describedby={hasHint && `${id}-hint`}
+          aria-errormessage={hasError && `${id}-error`}
+          aria-invalid={hasError}
           id={id}
+          name={name || id}
+          onChange={onChange}
           ref={ref}
-          name={id}
           required={isRequired}
           value={value}
-          onChange={onChange}
-          aria-invalid={!!alertLabel}
-          aria-errormessage={!!alertLabel && `${id}-error`}
         />
       </Wrapper>
     );

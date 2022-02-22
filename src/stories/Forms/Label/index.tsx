@@ -19,6 +19,10 @@ const Wrapper = styled.div`
       font-weight: normal;
       font-size: var(--font-size-12);
     }
+
+    a {
+      color: var(--color-lavender);
+    }
   }
 
   .help-link {
@@ -35,8 +39,9 @@ const Wrapper = styled.div`
 `;
 
 export interface LabelProps {
-  htmlFor: string;
   children: React.ReactNode;
+  id?: string;
+  htmlFor?: string;
   isRequired?: boolean;
   helpLink?: string;
   helpLabel?: string;
@@ -46,6 +51,7 @@ export interface LabelProps {
  * Label component
  */
 export const Label = ({
+  id,
   htmlFor,
   children,
   isRequired,
@@ -54,7 +60,7 @@ export const Label = ({
 }: LabelProps) => {
   return (
     <Wrapper>
-      <label htmlFor={htmlFor}>
+      <label htmlFor={htmlFor || id}>
         {children}{' '}
         {!isRequired && <span className='required-text'>(optional)</span>}
       </label>

@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import InputWrapper from '../InputWrapper';
-import Label from '../Label';
 interface WrapperProps {
   hasError?: boolean;
   isHidden?: boolean;
 }
 
-const Wrapper = styled(InputWrapper)<WrapperProps>`
+const Wrapper = styled.div<WrapperProps>`
   display: ${(p) => (p.isHidden ? 'none' : 'block')};
 
   input {
@@ -16,16 +14,21 @@ const Wrapper = styled(InputWrapper)<WrapperProps>`
     width: 100%;
     height: var(--spacing-48);
     padding: var(--spacing-16);
-    border: var(--border);
+    border: ${(p) =>
+      p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     border-radius: var(--border-radius);
-    // If there is an error, apply the error border
-    ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
   }
 `;
 
 export interface InputProps {
-  id: string;
-  type:
+  hasHint?: boolean;
+  hasError?: boolean;
+  className?: string;
+  id?: string;
+  isRequired?: boolean;
+  name?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // eslint-disable-line no-unused-vars
+  type?:
     | 'date'
     | 'datetime-local'
     | 'email'
@@ -39,14 +42,7 @@ export interface InputProps {
     | 'time'
     | 'url'
     | 'week';
-  label?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // eslint-disable-line no-unused-vars
-  isRequired?: boolean;
-  alertLabel?: string;
-  helpLink?: string;
-  helpLabel?: string;
-  className?: string;
 }
 
 /**
@@ -55,49 +51,36 @@ export interface InputProps {
 export const Input = React.forwardRef(
   (
     {
-      id,
-      type = 'text',
-      label,
-      value,
-      onChange,
-      isRequired,
-      alertLabel,
-      helpLink,
-      helpLabel,
       className,
+      hasError,
+      hasHint,
+      id,
+      isRequired,
+      name,
+      onChange,
+      type = 'text',
+      value,
     }: InputProps,
     ref: React.RefObject<HTMLInputElement>
   ) => {
     return (
       <Wrapper
-        id={id}
-        className={className}
-        hasError={!!alertLabel}
-        isHidden={type === 'hidden'}
         aria-hidden={type === 'hidden'}
-        alertLabel={alertLabel}
+        className={className}
+        hasError={hasError}
+        isHidden={type === 'hidden'}
       >
-        {label && (
-          <Label
-            htmlFor={id}
-            isRequired={isRequired}
-            helpLink={helpLink}
-            helpLabel={helpLabel}
-          >
-            {label}
-          </Label>
-        )}
-
         <input
+          aria-describedby={hasHint && `${id}-hint`}
+          aria-errormessage={hasError && `${id}-error`}
+          aria-invalid={hasError}
           id={id}
+          name={name || id}
+          onChange={onChange}
           ref={ref}
-          name={id}
+          required={isRequired}
           type={type}
           value={value}
-          onChange={onChange}
-          required={isRequired}
-          aria-invalid={!!alertLabel}
-          aria-errormessage={!!alertLabel && `${id}-error`}
         />
       </Wrapper>
     );

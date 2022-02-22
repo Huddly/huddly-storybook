@@ -1,4 +1,4 @@
-import { Label } from '.';
+import Label from '.';
 
 export default { component: Label };
 

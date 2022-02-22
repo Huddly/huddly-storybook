@@ -5,6 +5,7 @@ import { Success, Info, Warning, Failed } from '../../Icons';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   column-gap: var(--spacing-8);
   font-size: var(--font-size-12);
 
@@ -15,10 +16,10 @@ const Wrapper = styled.div`
 `;
 
 export interface AlertTextProps {
-  severity: 'success' | 'info' | 'warning' | 'error';
-  children: React.ReactNode;
-  id?: string;
+  children?: React.ReactNode;
   className?: string;
+  id?: string;
+  severity: 'success' | 'info' | 'warning' | 'error';
 }
 
 /**
@@ -42,14 +43,14 @@ const getIcon = (severity: AlertTextProps['severity']) => {
  * AlertText component
  */
 export const AlertText = ({
-  severity = 'info',
   children,
-  id,
   className,
+  id,
+  severity = 'info',
 }: AlertTextProps) => {
   return (
-    <Wrapper role='alert' id={id} className={className}>
-      {getIcon(severity)}
+    <Wrapper className={className} id={id} role='alert'>
+      <span aria-hidden='true'>{getIcon(severity)}</span>
       <span>{children}</span>
     </Wrapper>
   );
