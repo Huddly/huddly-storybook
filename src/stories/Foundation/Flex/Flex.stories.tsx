@@ -1,4 +1,4 @@
-import { Flex } from '.';
+import Flex from '.';
 import React from 'react';
 
 export default { component: Flex };

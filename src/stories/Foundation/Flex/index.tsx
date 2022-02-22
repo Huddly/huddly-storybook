@@ -37,7 +37,7 @@ const Wrapper = styled.div<FlexProps>`
 /**
  * Flex component
  */
-export const Flex = ({
+const Flex = ({
   direction = 'row',
   wrap = 'nowrap',
   justify = 'flex-start',
