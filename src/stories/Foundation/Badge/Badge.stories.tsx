@@ -1,5 +1,5 @@
 import { Badge } from '.';
-import { Flex } from '../Flex';
+import Flex from '../Flex';
 import { Text } from '../Text';
 
 export default { component: Badge };
