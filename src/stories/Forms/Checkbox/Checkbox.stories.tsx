@@ -1,5 +1,5 @@
 import { Checkbox } from '.';
-import { InputWrapper } from '../InputWrapper';
+import { InputWrapper } from '../../../index';
 
 export default {
   component: Checkbox,

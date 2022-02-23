@@ -1,6 +1,5 @@
 import { TextArea } from '.';
-import { InputWrapper } from '../InputWrapper';
-import { Label } from '../Label';
+import { InputWrapper, Label } from '../../../index';
 
 // Import stories from Input.stories.tsx
 

@@ -1,6 +1,5 @@
 import { Input } from '.';
-import { InputWrapper } from '../InputWrapper';
-import { Label } from '../Label';
+import { InputWrapper, Label } from '../../../index';
 
 export default {
   component: Input,

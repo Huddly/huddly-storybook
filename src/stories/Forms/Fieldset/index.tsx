@@ -18,7 +18,7 @@ const Wrapper = styled.fieldset`
   }
 `;
 
-interface FieldsetProps {
+export interface FieldsetProps {
   children: React.ReactNode;
   className?: string;
   legend?: string;
