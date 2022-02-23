@@ -4,65 +4,52 @@ import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
-  isHidden?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  display: ${(p) => (p.isHidden ? 'none' : 'block')};
-
-  input {
+  select {
     display: block;
     width: 100%;
     height: var(--spacing-48);
-    padding: var(--spacing-16);
+    padding: 0 var(--spacing-16);
     border: ${(p) =>
       p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     border-radius: var(--border-radius);
     font-size: var(--font-size-16);
+    font-family: var(--font-family-primary);
+    cursor: pointer;
+    // This is to get a custom arrow on the select element
+    background: url("data:image/svg+xml,%3Csvg width='13' height='8' viewBox='0 0 13 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6.5 7L12 1' stroke='black'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-16) center;
+    -moz-appearance: none;
+    -webkit-appearance: none;
   }
 `;
 
-export interface InputProps extends GlobalInputProps {
-  type?:
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'hidden'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week';
+export interface SelectProps extends GlobalInputProps {
+  children: React.ReactNode;
 }
 
 /**
- * Input component
+ * Select component
  */
-export const Input = React.forwardRef(
-  (props: InputProps, ref: React.RefObject<HTMLInputElement>) => {
+export const Select = React.forwardRef(
+  (props: SelectProps, ref: React.RefObject<HTMLSelectElement>) => {
     const {
+      children,
       className,
       hasError,
       hasHint,
       id,
       isRequired,
       name,
-      type = 'text',
       value,
     } = props;
 
     return (
-      <Wrapper
-        aria-hidden={type === 'hidden'}
-        className={className}
-        hasError={hasError}
-        isHidden={type === 'hidden'}
-      >
-        <input
+      <Wrapper className={className} hasError={hasError}>
+        <select
           aria-describedby={hasHint && `${id}-hint`}
           aria-errormessage={hasError && `${id}-error`}
           aria-invalid={hasError}
@@ -70,13 +57,14 @@ export const Input = React.forwardRef(
           name={name || id}
           ref={ref}
           required={isRequired}
-          type={type}
           value={value}
           {...props}
-        />
+        >
+          {children}
+        </select>
       </Wrapper>
     );
   }
 );
 
-export default Input;
+export default Select;

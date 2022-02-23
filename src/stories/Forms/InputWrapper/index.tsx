@@ -27,11 +27,11 @@ const HintText = styled.span`
 `;
 
 interface InputWrapperProps {
+  id: string;
   alert?: string;
   children: JSX.Element | JSX.Element[];
   className?: string;
   hint?: string;
-  id: string;
   isRequired?: boolean;
 }
 
@@ -39,11 +39,11 @@ interface InputWrapperProps {
  * InputWrapper component
  */
 export const InputWrapper = ({
+  id,
   alert,
   children,
   className,
   hint,
-  id,
   isRequired,
 }: InputWrapperProps) => {
   // We pass pass global props such as id to the children.

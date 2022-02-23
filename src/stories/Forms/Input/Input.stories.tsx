@@ -4,6 +4,7 @@ import Fieldset from '../Fieldset';
 import Input from '.';
 import Label from '../Label';
 import Checkbox from '../Checkbox';
+import Select from '../Select';
 
 export default { component: Input };
 
@@ -62,6 +63,20 @@ export const Signup = () => {
             <Input />
           </InputWrapper>
         </Flex>
+
+        <InputWrapper id='time-zone' isRequired alert='yo'>
+          <Label>Time zone</Label>
+          <Select>
+            <option>(GMT-11:00) Midway Island</option>
+            <option>(GMT-11:00) Samoa</option>
+            <option>(GMT-10:00) Hawaii</option>
+            <option>(GMT-09:00) Alaska</option>
+            <option>(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+            <option>(GMT-08:00) Tijuana</option>
+            <option>(GMT-07:00) Arizona</option>
+            <option>(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+          </Select>
+        </InputWrapper>
       </Fieldset>
 
       <InputWrapper id='privacy-policy' isRequired>

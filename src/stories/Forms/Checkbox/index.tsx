@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
@@ -30,15 +31,8 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-export interface CheckboxProps {
+export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
   children: React.ReactNode;
-  className?: string;
-  hasError?: boolean;
-  hasHint?: boolean;
-  id?: string;
-  isRequired?: boolean;
-  name?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // eslint-disable-line no-unused-vars
   value?: boolean;
 }
 
@@ -46,8 +40,8 @@ export interface CheckboxProps {
  * Checkbox component
  */
 export const Checkbox = React.forwardRef(
-  (
-    {
+  (props: CheckboxProps, ref: React.RefObject<HTMLInputElement>) => {
+    const {
       children,
       className,
       hasError,
@@ -55,11 +49,10 @@ export const Checkbox = React.forwardRef(
       id,
       isRequired,
       name,
-      onChange,
       value,
-    }: CheckboxProps,
-    ref: React.RefObject<HTMLInputElement>
-  ) => {
+      ...additionalInputProps
+    } = props;
+
     return (
       <Wrapper className={className} hasError={hasError}>
         <input
@@ -68,11 +61,11 @@ export const Checkbox = React.forwardRef(
           aria-invalid={hasError}
           id={id}
           name={name || id}
-          onChange={onChange}
           ref={ref}
           required={isRequired}
           type='checkbox'
           checked={value}
+          {...additionalInputProps}
         />
 
         <label htmlFor={id}>{children}</label>

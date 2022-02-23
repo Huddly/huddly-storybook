@@ -9,9 +9,12 @@ const Wrapper = styled.div`
   column-gap: var(--spacing-8);
   font-size: var(--font-size-12);
 
-  svg {
-    width: var(--spacing-16);
-    height: var(--spacing-16);
+  i {
+    display: inline-flex;
+    svg {
+      width: var(--spacing-16);
+      height: var(--spacing-16);
+    }
   }
 `;
 
@@ -50,7 +53,7 @@ export const AlertText = ({
 }: AlertTextProps) => {
   return (
     <Wrapper className={className} id={id} role='alert'>
-      <span aria-hidden='true'>{getIcon(severity)}</span>
+      <i aria-hidden='true'>{getIcon(severity)}</i>
       <span>{children}</span>
     </Wrapper>
   );
