@@ -29,24 +29,32 @@ export interface TextAreaProps extends GlobalInputProps {
  */
 export const TextArea = React.forwardRef(
   (props: TextAreaProps, ref: React.RefObject<HTMLTextAreaElement>) => {
-    const { className, hasError, hasHint, id, isRequired, name, value } = props;
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      className,
+      hasError,
+      id,
+      isRequired,
+      name,
+      value,
+      ...additionalInputProps
+    } = props;
 
     return (
       <Wrapper className={className} hasError={hasError}>
         <textarea
-          aria-describedby={hasHint && `${id}-hint`}
-          aria-errormessage={hasError && `${id}-error`}
+          aria-describedby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}
           name={name || id}
           ref={ref}
           required={isRequired}
           value={value}
-          {...props}
+          {...additionalInputProps}
         />
       </Wrapper>
     );
   }
 );
-
-export default TextArea;

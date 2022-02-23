@@ -78,5 +78,3 @@ export const Label = ({
     </Wrapper>
   );
 };
-
-export default Label;

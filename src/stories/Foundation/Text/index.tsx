@@ -42,5 +42,3 @@ export const Text = ({
     </Wrapper>
   );
 };
-
-export default Text;

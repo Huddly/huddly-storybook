@@ -37,28 +37,30 @@ export interface SelectProps extends GlobalInputProps {
 export const Select = React.forwardRef(
   (props: SelectProps, ref: React.RefObject<HTMLSelectElement>) => {
     const {
+      ariaDescribedBy,
+      ariaErrorMessage,
       children,
       className,
       hasError,
-      hasHint,
       id,
       isRequired,
       name,
       value,
+      ...additionalInputProps
     } = props;
 
     return (
       <Wrapper className={className} hasError={hasError}>
         <select
-          aria-describedby={hasHint && `${id}-hint`}
-          aria-errormessage={hasError && `${id}-error`}
+          aria-describedby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}
           name={name || id}
           ref={ref}
           required={isRequired}
           value={value}
-          {...props}
+          {...additionalInputProps}
         >
           {children}
         </select>
@@ -66,5 +68,3 @@ export const Select = React.forwardRef(
     );
   }
 );
-
-export default Select;

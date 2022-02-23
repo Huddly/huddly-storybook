@@ -1,10 +1,10 @@
-import InputWrapper from '../InputWrapper';
-import Flex from '../../Foundation/Flex';
-import Fieldset from '../Fieldset';
-import Input from '.';
-import Label from '../Label';
-import Checkbox from '../Checkbox';
-import Select from '../Select';
+import { InputWrapper } from '../InputWrapper';
+import { Flex } from '../../Foundation/Flex';
+import { Fieldset } from '../Fieldset';
+import { Input } from '.';
+import { Label } from '../Label';
+import { Checkbox } from '../Checkbox';
+import { Select } from '../Select';
 
 export default { component: Input };
 

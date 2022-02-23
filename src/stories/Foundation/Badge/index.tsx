@@ -20,5 +20,3 @@ export interface BadgeProps {
 export const Badge = ({ children }: BadgeProps) => {
   return <Wrapper>{children}</Wrapper>;
 };
-
-export default Badge;

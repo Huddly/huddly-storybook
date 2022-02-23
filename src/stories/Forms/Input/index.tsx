@@ -45,14 +45,16 @@ export interface InputProps extends GlobalInputProps {
 export const Input = React.forwardRef(
   (props: InputProps, ref: React.RefObject<HTMLInputElement>) => {
     const {
+      ariaDescribedBy,
+      ariaErrorMessage,
       className,
       hasError,
-      hasHint,
       id,
       isRequired,
       name,
       type = 'text',
       value,
+      ...additionalInputProps
     } = props;
 
     return (
@@ -63,8 +65,8 @@ export const Input = React.forwardRef(
         isHidden={type === 'hidden'}
       >
         <input
-          aria-describedby={hasHint && `${id}-hint`}
-          aria-errormessage={hasError && `${id}-error`}
+          aria-describedby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}
           name={name || id}
@@ -72,11 +74,9 @@ export const Input = React.forwardRef(
           required={isRequired}
           type={type}
           value={value}
-          {...props}
+          {...additionalInputProps}
         />
       </Wrapper>
     );
   }
 );
-
-export default Input;

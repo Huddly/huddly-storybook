@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import AlertText from '../../Foundation/AlertText';
+
+import { AlertText } from '../../Foundation/AlertText';
 
 const Wrapper = styled.div`
   display: block;
@@ -26,7 +27,7 @@ const HintText = styled.span`
   color: '#747474';
 `;
 
-interface InputWrapperProps {
+export interface InputWrapperProps {
   id: string;
   alert?: string;
   children: JSX.Element | JSX.Element[];
@@ -46,29 +47,44 @@ export const InputWrapper = ({
   hint,
   isRequired,
 }: InputWrapperProps) => {
-  // We pass pass global props such as id to the children.
-  const modifiedChildren = React.Children.map(children, (child) => {
-    const clone = React.cloneElement(child as React.ReactElement<any>, {
-      hasError: alert ? true : null, // Null because we don't want the attributes showing up in the DOM if the value is false
-      hasHint: hint ? true : null,
-      id,
-      isRequired,
-    });
-    return clone;
+  const ariaDescribedById = hint ? `${id}-hint` : undefined;
+  const ariaErrorMessageId = alert ? `${id}-error` : undefined;
+
+  // Define global child/input props
+  const globalInputProps = {
+    ariaDescribedBy: ariaDescribedById,
+    ariaErrorMessage: ariaErrorMessageId,
+    hasError: alert ? true : undefined,
+    id,
+    isRequired,
+  };
+
+  // Pass globalInputProps to children, but if it's a fragment, we need to pass props to each child
+  const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
+    if (child.type === React.Fragment) {
+      return React.Children.map(child.props.children, (child) => {
+        return React.cloneElement(child, globalInputProps);
+      });
+    }
+    return React.cloneElement(child, globalInputProps);
   });
 
   return (
     <Wrapper className={className}>
-      {modifiedChildren}
+      {childrenWithGlobalInputProps}
 
       <HintWrapper>
         {
-          // Don't show the hint if there's an alert.
-          hint && !alert && <HintText className='hint'>{hint}</HintText>
+          // Don't show the hint if there's an alert
+          hint && !alert && (
+            <HintText className='hint' id={ariaErrorMessageId}>
+              {hint}
+            </HintText>
+          )
         }
 
         {alert && (
-          <AlertText severity='error' id={`${id}-error`} className='hint'>
+          <AlertText className='hint' id={ariaErrorMessageId} severity='error'>
             {alert}
           </AlertText>
         )}
@@ -76,5 +92,3 @@ export const InputWrapper = ({
     </Wrapper>
   );
 };
-
-export default InputWrapper;

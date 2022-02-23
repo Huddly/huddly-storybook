@@ -6,15 +6,15 @@ export { GlobalStyles } from './shared/global';
 /**
  * Forms
  */
-export { default as Button } from './stories/Forms/Button';
-export { default as Input } from './stories/Forms/Input';
-export { default as Label } from './stories/Forms/Label';
-export { default as TextArea } from './stories/Forms/TextArea';
+export { Button } from './stories/Forms/Button';
+export { Input } from './stories/Forms/Input';
+export { Label } from './stories/Forms/Label';
+export { TextArea } from './stories/Forms/TextArea';
 
 /**
  * Foundation
  */
-export { default as AlertText } from './stories/Foundation/AlertText';
-export { default as Text } from './stories/Foundation/Text';
-export { default as Flex } from './stories/Foundation/Flex';
-export { default as Badge } from './stories/Foundation/Badge';
+export { AlertText } from './stories/Foundation/AlertText';
+export { Text } from './stories/Foundation/Text';
+export { Flex } from './stories/Foundation/Flex';
+export { Badge } from './stories/Foundation/Badge';

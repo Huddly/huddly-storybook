@@ -35,5 +35,3 @@ export const Fieldset = ({ children, className, legend }: FieldsetProps) => {
     </Wrapper>
   );
 };
-
-export default Fieldset;

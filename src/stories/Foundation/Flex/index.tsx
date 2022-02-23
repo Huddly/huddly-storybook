@@ -59,5 +59,3 @@ export const Flex = ({
     </Wrapper>
   );
 };
-
-export default Flex;

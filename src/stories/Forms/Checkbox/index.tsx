@@ -42,10 +42,11 @@ export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
 export const Checkbox = React.forwardRef(
   (props: CheckboxProps, ref: React.RefObject<HTMLInputElement>) => {
     const {
+      ariaDescribedBy,
+      ariaErrorMessage,
       children,
       className,
       hasError,
-      hasHint,
       id,
       isRequired,
       name,
@@ -56,8 +57,8 @@ export const Checkbox = React.forwardRef(
     return (
       <Wrapper className={className} hasError={hasError}>
         <input
-          aria-describedby={hasHint && `${id}-hint`}
-          aria-errormessage={hasError && `${id}-error`}
+          aria-describedby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}
           name={name || id}
@@ -73,5 +74,3 @@ export const Checkbox = React.forwardRef(
     );
   }
 );
-
-export default Checkbox;
