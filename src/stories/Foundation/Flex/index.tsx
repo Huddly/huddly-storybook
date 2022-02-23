@@ -21,7 +21,7 @@ export interface FlexProps {
     | 'space-around';
   rowGap?: Spacing8;
   columnGap?: Spacing8;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const Wrapper = styled.div<FlexProps>`

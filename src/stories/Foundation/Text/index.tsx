@@ -19,7 +19,7 @@ export interface TextProps {
     | 'signalOrange';
   type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   bold?: boolean;
-  children: React.ReactChild;
+  children: React.ReactNode;
 }
 /**
  * Text component

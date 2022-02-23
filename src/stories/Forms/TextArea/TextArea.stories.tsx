@@ -2,6 +2,8 @@ import { TextArea } from '.';
 import { InputWrapper } from '../InputWrapper';
 import { Label } from '../Label';
 
+// Import stories from Input.stories.tsx
+
 export default {
   component: TextArea,
 };

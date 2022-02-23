@@ -20,15 +20,11 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-export interface TextAreaProps extends GlobalInputProps {
-  /** Additional props here */
-}
-
 /**
  * TextArea component
  */
 export const TextArea = React.forwardRef(
-  (props: TextAreaProps, ref: React.RefObject<HTMLTextAreaElement>) => {
+  (props: GlobalInputProps, ref: React.RefObject<HTMLTextAreaElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

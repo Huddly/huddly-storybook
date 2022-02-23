@@ -4,7 +4,7 @@ import { Input } from '../Input';
 
 export default { component: InputWrapper };
 
-const Template = ({ alert, children, hint, id, isRequired }) => {
+export const Template = ({ alert, children, hint, id, isRequired }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       {children}

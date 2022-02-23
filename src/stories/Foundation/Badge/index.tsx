@@ -11,7 +11,7 @@ const Wrapper = styled.span`
 `;
 
 export interface BadgeProps {
-  children: React.ReactChild;
+  children: React.ReactNode;
 }
 
 /**

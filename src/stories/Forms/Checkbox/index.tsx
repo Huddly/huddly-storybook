@@ -60,12 +60,12 @@ export const Checkbox = React.forwardRef(
           aria-describedby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
+          checked={value}
           id={id}
           name={name || id}
           ref={ref}
           required={isRequired}
           type='checkbox'
-          checked={value}
           {...additionalInputProps}
         />
 
