@@ -1,9 +1,8 @@
 import { InputWrapper } from '.';
-import { Label, Input } from '../../../index';
 
 export default { component: InputWrapper };
 
-export const Template = ({ alert, children, hint, id, isRequired }) => {
+const Template = ({ alert, children, hint, id, isRequired }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       {children}
@@ -16,8 +15,11 @@ Primary.args = {
   id: 'example',
   children: (
     <>
-      <Label>Label</Label>
-      <Input />
+      <p>You can have whatever input inside this compontent.</p>
+      <p>
+        The compontent will pass props down to its children as needed to handle
+        helper texts, error states etc...
+      </p>
     </>
   ),
 };

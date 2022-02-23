@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  max-width: 400px;
   column-gap: var(--spacing-16);
 
   label {
