@@ -15,6 +15,6 @@ export interface IconProps {
 /**
  * Icon component
  */
-export const Icon = ({ className, icon, size, color }: IconProps) => {
+export const Icon = ({ className }: IconProps) => {
   return <Wrapper className={className}>Icon</Wrapper>;
 };
