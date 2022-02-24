@@ -9,4 +9,5 @@ export type GlobalInputProps = {
   isRequired?: boolean;
   name?: string;
   value?: string;
+  [x: string]: any;
 };
