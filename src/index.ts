@@ -7,6 +7,7 @@ export { GlobalStyles } from './shared/global';
  * Forms
  */
 export { Button } from './stories/Forms/Button';
+export { Radio } from './stories/Forms/Radio';
 export { Checkbox } from './stories/Forms/Checkbox';
 export { Fieldset } from './stories/Forms/Fieldset';
 export { Input } from './stories/Forms/Input';

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { AlertText, Checkbox } from '../../../index';
+import { AlertText, Checkbox, Radio } from '../../../index';
 
 interface WrapperProps {
   boxyErrorStyle?: boolean;
@@ -111,7 +111,7 @@ export const InputWrapper = ({
    * We apply special error styles for inputs such as checkboxes and radio buttons.
    */
   const hasBoxyErrorStyle = childrenWithGlobalInputProps?.some((child) => {
-    const componentsThatApply = [Checkbox];
+    const componentsThatApply = [Checkbox, Radio];
     return componentsThatApply.includes(child?.type);
   });
 
@@ -132,7 +132,6 @@ export const InputWrapper = ({
             </span>
           )
         }
-
         {alert && (
           <AlertText
             className='hint hint--error'

@@ -12,9 +12,9 @@ export const Primary = {
   },
 };
 
-const Template = ({ id, isRequired, alert }) => {
+const Template = ({ alert, hint, id, isRequired }) => {
   return (
-    <InputWrapper id={id} isRequired={isRequired} alert={alert}>
+    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       <Label>Label</Label>
       <Select>
         <option>Click me</option>

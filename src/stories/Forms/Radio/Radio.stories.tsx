@@ -1,8 +1,8 @@
-import { Checkbox } from '.';
+import { Radio } from '.';
 import { InputWrapper } from '../../../index';
 
 export default {
-  component: Checkbox,
+  component: Radio,
 };
 
 export const Primary = {
@@ -27,7 +27,7 @@ export const Checked = {
 const Template = ({ alert, children, hint, id, isRequired }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
-      <Checkbox>{children}</Checkbox>
+      <Radio>{children}</Radio>
     </InputWrapper>
   );
 };

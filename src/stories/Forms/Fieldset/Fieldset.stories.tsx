@@ -12,11 +12,11 @@ export const Primary = {
       <>
         <Flex columnGap={16}>
           <InputWrapper id='fname' isRequired>
-            <Label>First Name</Label>
+            <Label>First name</Label>
             <Input />
           </InputWrapper>
           <InputWrapper id='lname' isRequired>
-            <Label>Last Name</Label>
+            <Label>Last name</Label>
             <Input />
           </InputWrapper>
         </Flex>
