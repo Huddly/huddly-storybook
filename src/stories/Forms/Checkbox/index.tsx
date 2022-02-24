@@ -19,9 +19,11 @@ const Wrapper = styled.div<WrapperProps>`
       width: var(--spacing-16);
       height: var(--spacing-16);
       margin-right: var(--spacing-8);
-      border: var(--border-primary);
       border-radius: 2px;
       content: '';
+
+      border: ${({ hasError }) =>
+        hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     }
 
     a {
