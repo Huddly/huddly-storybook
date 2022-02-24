@@ -14,7 +14,8 @@ export const GlobalStyles = createGlobalStyle`
     --color-petitePink: #E39994;
     --color-springGreen: #B6B77E;
     /* Alert colors */
-    --color-alertRed: #B1060F;
+    --color-warningRed: #B1060F;
+    --color-successGreen: #34C759;
 
     /* Shades */
     --color-background-card: rgba(245, 245, 245, 1);
@@ -24,7 +25,12 @@ export const GlobalStyles = createGlobalStyle`
     --color-darkBg: rgba(255, 255, 255, 0.12);
     --color-lightGrey: rgba(0, 0, 0, 0.04);
     --color-borderGrey: rgba(0, 0, 0, 0.12);
+<<<<<<< HEAD
     --color-alertRedBg: rgba(177, 6, 15, 0.06);
+=======
+    --color-lavender30: #CECFFF;
+    --color-hawkes: #EAEEFE;
+>>>>>>> origin/main
 
     /* Font sizes */
     --font-size-12: 12px;
