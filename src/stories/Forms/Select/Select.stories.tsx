@@ -1,10 +1,9 @@
-import { TextArea } from '.';
-import { InputWrapper, Label } from '../../../index';
-
-// Import stories from Input.stories.tsx
+import { Select } from '.';
+import { InputWrapper } from '../InputWrapper';
+import { Label } from '../Label';
 
 export default {
-  component: TextArea,
+  component: Select,
 };
 
 export const Primary = {
@@ -17,7 +16,15 @@ const Template = ({ alert, hint, id, isRequired }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       <Label>Label</Label>
-      <TextArea />
+      <Select>
+        <option>Click me</option>
+        <option>Never gonna give you up</option>
+        <option>Never gonna let you down</option>
+        <option>Never gonna run around and desert you</option>
+        <option>Never gonna make you cry</option>
+        <option>Never gonna say goodbye</option>
+        <option>Never gonna tell a lie and hurt you</option>
+      </Select>
     </InputWrapper>
   );
 };

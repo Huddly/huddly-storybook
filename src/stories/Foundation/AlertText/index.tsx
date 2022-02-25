@@ -1,24 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Success, Info, Warning, Failed } from '../../Icons';
-
+import { ErrorSeverity } from '../../../shared/types';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   column-gap: var(--spacing-8);
   font-size: var(--font-size-12);
 
-  svg {
-    width: var(--spacing-16);
-    height: var(--spacing-16);
+  i {
+    display: inline-flex;
+    svg {
+      width: var(--spacing-16);
+      height: var(--spacing-16);
+    }
   }
 `;
 
 export interface AlertTextProps {
-  severity: 'success' | 'info' | 'warning' | 'error';
-  children: React.ReactNode;
-  id?: string;
+  children?: React.ReactNode;
   className?: string;
+  hideIcon?: boolean;
+  id?: string;
+  severity: ErrorSeverity;
 }
 
 /**
@@ -42,17 +47,16 @@ const getIcon = (severity: AlertTextProps['severity']) => {
  * AlertText component
  */
 export const AlertText = ({
-  severity = 'info',
   children,
-  id,
   className,
+  hideIcon,
+  id,
+  severity = 'info',
 }: AlertTextProps) => {
   return (
-    <Wrapper role='alert' id={id} className={className}>
-      {getIcon(severity)}
+    <Wrapper className={className} id={id} role='alert'>
+      {!hideIcon && <i aria-hidden='true'>{getIcon(severity)}</i>}
       <span>{children}</span>
     </Wrapper>
   );
 };
-
-export default AlertText;

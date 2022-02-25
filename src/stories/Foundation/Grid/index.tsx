@@ -29,7 +29,7 @@ const Wrapper = styled.div<GridProps>`
 /**
  * Grid component
  */
-const Grid = ({
+export const Grid = ({
   rows = 'none',
   columns = 'none',
   rowGap = 0,
@@ -51,5 +51,3 @@ const Grid = ({
     </Wrapper>
   );
 };
-
-export default Grid;

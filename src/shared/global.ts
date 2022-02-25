@@ -25,13 +25,16 @@ export const GlobalStyles = createGlobalStyle`
     --color-darkBg: rgba(255, 255, 255, 0.12);
     --color-lightGrey: rgba(0, 0, 0, 0.04);
     --color-borderGrey: rgba(0, 0, 0, 0.12);
+    --color-alertRedBg: rgba(177, 6, 15, 0.06);
     --color-lavender30: #CECFFF;
     --color-hawkes: #EAEEFE;
+    --color-grayText: #747474;
 
     /* Font sizes */
     --font-size-12: 12px;
     --font-size-14: 14px;
     --font-size-18: 18px;
+    --font-size-20: 20px;
     --font-size-22: 22px;
     --font-size-28: 28px;
     --font-size-48: 48px;
@@ -50,7 +53,8 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: 64px;
 
     /* Borders */
-    --border: 1px solid #9E9E9E;
+    --border-primary: 1px solid #9E9E9E;
+    --border-error: 2px solid var(--color-warningRed);
 
     /* Border radius */
     --border-radius: 6px;

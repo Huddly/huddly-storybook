@@ -21,7 +21,7 @@ export interface FlexProps {
     | 'space-around';
   rowGap?: Spacing8;
   columnGap?: Spacing8;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const Wrapper = styled.div<FlexProps>`
@@ -37,7 +37,7 @@ const Wrapper = styled.div<FlexProps>`
 /**
  * Flex component
  */
-const Flex = ({
+export const Flex = ({
   direction = 'row',
   wrap = 'nowrap',
   justify = 'flex-start',
@@ -59,5 +59,3 @@ const Flex = ({
     </Wrapper>
   );
 };
-
-export default Flex;

@@ -58,5 +58,3 @@ export const Button = ({
     </ButtonElement>
   );
 };
-
-export default Button;

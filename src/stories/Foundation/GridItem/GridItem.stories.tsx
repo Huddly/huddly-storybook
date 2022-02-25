@@ -1,5 +1,5 @@
-import GridItem from '.';
 import React from 'react';
+import { GridItem } from '.';
 
 export default { component: GridItem };
 

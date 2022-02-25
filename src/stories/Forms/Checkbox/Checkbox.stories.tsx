@@ -1,23 +1,33 @@
-import { TextArea } from '.';
-import { InputWrapper, Label } from '../../../index';
-
-// Import stories from Input.stories.tsx
+import { Checkbox } from '.';
+import { InputWrapper } from '../../../index';
 
 export default {
-  component: TextArea,
+  component: Checkbox,
 };
 
 export const Primary = {
   args: {
     id: 'example',
+    children: (
+      <>
+        Confirm that you have read and accepted our{' '}
+        <a href='#'>Privacy Policy</a> and <a href='#'>Terms of Service</a>.
+      </>
+    ),
   },
 };
 
-const Template = ({ alert, hint, id, isRequired }) => {
+export const Checked = {
+  args: {
+    ...Primary.args,
+    value: true,
+  },
+};
+
+const Template = ({ alert, children, hint, id, isRequired }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
-      <Label>Label</Label>
-      <TextArea />
+      <Checkbox>{children}</Checkbox>
     </InputWrapper>
   );
 };

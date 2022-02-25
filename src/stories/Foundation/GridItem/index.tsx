@@ -30,7 +30,7 @@ const Wrapper = styled.div<GridItemProps>`
 /**
  * GridItem component
  */
-const GridItem = ({
+export const GridItem = ({
   columnStart = 'auto',
   columnEnd = 'auto',
   rowStart = 'auto',
@@ -52,5 +52,3 @@ const GridItem = ({
     </Wrapper>
   );
 };
-
-export default GridItem;

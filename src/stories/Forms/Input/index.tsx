@@ -1,31 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GlobalInputProps } from '../../../shared/types';
 
-import InputWrapper from '../InputWrapper';
-import Label from '../Label';
 interface WrapperProps {
   hasError?: boolean;
   isHidden?: boolean;
 }
 
-const Wrapper = styled(InputWrapper)<WrapperProps>`
+const Wrapper = styled.div<WrapperProps>`
   display: ${(p) => (p.isHidden ? 'none' : 'block')};
 
   input {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     height: var(--spacing-48);
     padding: var(--spacing-16);
-    border: var(--border);
+    border: ${(p) =>
+      p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     border-radius: var(--border-radius);
-    // If there is an error, apply the error border
-    ${(p) => p.hasError && `border-color: var(--color-alertRed);`}
+    font-size: var(--font-size-16);
   }
 `;
 
-export interface InputProps {
-  id: string;
-  type:
+export interface InputProps extends GlobalInputProps {
+  type?:
     | 'date'
     | 'datetime-local'
     | 'email'
@@ -39,69 +38,46 @@ export interface InputProps {
     | 'time'
     | 'url'
     | 'week';
-  label?: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // eslint-disable-line no-unused-vars
-  isRequired?: boolean;
-  alertLabel?: string;
-  helpLink?: string;
-  helpLabel?: string;
-  className?: string;
 }
 
 /**
  * Input component
  */
 export const Input = React.forwardRef(
-  (
-    {
-      id,
-      type = 'text',
-      label,
-      value,
-      onChange,
-      isRequired,
-      alertLabel,
-      helpLink,
-      helpLabel,
+  (props: InputProps, ref: React.RefObject<HTMLInputElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
       className,
-    }: InputProps,
-    ref: React.RefObject<HTMLInputElement>
-  ) => {
+      hasError,
+      id,
+      isRequired,
+      name,
+      type = 'text',
+      value,
+      ...additionalInputProps
+    } = props;
+
     return (
       <Wrapper
-        id={id}
-        className={className}
-        hasError={!!alertLabel}
-        isHidden={type === 'hidden'}
         aria-hidden={type === 'hidden'}
-        alertLabel={alertLabel}
+        className={className}
+        hasError={hasError}
+        isHidden={type === 'hidden'}
       >
-        {label && (
-          <Label
-            htmlFor={id}
-            isRequired={isRequired}
-            helpLink={helpLink}
-            helpLabel={helpLabel}
-          >
-            {label}
-          </Label>
-        )}
-
         <input
+          aria-describedby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
           id={id}
+          name={name || id}
           ref={ref}
-          name={id}
+          required={isRequired}
           type={type}
           value={value}
-          onChange={onChange}
-          required={isRequired}
-          aria-invalid={!!alertLabel}
-          aria-errormessage={!!alertLabel && `${id}-error`}
+          {...additionalInputProps}
         />
       </Wrapper>
     );
   }
 );
-
-export default Input;

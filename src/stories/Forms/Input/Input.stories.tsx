@@ -1,36 +1,38 @@
 import { Input } from '.';
+import { InputWrapper, Label } from '../../../index';
 
-export default { component: Input };
+export default {
+  component: Input,
+};
 
-export const Text = {
+export const Primary = {
   args: {
-    id: 'name',
-    type: 'text',
-    label: 'Your name',
-    isRequired: true,
+    id: 'example',
   },
 };
 
-export const Password = {
-  args: {
-    id: 'password',
-    type: 'password',
-    label: 'Your password',
-    isRequired: true,
-    helpLabel: 'Forgot your password?',
-    helpLink: '#',
-  },
+const Template = ({ alert, hint, id, isRequired }) => {
+  return (
+    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+      <Label>Label</Label>
+      <Input />
+    </InputWrapper>
+  );
 };
 
-export const FailedInput = {
-  args: {
-    id: 'password',
-    type: 'password',
-    label: 'Your password',
-    value: 'https://youtu.be/dQw4w9WgXcQ',
-    isRequired: true,
-    alertLabel: 'Password doesn’t match your email.',
-    helpLabel: 'Forgot your password?',
-    helpLink: '#',
-  },
+export const InWrapper = Template.bind({});
+InWrapper.args = {
+  ...Primary.args,
+};
+
+export const HasHint = Template.bind({});
+HasHint.args = {
+  ...Primary.args,
+  hint: 'This is a hint.',
+};
+
+export const HasError = Template.bind({});
+HasError.args = {
+  ...Primary.args,
+  alert: 'This is an error message.',
 };

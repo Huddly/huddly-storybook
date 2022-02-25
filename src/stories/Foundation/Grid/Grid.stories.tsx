@@ -1,6 +1,6 @@
-import Grid from '.';
 import React from 'react';
-import GridItem from '../GridItem';
+import { Grid } from '.';
+import { GridItem } from '../GridItem';
 
 export default { component: Grid };
 

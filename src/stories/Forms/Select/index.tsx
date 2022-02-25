@@ -7,28 +7,40 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  textarea {
+  select {
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: 120px;
-    padding: var(--spacing-16);
+    height: var(--spacing-48);
+    padding: 0 var(--spacing-16);
     border: ${(p) =>
       p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
     border-radius: var(--border-radius);
+    font-size: var(--font-size-16);
     font-family: var(--font-family-primary);
-    resize: vertical;
+    cursor: pointer;
+    // This is to get a custom arrow on the select element
+    background: url("data:image/svg+xml,%3Csvg width='13' height='8' viewBox='0 0 13 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6.5 7L12 1' stroke='black'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-16) center;
+    -moz-appearance: none;
+    -webkit-appearance: none;
   }
 `;
 
+export interface SelectProps extends GlobalInputProps {
+  children: React.ReactNode;
+}
+
 /**
- * TextArea component
+ * Select component
  */
-export const TextArea = React.forwardRef(
-  (props: GlobalInputProps, ref: React.RefObject<HTMLTextAreaElement>) => {
+export const Select = React.forwardRef(
+  (props: SelectProps, ref: React.RefObject<HTMLSelectElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
+      children,
       className,
       hasError,
       id,
@@ -40,7 +52,7 @@ export const TextArea = React.forwardRef(
 
     return (
       <Wrapper className={className} hasError={hasError}>
-        <textarea
+        <select
           aria-describedby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
@@ -50,7 +62,9 @@ export const TextArea = React.forwardRef(
           required={isRequired}
           value={value}
           {...additionalInputProps}
-        />
+        >
+          {children}
+        </select>
       </Wrapper>
     );
   }
