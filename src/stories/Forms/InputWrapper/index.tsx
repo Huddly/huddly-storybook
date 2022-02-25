@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { AlertText, Checkbox, Radio } from '../../../index';
 
 interface WrapperProps {
-  boxyErrorStyle?: boolean;
-  hasError?: boolean;
+  boxyErrorStyle: boolean;
+  hasError: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -13,35 +13,6 @@ const Wrapper = styled.div<WrapperProps>`
   width: 100%;
   max-width: 400px;
   margin-bottom: var(--spacing-32);
-
-  .hint-wrapper {
-    position: relative;
-    margin-top: var(--spacing-4);
-    .hint {
-      &--help {
-        color: #747474;
-        font-size: var(--font-size-12);
-      }
-      // This is to make sure the hint/alert text doesn't take up space,
-      // as we don't want inputs moving around.
-      position: absolute;
-    }
-  }
-
-  // Apply special styling when boxyErrorStyle is true.
-  ${({ boxyErrorStyle }) =>
-    boxyErrorStyle &&
-    `.hint-wrapper .hint {
-      margin-left: var(--spacing-24);
-      &--error {
-        color: var(--color-alertRed);
-        position: static; // Make the error text take up space again
-        i {
-          display: none; // Hide icon
-        }
-      }
-    }
-  `}
 
   // Apply special styling when boxyErrorStyle is true and the input has an error.
   ${({ boxyErrorStyle, hasError }) =>
@@ -52,6 +23,26 @@ const Wrapper = styled.div<WrapperProps>`
     padding: var(--spacing-8);
     border-radius: var(--border-radius);
     background-color: var(--color-alertRedBg);`}
+`;
+
+const HintWrapper = styled.div<WrapperProps>`
+  position: relative;
+
+  & > * {
+    position: absolute;
+    margin-top: var(--spacing-4);
+
+    ${({ boxyErrorStyle }) =>
+      boxyErrorStyle &&
+      `position: static; // The hint/error should take up space in the box when boxyErrorStyle is true
+      margin-left: var(--spacing-24); // Align with checkbox/radio label
+    `}
+  }
+`;
+
+const Hint = styled.div`
+  color: #747474;
+  font-size: var(--font-size-12);
 `;
 
 export interface InputWrapperProps {
@@ -123,25 +114,23 @@ export const InputWrapper = ({
     >
       {childrenWithGlobalInputProps}
 
-      <div className='hint-wrapper'>
-        {
-          // Don't show the hint if there's an alert
-          hint && !alert && (
-            <span className='hint hint--help' id={ariaErrorMessageId}>
-              {hint}
-            </span>
-          )
-        }
-        {alert && (
+      {hint && !alert && (
+        <HintWrapper boxyErrorStyle={hasBoxyErrorStyle} hasError={!!alert}>
+          <Hint id={ariaErrorMessageId}>{hint}</Hint>
+        </HintWrapper>
+      )}
+
+      {alert && (
+        <HintWrapper boxyErrorStyle={hasBoxyErrorStyle} hasError={!!alert}>
           <AlertText
-            className='hint hint--error'
             id={ariaErrorMessageId}
             severity='error'
+            hideIcon={hasBoxyErrorStyle}
           >
             {alert}
           </AlertText>
-        )}
-      </div>
+        </HintWrapper>
+      )}
     </Wrapper>
   );
 };

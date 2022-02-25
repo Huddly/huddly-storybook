@@ -10,6 +10,7 @@ export type SecondaryColors =
 export type IndicationColors = 'indicationRed' | 'indicationGreen';
 export type ShadeColors = 'lavender30' | 'hawkes' | 'lightGray';
 export type Colors = StandardColors | SecondaryColors | IndicationColors;
+export type ErrorSeverity = 'success' | 'info' | 'warning' | 'error';
 export type GlobalInputProps = {
   ariaDescribedBy?: string;
   ariaErrorMessage?: string;

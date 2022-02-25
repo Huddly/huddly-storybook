@@ -9,6 +9,7 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   select {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     height: var(--spacing-48);
     padding: 0 var(--spacing-16);

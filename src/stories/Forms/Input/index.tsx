@@ -12,6 +12,7 @@ const Wrapper = styled.div<WrapperProps>`
 
   input {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     height: var(--spacing-48);
     padding: var(--spacing-16);

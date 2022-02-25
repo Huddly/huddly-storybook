@@ -15,6 +15,7 @@ const Wrapper = styled.div<WrapperProps>`
     // Checkbox
     &:before {
       display: block;
+      box-sizing: border-box;
       flex-shrink: 0;
       width: var(--spacing-16);
       height: var(--spacing-16);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Success, Info, Warning, Failed } from '../../Icons';
-
+import { ErrorSeverity } from '../../../shared/types';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -21,8 +21,9 @@ const Wrapper = styled.div`
 export interface AlertTextProps {
   children?: React.ReactNode;
   className?: string;
+  hideIcon?: boolean;
   id?: string;
-  severity: 'success' | 'info' | 'warning' | 'error';
+  severity: ErrorSeverity;
 }
 
 /**
@@ -48,12 +49,13 @@ const getIcon = (severity: AlertTextProps['severity']) => {
 export const AlertText = ({
   children,
   className,
+  hideIcon,
   id,
   severity = 'info',
 }: AlertTextProps) => {
   return (
     <Wrapper className={className} id={id} role='alert'>
-      <i aria-hidden='true'>{getIcon(severity)}</i>
+      {!hideIcon && <i aria-hidden='true'>{getIcon(severity)}</i>}
       <span>{children}</span>
     </Wrapper>
   );

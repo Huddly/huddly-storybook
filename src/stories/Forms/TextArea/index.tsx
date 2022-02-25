@@ -9,6 +9,7 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   textarea {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     height: 120px;
     padding: var(--spacing-16);
