@@ -37,6 +37,9 @@ const HintWrapper = styled.div<WrapperProps>`
       `position: static; // The hint/error should take up space in the box when boxyErrorStyle is true
       margin-left: var(--spacing-24); // Align with checkbox/radio label
     `}
+
+    ${({ boxyErrorStyle, hasError }) =>
+      boxyErrorStyle && hasError && `color: var(--color-warningRed);`}
   }
 `;
 
@@ -106,22 +109,23 @@ export const InputWrapper = ({
     return componentsThatApply.includes(child?.type);
   });
 
+  const HintWrapperProps = {
+    boxyErrorStyle: hasBoxyErrorStyle,
+    hasError: !!alert,
+  };
+
   return (
-    <Wrapper
-      className={className}
-      boxyErrorStyle={hasBoxyErrorStyle}
-      hasError={!!alert}
-    >
+    <Wrapper className={className} {...HintWrapperProps}>
       {childrenWithGlobalInputProps}
 
       {hint && !alert && (
-        <HintWrapper boxyErrorStyle={hasBoxyErrorStyle} hasError={!!alert}>
+        <HintWrapper {...HintWrapperProps}>
           <Hint id={ariaErrorMessageId}>{hint}</Hint>
         </HintWrapper>
       )}
 
       {alert && (
-        <HintWrapper boxyErrorStyle={hasBoxyErrorStyle} hasError={!!alert}>
+        <HintWrapper {...HintWrapperProps}>
           <AlertText
             id={ariaErrorMessageId}
             severity='error'
