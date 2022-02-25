@@ -86,8 +86,8 @@ export const InputWrapper = ({
 
   /**
    * Pass globalInputProps to children.
-   * If the compontent is a fragment, we need to pass props to each child inside the fragment.
-   * However, if the child is not a valid react compontent, don't pass props at all.
+   * If the component is a fragment, we need to pass props to each child inside the fragment.
+   * However, if the child is not a valid react component, don't pass props at all.
    */
   const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
     if (child.type === React.Fragment) {
