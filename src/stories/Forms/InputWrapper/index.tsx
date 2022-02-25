@@ -44,7 +44,7 @@ const HintWrapper = styled.div<WrapperProps>`
 `;
 
 const Hint = styled.div`
-  color: #747474;
+  color: var(--color-grayText);
   font-size: var(--font-size-12);
 `;
 

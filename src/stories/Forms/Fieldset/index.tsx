@@ -14,7 +14,7 @@ const Wrapper = styled.fieldset`
     margin-bottom: var(--spacing-16);
     padding: 0;
     font-weight: bold;
-    font-size: 20px;
+    font-size: var(--font-size-20);
   }
 `;
 
