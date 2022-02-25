@@ -25,5 +25,4 @@ export { Card } from './stories/Foundation/Card';
 export { Flex } from './stories/Foundation/Flex';
 export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
-export { Icon } from './stories/Foundation/Icon';
 export { Text } from './stories/Foundation/Text';
