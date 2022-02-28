@@ -1,13 +1,12 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint',
-  ],
+  plugins: ['@typescript-eslint'],
   extends: [
     'plugin:storybook/recommended',
     'eslint:recommended',
-    'prettier'
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
   ],
   overrides: [
     {
