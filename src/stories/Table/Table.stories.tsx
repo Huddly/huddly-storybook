@@ -1,6 +1,20 @@
+import styled from 'styled-components';
 import { Table } from '.';
-import { Button } from '../Forms/Button';
+import { Input } from '../Forms/Input';
+import { Select } from '../Forms/Select';
 import { Text } from '../Foundation/Text';
+
+const UL = styled.ul`
+  padding: 0;
+  margin: 0;
+`;
+
+const LI = styled.li`
+  list-style-type: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+`;
 
 export default { component: Table };
 
@@ -9,35 +23,43 @@ const columns = [
     columnKey: 'name',
     header: 'Room Name',
     align: 'left',
+    editFormatter: (value: string) => <Input value={value} />,
+    isSortable: true,
   },
   {
     columnKey: 'type',
     header: 'Room type',
     align: 'left',
     valueFormatter: (value: string) => <Text color='lavender'>{value}</Text>,
+    editFormatter: (value: string) => <Input value={value} />,
   },
   {
     columnKey: 'devices',
     header: 'Devices',
     align: 'left',
     valueFormatter: (value: string[]) => (
-      <ul>
-        {value.map((v) => (
-          <li>{v}</li>
+      <UL>
+        {value.map((v, i) => (
+          <LI>
+            {v}
+            {i !== value.length - 1 && ', '}
+          </LI>
         ))}
-      </ul>
+      </UL>
     ),
   },
   {
     columnKey: 'timezone',
     header: 'Timezone',
-    align: 'left',
-  },
-  {
-    columnKey: 'edit',
-    header: 'Edit',
-    align: 'center',
-    valueFormatter: (value: string) => <Button>{value}</Button>,
+    align: 'right',
+    editFormatter: (value: string) => (
+      <Select value={value}>
+        <option>Meeting room</option>
+        <option>Standup room</option>
+        <option>Work room</option>
+      </Select>
+    ),
+    isSortable: true,
   },
 ];
 
@@ -47,21 +69,18 @@ const rows = [
     type: 'Meeting room',
     devices: ['L1', 'IQ', 'Canvas'],
     timezone: 'UTC +1',
-    edit: 'Edit',
   },
   {
     name: 'Neptune',
     type: 'Standup room',
     devices: ['L1', 'Studio kit'],
     timezone: 'UTC +1',
-    edit: 'Edit',
   },
   {
     name: 'Mars',
     type: 'Meeting room',
     devices: ['L1'],
     timezone: 'UTC +1',
-    edit: 'Edit',
   },
 ];
 
