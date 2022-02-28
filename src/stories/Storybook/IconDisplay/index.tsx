@@ -59,6 +59,15 @@ const generateIconJsx = (child: any): string => {
   return `<${displayName} ${propsAttributes.join(' ')} />`;
 };
 
+const copyStringToClipboard = (str: string): void => {
+  const tmp = document.createElement('textarea');
+  tmp.value = str;
+  document.body.appendChild(tmp);
+  tmp.select();
+  document.execCommand('copy');
+  document.body.removeChild(tmp);
+};
+
 const copyIconJsx = (children: React.ReactNode): void => {
   const iconChild = Array.isArray(children)
     ? children.find((child) => child.type === Icon)
@@ -71,15 +80,6 @@ const copyIconJsx = (children: React.ReactNode): void => {
   const jsx = generateIconJsx(iconChild);
   copyStringToClipboard(jsx);
   alert(`Copied to clipboard:\n${jsx}`); // Replace this with a notification component when we have one.
-};
-
-const copyStringToClipboard = (str: string): void => {
-  const tmp = document.createElement('textarea');
-  tmp.value = str;
-  document.body.appendChild(tmp);
-  tmp.select();
-  document.execCommand('copy');
-  document.body.removeChild(tmp);
 };
 
 /**
