@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Carrot } from './Carrot';
+import { RenderTableRow } from './TableRow';
 
 const Wrapper = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
-`;
-
-const TD = styled.td<{ align: 'left' | 'right' | 'center' }>`
-  text-align: ${(p) => p.align};
+  border-spacing: 0;
 `;
 
 const TH = styled.td<{ align: 'left' | 'right' | 'center'; width: string }>`
   text-align: ${(p) => p.align};
   width: 1fr;
 `;
-
-interface Column {
+export interface TableColumn {
   columnKey: string;
   header: string;
   subHeader?: string;
@@ -23,16 +21,20 @@ interface Column {
   valueFormatter?: (
     value: string | number | Array<string | number>
   ) => React.ReactNode;
+  editFormatter?: (
+    value: string | number | Array<string | number>
+  ) => React.ReactNode;
+  isSortable: boolean;
 }
 
-interface Row {
+export interface TableRow {
   [columnKey: string]: string | number | Array<string | number>;
 }
 
 export interface TableProps {
   className?: string;
-  rows: Row[];
-  columns: Column[];
+  rows: TableRow[];
+  columns: TableColumn[];
   fullWidth?: boolean;
 }
 
@@ -40,28 +42,43 @@ export interface TableProps {
  * Table component
  */
 export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
+  const [currentSorting, setCurrentSorting] = useState(columns[0].columnKey);
   return (
     <Wrapper fullWidth={fullWidth} className={className}>
       <thead>
         <tr>
-          {columns.map(({ align = 'left', header, width = 'auto' }) => (
-            <TH align={align} width={width}>
-              {header}
-            </TH>
-          ))}
+          {columns.map(
+            ({
+              align = 'left',
+              header,
+              width = 'auto',
+              isSortable,
+              columnKey,
+            }) => (
+              <>
+                <TH align={align} width={width}>
+                  {header}
+                  {isSortable && align !== 'right' && (
+                    <Carrot
+                      onClick={() => setCurrentSorting(columnKey)}
+                      currentSorting={currentSorting === columnKey}
+                    />
+                  )}
+                </TH>
+                {isSortable && align === 'right' && (
+                  <Carrot
+                    onClick={() => setCurrentSorting(columnKey)}
+                    currentSorting={currentSorting === columnKey}
+                  />
+                )}
+              </>
+            )
+          )}
         </tr>
       </thead>
       <tbody>
         {rows.map((r) => (
-          <tr>
-            {columns.map(({ align = 'left', columnKey, valueFormatter }) => {
-              const value = r[columnKey] ?? '';
-              const columnValue = valueFormatter
-                ? valueFormatter(value)
-                : value;
-              return <TD align={align}>{columnValue}</TD>;
-            })}
-          </tr>
+          <RenderTableRow columns={columns} row={r} />
         ))}
       </tbody>
     </Wrapper>
