@@ -11,16 +11,13 @@ export interface IconProps {
 
 // name should accept the name of IconProps
 const getIcon = (name: IconProps['name'], size: IconProps['size']) => {
-  const formattedName = name.toLowerCase();
-
-  if (!icons[formattedName]) {
-    throw new Error(`Invalid icon: ${formattedName}`);
+  if (!icons[name]) {
+    throw new Error(`Invalid icon: ${name}`);
   }
-  if (!icons[formattedName][size]) {
-    throw new Error(`Invalid icon size: ${formattedName}`);
+  if (!icons[name][size]) {
+    throw new Error(`Invalid icon size: ${name}`);
   }
-
-  return icons[formattedName][size];
+  return icons[name][size];
 };
 
 /**
