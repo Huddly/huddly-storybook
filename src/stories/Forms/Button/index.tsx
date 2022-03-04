@@ -28,6 +28,7 @@ export interface ButtonProps {
   color?: 'black' | 'lavender';
   children?: React.ReactNode;
   href?: string;
+  className?: string;
 }
 
 /**
@@ -35,6 +36,7 @@ export interface ButtonProps {
  */
 export const Button = ({
   children,
+  className,
   disabled,
   label,
   onClick,
@@ -46,6 +48,7 @@ export const Button = ({
   const isSubmit = role === 'submit';
   return (
     <ButtonElement
+      className={className}
       as={roleToHtmlTag[role] as any}
       disabled={disabled}
       onClick={onClick}

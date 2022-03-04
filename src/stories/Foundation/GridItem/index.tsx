@@ -16,6 +16,7 @@ export interface GridItemProps {
   justifySelf?: 'start' | 'end' | 'center' | 'stretch';
   alignSelf?: 'start' | 'end' | 'center' | 'stretch';
   children: JSX.Element | JSX.Element[];
+  className?: string;
 }
 
 const Wrapper = styled.div<GridItemProps>`
@@ -38,6 +39,7 @@ export const GridItem = ({
   justifySelf = 'stretch',
   alignSelf = 'stretch',
   children,
+  className,
 }: GridItemProps) => {
   return (
     <Wrapper
@@ -47,6 +49,7 @@ export const GridItem = ({
       rowEnd={rowEnd}
       justifySelf={justifySelf}
       alignSelf={alignSelf}
+      className={className}
     >
       {children}
     </Wrapper>
