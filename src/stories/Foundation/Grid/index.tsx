@@ -14,6 +14,7 @@ export interface GridProps {
   justifyItems?: 'start' | 'end' | 'center' | 'stretch' | 'normal';
   alignItems?: 'start' | 'end' | 'center' | 'stretch' | 'normal';
   children: JSX.Element | JSX.Element[];
+  className?: string;
 }
 
 const Wrapper = styled.div<GridProps>`
@@ -37,9 +38,11 @@ export const Grid = ({
   justifyItems = 'normal',
   alignItems = 'normal',
   children,
+  className,
 }: GridProps) => {
   return (
     <Wrapper
+      className={className}
       rows={rows}
       columns={columns}
       justifyItems={justifyItems}

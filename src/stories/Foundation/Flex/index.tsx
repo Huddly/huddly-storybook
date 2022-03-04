@@ -22,6 +22,7 @@ export interface FlexProps {
   rowGap?: Spacing8;
   columnGap?: Spacing8;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Wrapper = styled.div<FlexProps>`
@@ -45,6 +46,7 @@ export const Flex = ({
   rowGap,
   columnGap,
   children,
+  className,
 }: FlexProps) => {
   return (
     <Wrapper
@@ -54,6 +56,7 @@ export const Flex = ({
       align={align}
       rowGap={rowGap}
       columnGap={columnGap}
+      className={className}
     >
       {children}
     </Wrapper>

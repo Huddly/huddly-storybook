@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 export interface CardProps {
   background?: Colors;
-  children: JSX.Element | JSX.Element[];
+  className?: string;
+  children: React.ReactNode;
 }
 
 const Wrapper = styled.div<CardProps>`
@@ -16,6 +17,14 @@ const Wrapper = styled.div<CardProps>`
 /**
  * Card component
  */
-export const Card = ({ background = 'white', children }: CardProps) => {
-  return <Wrapper background={background}>{children}</Wrapper>;
+export const Card = ({
+  background = 'white',
+  children,
+  className,
+}: CardProps) => {
+  return (
+    <Wrapper background={background} className={className}>
+      {children}
+    </Wrapper>
+  );
 };
