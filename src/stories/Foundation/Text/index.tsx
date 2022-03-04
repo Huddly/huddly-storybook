@@ -15,6 +15,7 @@ export interface TextProps {
   type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   bold?: boolean;
   children: React.ReactNode;
+  className?: string;
 }
 /**
  * Text component
@@ -25,6 +26,7 @@ export const Text = ({
   type = 'p',
   bold,
   children,
+  className,
 }: TextProps) => {
   return (
     <Wrapper
@@ -32,6 +34,7 @@ export const Text = ({
       bold={bold}
       size={size}
       color={color}
+      className={className}
     >
       {children}
     </Wrapper>
