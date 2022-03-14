@@ -10,7 +10,7 @@ export interface CardProps {
 
 const Wrapper = styled.div<CardProps>`
   border-radius: 8px;
-  background-color: ${(p) => p.background};
+  background-color: ${(p) => `var(--color-${p.background})`};
   padding: var(--spacing-16);
 `;
 
