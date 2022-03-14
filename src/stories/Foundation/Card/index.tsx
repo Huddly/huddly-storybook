@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export interface CardProps {
   background?: Colors;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   className?: string;
 }
 
