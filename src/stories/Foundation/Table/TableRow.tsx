@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Colors } from '../../shared/types';
+import { Colors } from '../../../shared/types';
 import styled from 'styled-components';
-import { TableColumn, TableRow } from '.';
-import { Button } from '../Forms/Button';
+import { TableColumn, TableData } from '.';
+import { Button } from '../../Forms/Button';
 
 const TD = styled.td<{
   align: 'left' | 'right' | 'center';
@@ -21,11 +21,11 @@ const TR = styled.tr`
 
 interface Props {
   columns: TableColumn[];
-  row: TableRow;
+  row: TableData;
   backgroundColor?: Colors;
 }
 
-export const RenderTableRow = ({ columns, row }: Props) => {
+export const TableRow = ({ columns, row }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing(!isEditing);
 
