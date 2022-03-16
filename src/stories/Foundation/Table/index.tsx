@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Carrot } from './Carrot';
-import { RenderTableRow } from './TableRow';
+import { TableRow } from './TableRow';
 
 const Wrapper = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
@@ -27,13 +27,13 @@ export interface TableColumn {
   isSortable: boolean;
 }
 
-export interface TableRow {
+export interface TableData {
   [columnKey: string]: string | number | Array<string | number>;
 }
 
 export interface TableProps {
   className?: string;
-  rows: TableRow[];
+  rows: TableData[];
   columns: TableColumn[];
   fullWidth?: boolean;
 }
@@ -78,7 +78,7 @@ export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
       </thead>
       <tbody>
         {rows.map((r) => (
-          <RenderTableRow columns={columns} row={r} />
+          <TableRow columns={columns} row={r} />
         ))}
       </tbody>
     </Wrapper>
