@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import { normalizeStyles } from './normalizeStyles';
 
 export const GlobalStyles = createGlobalStyle`
+  /* Normalize */
+  ${normalizeStyles}
+
   :root {
     /* Standard colors */
     --color-black: #000000;
