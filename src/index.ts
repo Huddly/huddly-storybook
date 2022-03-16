@@ -2,6 +2,7 @@
  * Global
  */
 export { GlobalStyles } from './shared/global';
+export * from './shared/types';
 
 /**
  * Forms
@@ -26,3 +27,5 @@ export { Flex } from './stories/Foundation/Flex';
 export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
 export { Text } from './stories/Foundation/Text';
+export { Table } from './stories/Foundation/Table';
+export { TableRow } from './stories/Foundation/Table/TableRow';

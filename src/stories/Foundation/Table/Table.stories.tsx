@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Table } from '.';
-import { Input } from '../Forms/Input';
-import { Select } from '../Forms/Select';
-import { Text } from '../Foundation/Text';
+import { Input } from '../../Forms/Input';
+import { Select } from '../../Forms/Select';
+import { Text } from '../Text';
 
 const UL = styled.ul`
   padding: 0;
