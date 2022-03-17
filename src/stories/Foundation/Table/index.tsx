@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { TableData, TableColumn } from '../../../../src/shared/types';
 import styled from 'styled-components';
 import { Carrot } from './Carrot';
-import { TableRow, TableColumn, TableData } from './TableRow';
+import { TableRow } from './TableRow';
 
 const Wrapper = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
@@ -47,10 +48,12 @@ export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
                   )}
                 </TH>
                 {isSortable && align === 'right' && (
-                  <Carrot
-                    onClick={() => setCurrentSorting(columnKey)}
-                    currentSorting={currentSorting === columnKey}
-                  />
+                  <TH align='right' width='30px'>
+                    <Carrot
+                      onClick={() => setCurrentSorting(columnKey)}
+                      currentSorting={currentSorting === columnKey}
+                    />
+                  </TH>
                 )}
               </>
             )

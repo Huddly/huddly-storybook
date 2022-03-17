@@ -26,3 +26,18 @@ export type GlobalInputProps = {
   value?: string;
   [x: string]: any;
 };
+
+export interface TableColumn {
+  columnKey: string;
+  header: string;
+  subHeader?: string;
+  align?: 'left' | 'right' | 'center';
+  width?: string;
+  valueFormatter?: (value?: any) => React.ReactNode;
+  editFormatter?: (value?: any) => React.ReactNode;
+  isSortable: boolean;
+}
+
+export interface TableData {
+  [columnKey: string]: string | number | Array<string | number>;
+}

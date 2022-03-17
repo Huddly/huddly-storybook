@@ -1,29 +1,10 @@
 import React, { useState } from 'react';
-import { Colors } from '../../../shared/types';
+import { Colors, TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
 
 interface TDProps {
   align: 'left' | 'right' | 'center';
-}
-
-export interface TableColumn {
-  columnKey: string;
-  header: string;
-  subHeader?: string;
-  align?: 'left' | 'right' | 'center';
-  width?: string;
-  valueFormatter?: (
-    value: string | number | Array<string | number>
-  ) => React.ReactNode;
-  editFormatter?: (
-    value: string | number | Array<string | number>
-  ) => React.ReactNode;
-  isSortable: boolean;
-}
-
-export interface TableData {
-  [columnKey: string]: string | number | Array<string | number>;
 }
 
 const TD = styled.td<TDProps>`
@@ -74,9 +55,9 @@ export const TableRow = ({ columns, row }: Props) => {
           );
         }
       )}
-      <td>
+      <TD align='center'>
         <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>
-      </td>
+      </TD>
     </TR>
   );
 };
