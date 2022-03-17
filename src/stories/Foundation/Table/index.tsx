@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Carrot } from './Carrot';
-import { TableRow } from './TableRow';
+import { TableRow, TableColumn, TableData } from './TableRow';
 
 const Wrapper = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
@@ -12,25 +12,6 @@ const TH = styled.td<{ align: 'left' | 'right' | 'center'; width: string }>`
   text-align: ${(p) => p.align};
   width: 1fr;
 `;
-export interface TableColumn {
-  columnKey: string;
-  header: string;
-  subHeader?: string;
-  align?: 'left' | 'right' | 'center';
-  width?: string;
-  valueFormatter?: (
-    value: string | number | Array<string | number>
-  ) => React.ReactNode;
-  editFormatter?: (
-    value: string | number | Array<string | number>
-  ) => React.ReactNode;
-  isSortable: boolean;
-}
-
-export interface TableData {
-  [columnKey: string]: string | number | Array<string | number>;
-}
-
 export interface TableProps {
   className?: string;
   rows: TableData[];
