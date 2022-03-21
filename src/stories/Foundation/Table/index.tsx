@@ -61,8 +61,12 @@ export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
         </tr>
       </thead>
       <tbody>
-        {rows.map((r) => (
-          <TableRow columns={columns} row={r} />
+        {rows.map((r, i) => (
+          <TableRow
+            columns={columns}
+            row={r}
+            key={`row_${i}_${Object.keys(r)[0]}`}
+          />
         ))}
       </tbody>
     </Wrapper>

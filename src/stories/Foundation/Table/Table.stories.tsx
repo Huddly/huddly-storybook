@@ -73,7 +73,7 @@ const rows = [
   {
     name: 'Neptune',
     type: 'Standup room',
-    devices: ['L1', 'Studio kit'],
+    devices: ['L1'],
     timezone: 'UTC +1',
   },
   {
