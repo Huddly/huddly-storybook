@@ -33,13 +33,16 @@ export const TableRow = ({ columns, row }: Props) => {
   return (
     <TR>
       {columns.map(
-        ({
-          align = 'left',
-          columnKey,
-          editFormatter,
-          valueFormatter,
-          isSortable,
-        }) => {
+        (
+          {
+            align = 'left',
+            columnKey,
+            editFormatter,
+            valueFormatter,
+            isSortable,
+          },
+          i
+        ) => {
           const value = row[columnKey] ?? '';
 
           let columnValue = valueFormatter ? valueFormatter(value) : value;
@@ -48,10 +51,10 @@ export const TableRow = ({ columns, row }: Props) => {
           }
 
           return (
-            <>
+            <React.Fragment key={`column_${i}_${Math.random()}}`}>
               <TD align={align}>{columnValue}</TD>
               {isSortable && align === 'right' && <TD align='right' />}
-            </>
+            </React.Fragment>
           );
         }
       )}
