@@ -37,7 +37,7 @@ export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
               isSortable,
               columnKey,
             }) => (
-              <>
+              <React.Fragment key={`header_column_${columnKey}`}>
                 <TH align={align} width={width}>
                   {header}
                   {isSortable && align !== 'right' && (
@@ -55,7 +55,7 @@ export const Table = ({ className, columns, rows, fullWidth }: TableProps) => {
                     />
                   </TH>
                 )}
-              </>
+              </React.Fragment>
             )
           )}
         </tr>
