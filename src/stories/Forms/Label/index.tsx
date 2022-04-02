@@ -39,26 +39,28 @@ const Wrapper = styled.div`
 
 export interface LabelProps {
   children: React.ReactNode;
-  id?: string;
-  htmlFor?: string;
-  isRequired?: boolean;
-  helpLink?: string;
+  className?: string;
   helpLabel?: string;
+  helpLink?: string;
+  htmlFor?: string;
+  id?: string;
+  isRequired?: boolean;
 }
 
 /**
  * Label component
  */
 export const Label = ({
-  id,
-  htmlFor,
   children,
-  isRequired,
-  helpLink,
+  className,
   helpLabel,
+  helpLink,
+  htmlFor,
+  id,
+  isRequired,
 }: LabelProps) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <label htmlFor={htmlFor || id}>
         {children}{' '}
         {!isRequired && <span className='required-text'>(optional)</span>}
