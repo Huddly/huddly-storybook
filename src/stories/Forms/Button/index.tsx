@@ -24,7 +24,6 @@ export interface ButtonProps {
   label?: string;
   onClick?: () => void;
   role?: 'button' | 'submit' | 'anchor';
-  type?: 'button' | 'submit' | 'reset';
   secondary?: boolean;
   color?: 'black' | 'lavender';
   children?: React.ReactNode;
@@ -45,14 +44,12 @@ export const Button = ({
   color = 'black',
   secondary,
   href,
-  type,
 }: ButtonProps) => {
   const isSubmit = role === 'submit';
   return (
     <ButtonElement
       className={className}
       as={roleToHtmlTag[role] as any}
-      type={type}
       disabled={disabled}
       onClick={onClick}
       type={isSubmit ? 'submit' : undefined}
