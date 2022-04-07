@@ -1,34 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Spinner } from '../../../';
 
 const ButtonElement = styled.button<ButtonProps>`
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  padding: 0 var(--spacing-24);
   border: solid 2px ${(p) => `var(--color-${p.color})`};
   border-radius: 30px;
-  padding: 0 var(--spacing-24);
-  height: 38px;
-  background: ${(p) =>
-    p.secondary ? 'var(--color-white)' : `var(--color-${p.color})`};
   color: ${(p) =>
     p.secondary ? `var(--color-${p.color})` : 'var(--color-white)'};
   font-weight: bold;
   font-family: var(--font-family);
+  background: ${(p) =>
+    p.secondary ? 'var(--color-white)' : `var(--color-${p.color})`};
+  cursor: pointer;
+
+  ${(p) =>
+    p.disabled &&
+    `opacity: 0.6; 
+    cursor: not-allowed;
+    `}
 `;
 
-const roleToHtmlTag = {
-  button: 'button',
-  submit: 'input',
-  anchor: 'a',
-};
+const ButtonLabel = styled.span<{ hide?: boolean }>`
+  opacity: ${(p) => (p.hide ? '0' : '1')};
+`;
+
+const ButtonSpinner = styled(Spinner)`
+  position: absolute;
+`;
+
 export interface ButtonProps {
-  disabled?: boolean;
-  label?: string;
-  onClick?: () => void;
-  role?: 'button' | 'submit' | 'anchor';
-  secondary?: boolean;
-  color?: 'black' | 'lavender';
-  children?: React.ReactNode;
-  href?: string;
+  children: React.ReactNode;
   className?: string;
+  color?: 'black' | 'lavender';
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: () => void;
+  secondary?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 /**
@@ -37,27 +51,27 @@ export interface ButtonProps {
 export const Button = ({
   children,
   className,
-  disabled,
-  label,
-  onClick,
-  role = 'button',
   color = 'black',
+  disabled,
+  loading,
+  onClick,
   secondary,
-  href,
+  type = 'button',
 }: ButtonProps) => {
-  const isSubmit = role === 'submit';
   return (
     <ButtonElement
+      aria-busy={loading}
       className={className}
-      as={roleToHtmlTag[role] as any}
-      disabled={disabled}
-      onClick={onClick}
-      type={isSubmit ? 'submit' : undefined}
       color={color}
+      disabled={disabled || loading}
+      onClick={onClick}
       secondary={secondary}
-      href={href}
+      type={type}
     >
-      {label && isSubmit ? label : children}
+      <ButtonLabel hide={loading}>{children}</ButtonLabel>
+      {loading && (
+        <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />
+      )}
     </ButtonElement>
   );
 };

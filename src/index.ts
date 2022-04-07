@@ -26,6 +26,7 @@ export { Card } from './stories/Foundation/Card';
 export { Flex } from './stories/Foundation/Flex';
 export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
-export { Text } from './stories/Foundation/Text';
+export { Spinner } from './stories/Foundation/Spinner';
 export { Table } from './stories/Foundation/Table';
 export { TableRow } from './stories/Foundation/Table/TableRow';
+export { Text } from './stories/Foundation/Text';
