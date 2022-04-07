@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner } from '../../../';
+import { Spinner } from '../../Foundation/Spinner';
 
 const ButtonElement = styled.button<ButtonProps>`
   display: inline-flex;
