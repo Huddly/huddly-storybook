@@ -24,11 +24,26 @@ interface Props {
   columns: TableColumn[];
   row: TableData;
   backgroundColor?: Colors;
+  onSave?: (row: TableData) => void;
+  isDefaultEditing?: boolean;
+  rowIndex: number;
 }
 
-export const TableRow = ({ columns, row }: Props) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const toggleEditing = () => setIsEditing(!isEditing);
+export const TableRow = ({
+  columns,
+  row,
+  onSave,
+  isDefaultEditing,
+  rowIndex,
+}: Props) => {
+  const [isEditing, setIsEditing] = useState(isDefaultEditing);
+  const [rowValue, setRowValue] = useState(row);
+  const toggleEditing = () => {
+    if (isEditing) {
+      onSave(rowValue);
+    }
+    setIsEditing(!isEditing);
+  };
 
   return (
     <TR>
@@ -43,16 +58,17 @@ export const TableRow = ({ columns, row }: Props) => {
           },
           i
         ) => {
-          const value = row[columnKey] ?? '';
+          let renderValue = valueFormatter
+            ? valueFormatter(rowValue)
+            : rowValue[columnKey] ?? '';
 
-          let columnValue = valueFormatter ? valueFormatter(value) : value;
           if (isEditing && editFormatter) {
-            columnValue = editFormatter(value);
+            renderValue = editFormatter(rowValue, setRowValue);
           }
 
           return (
-            <React.Fragment key={`column_${i}_${Math.random()}}`}>
-              <TD align={align}>{columnValue}</TD>
+            <React.Fragment key={`column_${i}_row_${rowIndex}}`}>
+              <TD align={align}>{renderValue}</TD>
               {isSortable && align === 'right' && <TD align='right' />}
             </React.Fragment>
           );

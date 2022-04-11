@@ -15,7 +15,7 @@ export type Colors =
   | IndicationColors
   | ShadeColors;
 export type ErrorSeverity = 'success' | 'info' | 'warning' | 'error';
-export type GlobalInputProps = {
+export interface GlobalInputProps {
   ariaDescribedBy?: string;
   ariaErrorMessage?: string;
   className?: string;
@@ -25,7 +25,7 @@ export type GlobalInputProps = {
   name?: string;
   value?: string;
   [x: string]: any;
-};
+}
 
 export interface TableColumn {
   columnKey: string;
@@ -33,8 +33,11 @@ export interface TableColumn {
   subHeader?: string;
   align?: 'left' | 'right' | 'center';
   width?: string;
-  valueFormatter?: (value?: any) => React.ReactNode;
-  editFormatter?: (value?: any) => React.ReactNode;
+  valueFormatter?: (row: TableData) => React.ReactNode;
+  editFormatter?: (
+    row: TableData,
+    setRowData: (row: TableData) => void
+  ) => React.ReactNode;
   isSortable: boolean;
 }
 

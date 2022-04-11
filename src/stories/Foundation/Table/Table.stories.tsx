@@ -1,8 +1,11 @@
+import { TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Table } from '.';
 import { Input } from '../../Forms/Input';
 import { Select } from '../../Forms/Select';
 import { Text } from '../Text';
+import { useState } from 'react';
+import { Checkbox } from '../../Forms/Checkbox';
 
 const UL = styled.ul`
   padding: 0;
@@ -23,42 +26,75 @@ const columns = [
     columnKey: 'name',
     header: 'Name',
     align: 'left',
-    editFormatter: (value: string) => <Input value={value} />,
+    valueFormatter: (row: TableData) => (
+      <Checkbox id={`name_${row.name}`}>{row.name ?? ''}</Checkbox>
+    ),
+    editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
+      <Input
+        id='name'
+        onChange={(e) => onChange({ ...row, name: e.target.value })}
+        value={row.name ?? ''}
+      />
+    ),
     isSortable: true,
   },
   {
     columnKey: 'office',
     header: 'Current office',
     align: 'left',
-    valueFormatter: (value: string) => <Text color='lavender'>{value}</Text>,
-    editFormatter: (value: string) => <Input value={value} />,
+    valueFormatter: (row: TableData) => (
+      <Text color='lavender'>{row['office'] ?? ''}</Text>
+    ),
+    editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
+      <Input
+        id='office'
+        value={row.office ?? ''}
+        onChange={(e) => onChange({ ...row, office: e.target.value })}
+      />
+    ),
   },
   {
     columnKey: 'fruits',
     header: 'Fruits',
     align: 'left',
-    valueFormatter: (value: string[]) => (
-      <UL>
-        {value.map((v, i) => (
-          <LI key={v}>
-            {v}
-            {i !== value.length - 1 && ', '}
-          </LI>
-        ))}
-      </UL>
-    ),
+    valueFormatter: (row: TableData) => {
+      const value = row.fruits;
+      if (!value || !Array.isArray(value)) {
+        return <div />;
+      }
+
+      return (
+        <UL>
+          {value.map((v, i) => (
+            <LI key={v}>
+              {v}
+              {i !== value.length - 1 && ', '}
+            </LI>
+          ))}
+        </UL>
+      );
+    },
   },
   {
-    columnKey: 'timezone',
-    header: 'Timezone',
+    columnKey: 'timeZone',
+    header: 'Time Zone',
     align: 'right',
-    editFormatter: (value: string) => (
-      <Select value={value}>
-        <option>UTC +1</option>
-        <option>UTC +2</option>
-        <option>UTC +3</option>
-      </Select>
-    ),
+    editFormatter: (row: TableData, onChange: (row: TableData) => void) => {
+      if (!row.timeZone) {
+        return <div />;
+      }
+      return (
+        <Select
+          id='timeZone'
+          value={row.timeZone}
+          onChange={(e) => onChange({ ...row, timeZone: e.target.value })}
+        >
+          <option>UTC +1</option>
+          <option>UTC +2</option>
+          <option>UTC +3</option>
+        </Select>
+      );
+    },
     isSortable: true,
   },
 ];
@@ -68,26 +104,39 @@ const rows = [
     name: 'Bob',
     office: 'Vacation',
     fruits: ['Apple', 'Orange', 'Banana'],
-    timezone: 'UTC +1',
+    timeZone: 'UTC +1',
   },
   {
     name: 'Karen',
     office: 'In office',
     fruits: ['Banana'],
-    timezone: 'UTC +1',
+    timeZone: 'UTC +1',
   },
   {
     name: 'Lars',
     office: 'At home',
     fruits: ['Orange'],
-    timezone: 'UTC +1',
+    timeZone: 'UTC +1',
   },
 ];
 
-export const Primary = {
-  args: {
-    columns,
-    rows,
-    fullWidth: true,
-  },
+const Template = (props) => {
+  const [ordering, setOrdering] = useState({ field: 'name', direction: 'ASC' });
+  return (
+    <Table
+      {...props}
+      setOrdering={setOrdering}
+      ordering={ordering}
+      columns={columns}
+    />
+  );
+};
+
+export const StandardTable = Template.bind({});
+StandardTable.args = {
+  rows,
+  fullWidth: true,
+  onSave: (row: TableData) => console.log(row),
+  onSaveNewRow: (row: TableData) => console.log(row),
+  showNewRow: true,
 };
