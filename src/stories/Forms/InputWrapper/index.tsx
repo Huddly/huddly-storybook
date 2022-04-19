@@ -115,7 +115,7 @@ export const InputWrapper = React.forwardRef(
     return (
       <Wrapper className={className} {...HintWrapperProps}>
         <div className='testing-ref' ref={ref}>
-          ✨
+          Testing Ref Element
         </div>
         {childrenWithGlobalInputProps}
 
