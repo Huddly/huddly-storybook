@@ -42,5 +42,5 @@ export interface TableColumn {
 }
 
 export interface TableData {
-  [columnKey: string]: string | number | Array<string | number>;
+  [columnKey: string]: any;
 }
