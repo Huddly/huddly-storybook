@@ -34,7 +34,7 @@ export interface TableProps {
   setOrdering?: (ordering: Ordering) => void;
   onSaveRow?: (row: TableData) => void;
   onSaveNewRow?: (row: TableData) => void;
-  showNewRow?: boolean;
+  removeRow?: (rowId: string) => void;
 }
 
 /**
@@ -49,7 +49,7 @@ export const Table = ({
   setOrdering,
   onSaveNewRow,
   onSaveRow,
-  showNewRow,
+  removeRow,
 }: TableProps) => (
   <StyledTable fullWidth={fullWidth} className={className}>
     <thead>
@@ -62,15 +62,16 @@ export const Table = ({
             isSortable,
             columnKey,
           }) => {
-            const isCurrentlySelected = ordering.field === columnKey;
-            const directionIfClicked = isCurrentlySelected
-              ? invertedDirection[ordering.direction]
-              : 'ASC';
-            const onClick = () =>
+            const onClick = () => {
+              const isCurrentlySelected = ordering.field === columnKey;
+              const direction = isCurrentlySelected
+                ? invertedDirection[ordering.direction]
+                : 'ASC';
               setOrdering({
                 field: columnKey,
-                direction: directionIfClicked,
+                direction: direction,
               });
+            };
             return (
               <React.Fragment key={`header_column_${columnKey}`}>
                 <TH align={align} width={width}>
@@ -101,22 +102,13 @@ export const Table = ({
       </tr>
     </thead>
     <tbody>
-      {showNewRow && (
-        <TableRow
-          isDefaultEditing={true}
-          columns={columns}
-          row={{}}
-          onSave={onSaveNewRow}
-          rowIndex={-1}
-        />
-      )}
-      {rows.map((r, i) => (
+      {rows.map((r) => (
         <TableRow
           columns={columns}
           row={r}
-          key={`row_${i}`}
-          onSave={onSaveRow}
-          rowIndex={i}
+          key={`row_${r.id}`}
+          onSave={r.isNewRow ? onSaveNewRow : onSaveRow}
+          removeRow={removeRow}
         />
       ))}
     </tbody>

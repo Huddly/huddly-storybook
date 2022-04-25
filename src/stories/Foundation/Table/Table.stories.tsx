@@ -99,42 +99,62 @@ const columns = [
   },
 ];
 
-const rows = [
+const ROWS = [
   {
+    id: 'A123',
+    name: '',
+    office: '',
+    fruits: [],
+    timeZone: 'UTC +1',
+    isNewRow: true,
+    isEditable: true,
+  },
+  {
+    id: 'B123',
     name: 'Bob',
     office: 'Vacation',
     fruits: ['Apple', 'Orange', 'Banana'],
     timeZone: 'UTC +1',
+    isEditable: true,
   },
   {
+    id: 'C123',
     name: 'Karen',
     office: 'In office',
     fruits: ['Banana'],
     timeZone: 'UTC +1',
+    isEditable: true,
   },
   {
+    id: 'D123',
     name: 'Lars',
     office: 'At home',
     fruits: ['Orange'],
     timeZone: 'UTC +1',
+    isEditable: true,
   },
 ];
 
 const Template = (props) => {
   const [ordering, setOrdering] = useState({ field: 'name', direction: 'ASC' });
+  const [rows, setRows] = useState(ROWS);
+  const removeRow = (rowId: string) => {
+    setRows(rows.filter((r) => r.id !== rowId));
+  };
   return (
     <Table
       {...props}
+      rows={rows}
       setOrdering={setOrdering}
       ordering={ordering}
       columns={columns}
+      removeRow={removeRow}
     />
   );
 };
 
 export const StandardTable = Template.bind({});
 StandardTable.args = {
-  rows,
   fullWidth: true,
   onSave: (row: TableData) => console.log(row),
   onSaveNewRow: (row: TableData) => console.log(row),
