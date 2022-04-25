@@ -43,4 +43,9 @@ export interface TableColumn {
 
 export interface TableData {
   [columnKey: string]: any;
+  // it is important that this ID is unique for each row
+  // this is to ensure that rows are deleted correctly and react renders correctly when rerendered
+  id: string;
+  isNewRow?: boolean;
+  isEditable?: boolean;
 }

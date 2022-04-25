@@ -25,24 +25,28 @@ interface Props {
   row: TableData;
   backgroundColor?: Colors;
   onSave?: (row: TableData) => void;
-  isDefaultEditing?: boolean;
-  rowIndex: number;
+  removeRow: (rowId: string) => void;
 }
 
-export const TableRow = ({
-  columns,
-  row,
-  onSave,
-  isDefaultEditing,
-  rowIndex,
-}: Props) => {
-  const [isEditing, setIsEditing] = useState(isDefaultEditing);
+export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
+  const [isEditing, setIsEditing] = useState(row.isNewRow);
   const [rowValue, setRowValue] = useState(row);
   const toggleEditing = () => {
     if (isEditing) {
       onSave(rowValue);
     }
     setIsEditing(!isEditing);
+  };
+
+  const onCancel = () => {
+    // if this is a new row the row should be removed from the table when cancel
+    if (row.isNewRow) {
+      removeRow(row.id);
+    }
+
+    // set the row value back to the initial value to cancel editing
+    setRowValue(row);
+    setIsEditing(false);
   };
 
   return (
@@ -67,7 +71,7 @@ export const TableRow = ({
           }
 
           return (
-            <React.Fragment key={`column_${i}_row_${rowIndex}}`}>
+            <React.Fragment key={`column_${i}_row_${row.id}}`}>
               <TD align={align}>{renderValue}</TD>
               {isSortable && align === 'right' && <TD align='right' />}
             </React.Fragment>
@@ -75,7 +79,14 @@ export const TableRow = ({
         }
       )}
       <TD align='center'>
-        <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>
+        {isEditing && (
+          <Button onClick={onCancel} secondary>
+            Cancel
+          </Button>
+        )}
+        {row.isEditable && (
+          <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>
+        )}
       </TD>
     </TR>
   );
