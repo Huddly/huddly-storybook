@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Colors, TableColumn, TableData } from '../../../shared/types';
+import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
 

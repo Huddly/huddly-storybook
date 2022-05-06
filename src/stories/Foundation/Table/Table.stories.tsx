@@ -24,7 +24,12 @@ export default { component: Table };
 const columns = [
   {
     columnKey: 'name',
-    header: 'Name',
+    header: (
+      <>
+        <Checkbox id='name' />
+        Name
+      </>
+    ),
     align: 'left',
     valueFormatter: (row: TableData) => (
       <Checkbox id={`name_${row.name}`}>{row.name ?? ''}</Checkbox>

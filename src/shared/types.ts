@@ -15,7 +15,7 @@ export interface GlobalInputProps {
 
 export interface TableColumn {
   columnKey: string;
-  header: string;
+  header: React.ReactNode;
   subHeader?: string;
   align?: 'left' | 'right' | 'center';
   width?: string;
@@ -24,7 +24,7 @@ export interface TableColumn {
     row: TableData,
     setRowData: (row: TableData) => void
   ) => React.ReactNode;
-  isSortable: boolean;
+  isSortable?: boolean;
 }
 
 export interface TableData {
