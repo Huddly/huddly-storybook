@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
-
 interface TDProps {
   align: 'left' | 'right' | 'center';
 }
@@ -15,7 +14,7 @@ const TR = styled.tr`
   background-color: white;
   height: var(--spacing-48);
   &:hover {
-    background-color: var(--color-lavender30);
+    background-color: var(--color-grey96);
   }
 `;
 
