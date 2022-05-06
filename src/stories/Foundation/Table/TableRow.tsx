@@ -9,12 +9,11 @@ interface TDProps {
 
 const TD = styled.td<TDProps>`
   text-align: ${(p) => p.align};
-  border-bottom: 1px solid black;
 `;
 
 const TR = styled.tr`
   background-color: white;
-  height: var(--spacing-56);
+  height: var(--spacing-48);
   &:hover {
     background-color: var(--color-lavender30);
   }
@@ -23,7 +22,6 @@ const TR = styled.tr`
 interface Props {
   columns: TableColumn[];
   row: TableData;
-  backgroundColor?: Colors;
   onSave?: (row: TableData) => void;
   removeRow: (rowId: string) => void;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import * as icons from './icons';
-import { StandardColors } from '../../../shared/types';
-
+import { StandardColors } from '../../../shared/colors';
 export interface IconProps {
   className?: string;
   color?: StandardColors;

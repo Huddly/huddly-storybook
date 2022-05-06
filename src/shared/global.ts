@@ -1,4 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
+import {
+  YellowTonesHtml,
+  BlueTonesHtml,
+  PinkTonesHtml,
+  BrightGrayTonesHtml,
+  BrownTonesHtml,
+  GreenTonesHtml,
+  TaupeTonesHtml,
+  OrangeTonesHtml,
+  SignalScaleTonesHtml,
+  DarkGrayTonesHtml,
+} from './colors';
 import { normalizeStyles } from './normalizeStyles';
 
 export const GlobalStyles = createGlobalStyle`
@@ -6,17 +18,8 @@ export const GlobalStyles = createGlobalStyle`
   ${normalizeStyles}
 
   :root {
-    /* Standard colors */
-    --color-black: #000000;
     --color-white: #ffffff;
-    --color-lavender: #5B5FFF;
-    /* Secondary colors */
-    --color-sunYellow: #E6C669;
-    --color-caramelBrown: #D3924E;
-    --color-signalOrange: #EB6E3D;
-    --color-eveningTaupe: #BA7F6B;
-    --color-petitePink: #E39994;
-    --color-springGreen: #B6B77E;
+
     /* Alert colors */
     --color-warningRed: #B1060F;
     --color-successGreen: #34C759;
@@ -33,6 +36,17 @@ export const GlobalStyles = createGlobalStyle`
     --color-lavender30: #CECFFF;
     --color-hawkes: #EAEEFE;
     --color-grayText: #747474;
+
+    ${BlueTonesHtml}
+    ${YellowTonesHtml}
+    ${BrownTonesHtml}
+    ${TaupeTonesHtml}
+    ${PinkTonesHtml}
+    ${OrangeTonesHtml}
+    ${GreenTonesHtml}
+    ${DarkGrayTonesHtml}
+    ${BrightGrayTonesHtml}
+    ${SignalScaleTonesHtml}
 
     /* Font sizes */
     --font-size-12: 12px;
