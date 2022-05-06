@@ -10,7 +10,7 @@ export const Wrapper = styled.p<TextProps>`
   font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
 `;
 export interface TextProps {
-  size?: '14' | '18' | '22' | '28' | '48' | '68' | '98';
+  size?: '14' | '16' | '18' | '22' | '28' | '48' | '68' | '98';
   color?: Colors;
   type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   bold?: boolean;
