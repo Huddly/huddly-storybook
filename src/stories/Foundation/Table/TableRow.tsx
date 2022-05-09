@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
+import { IconButton } from '../IconButton';
 interface TDProps {
   align: 'left' | 'right' | 'center';
 }
@@ -75,14 +76,27 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
           );
         }
       )}
-      <TD align='center'>
+      <TD align='right'>
         {isEditing && (
           <Button onClick={onCancel} secondary>
             Cancel
           </Button>
         )}
         {row.isEditable && (
-          <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>
+          <>
+            {isEditing && (
+              <Button onClick={toggleEditing}>
+                {isEditing ? 'Save' : 'Edit'}
+              </Button>
+            )}
+            {!isEditing && (
+              <IconButton
+                onClick={toggleEditing}
+                icon='Edit'
+                tooltipText='Edit'
+              />
+            )}
+          </>
         )}
       </TD>
     </TR>

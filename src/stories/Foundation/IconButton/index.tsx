@@ -88,10 +88,12 @@ export const IconButton = ({
       {!loading && (
         <>
           <Icon name={icon} />
-          <ToolTip direction='column'>
-            <ToolTipText color='white'>{tooltipText}</ToolTipText>
-            <Triangle />
-          </ToolTip>
+          {tooltipText && (
+            <ToolTip direction='column'>
+              <ToolTipText color='white'>{tooltipText}</ToolTipText>
+              <Triangle />
+            </ToolTip>
+          )}
         </>
       )}
     </ButtonElement>

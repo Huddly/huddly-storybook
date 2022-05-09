@@ -4,9 +4,12 @@ import { Flex } from '../Flex';
 import { Direction, Ordering } from '.';
 import { Carrot } from './Carrot';
 
-const TH = styled.td<{ align: 'left' | 'right' | 'center'; width: string }>`
+const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`
   text-align: ${(p) => p.align};
-  width: 1fr;
+  font-size: var(--font-size-14);
+  font-weight: normal;
+  color: var(--color-grey35);
+  width: ${(p) => p.width ?? 'auto'};
 `;
 
 interface Props {

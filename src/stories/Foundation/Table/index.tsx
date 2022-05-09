@@ -8,6 +8,13 @@ import { Spinner } from '../Spinner';
 const StyledTable = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
   border-spacing: 0;
+  font-size: var(--font-size-16);
+`;
+
+const HeaderRow = styled.thead`
+  th {
+    border-bottom: 1px solid var(--color-grey91);
+  }
 `;
 
 export type Direction = 'ASC' | 'DESC';
@@ -45,7 +52,7 @@ export const Table = ({
   loading,
 }: TableProps) => (
   <StyledTable fullWidth={fullWidth} className={className}>
-    <thead>
+    <HeaderRow>
       <tr>
         {columns.map((c) => (
           <TableHeaderItem
@@ -55,8 +62,10 @@ export const Table = ({
             setOrdering={setOrdering}
           />
         ))}
+        {/*Empty table header for edit column*/}
+        <th />
       </tr>
-    </thead>
+    </HeaderRow>
     <tbody>
       {loading && <Spinner />}
       {!loading &&
