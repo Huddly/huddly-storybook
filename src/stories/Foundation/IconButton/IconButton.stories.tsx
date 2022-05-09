@@ -33,6 +33,6 @@ export const Overview = OverviewTemplate.bind({});
 Overview.args = {
   type: 'iconButton',
   children: 'Click me',
-  icon: 'placeholder',
+  icon: 'Edit',
   tooltipText: 'Edit',
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from '.';
-import * as icons from './icons';
+import * as icons from './components';
 import { IconDisplay } from '../../Storybook/IconDisplay';
 import { Flex, InputWrapper, Label, Input } from '../../../index';
 
@@ -15,7 +15,7 @@ export default {
   },
 };
 
-const OverviewTemplate = ({ size, color }) => {
+const OverviewTemplate = ({ color }) => {
   const initialIcons: Array<keyof typeof icons> = Object.keys(
     icons
   ).sort() as Array<keyof typeof icons>;
@@ -36,10 +36,10 @@ const OverviewTemplate = ({ size, color }) => {
         <Input placeholder='Search ...' onChange={filter} />
       </InputWrapper>
 
-      <Flex columnGap={24} rowGap={16}>
+      <Flex columnGap={24} rowGap={16} wrap='wrap'>
         {iconResults.map((name) => (
           <IconDisplay key={name} label={name} darkBg={color === 'white'}>
-            <Icon name={name} size={size} color={color} />
+            <Icon name={name} color={color} />
           </IconDisplay>
         ))}
       </Flex>
@@ -49,6 +49,5 @@ const OverviewTemplate = ({ size, color }) => {
 
 export const Overview = OverviewTemplate.bind({});
 Overview.args = {
-  size: '24',
   color: 'black',
 };
