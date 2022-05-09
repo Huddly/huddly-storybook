@@ -1,11 +1,13 @@
 import React from 'react';
 import * as icons from './icons';
 import { StandardColors } from '../../../shared/colors';
+
+export type Icons = keyof typeof icons;
 export interface IconProps {
   className?: string;
   color?: StandardColors;
   size?: 24 | 48;
-  name: keyof typeof icons;
+  name: Icons;
 }
 
 // name should accept the name of IconProps
