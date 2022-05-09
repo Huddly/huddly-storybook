@@ -1,46 +1,26 @@
 import React from 'react';
-import * as icons from './icons';
-import { StandardColors } from '../../../shared/types';
+import * as icons from './components';
+import { getHexColor, Colors } from '../../../shared/colors';
 
+export type Icons = keyof typeof icons;
 export interface IconProps {
+  name: Icons;
   className?: string;
-  color?: StandardColors;
-  size?: 24 | 48;
-  name: keyof typeof icons;
+  color?: Colors;
 }
 
 // name should accept the name of IconProps
-const getIcon = (name: IconProps['name'], size: IconProps['size']) => {
+const getIcon = (name: Icons) => {
   if (!icons[name]) {
     throw new Error(`Invalid icon: ${name}`);
   }
-  if (!icons[name][size]) {
-    throw new Error(`Invalid icon size: ${name}`);
-  }
-  return icons[name][size];
+  return icons[name];
 };
 
 /**
  * Icon component
  */
-export const Icon = ({
-  className,
-  name,
-  color = 'black',
-  size = 24,
-}: IconProps) => {
-  const fill = `var(--color-${color})`;
-  const icon = getIcon(name, size);
-
-  return (
-    <svg
-      className={className}
-      width={size}
-      height={size}
-      viewBox='0 0 1024 1024'
-    >
-      <title>{name}</title>
-      <path fill={fill} d={icon}></path>
-    </svg>
-  );
+export const Icon = ({ className, name, color = 'black' }: IconProps) => {
+  const Icon = getIcon(name);
+  return <Icon className={className} color={getHexColor(color)} />;
 };

@@ -3,7 +3,7 @@
  */
 export { GlobalStyles } from './shared/global';
 export * from './shared/types';
-
+export * from './shared/colors';
 /**
  * Forms
  */

@@ -15,7 +15,7 @@ export interface GridItemProps {
   rowEnd?: number | string;
   justifySelf?: 'start' | 'end' | 'center' | 'stretch';
   alignSelf?: 'start' | 'end' | 'center' | 'stretch';
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
   className?: string;
 }
 

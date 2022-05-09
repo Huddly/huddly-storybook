@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import { Colors, TableColumn, TableData } from '../../../shared/types';
+import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
-
+import { IconButton } from '../IconButton';
 interface TDProps {
   align: 'left' | 'right' | 'center';
 }
 
 const TD = styled.td<TDProps>`
   text-align: ${(p) => p.align};
-  border-bottom: 1px solid black;
 `;
 
 const TR = styled.tr`
   background-color: white;
-  height: var(--spacing-56);
+  height: var(--spacing-48);
   &:hover {
-    background-color: var(--color-lavender30);
+    background-color: var(--color-grey96);
   }
 `;
 
 interface Props {
   columns: TableColumn[];
   row: TableData;
-  backgroundColor?: Colors;
   onSave?: (row: TableData) => void;
   removeRow: (rowId: string) => void;
 }
@@ -78,14 +76,27 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
           );
         }
       )}
-      <TD align='center'>
+      <TD align='right'>
         {isEditing && (
           <Button onClick={onCancel} secondary>
             Cancel
           </Button>
         )}
         {row.isEditable && (
-          <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>
+          <>
+            {isEditing && (
+              <Button onClick={toggleEditing}>
+                {isEditing ? 'Save' : 'Edit'}
+              </Button>
+            )}
+            {!isEditing && (
+              <IconButton
+                onClick={toggleEditing}
+                icon='Edit'
+                tooltipText='Edit'
+              />
+            )}
+          </>
         )}
       </TD>
     </TR>

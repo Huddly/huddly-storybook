@@ -1,4 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
+import {
+  YellowTonesHtml,
+  BlueTonesHtml,
+  PinkTonesHtml,
+  BrightGrayTonesHtml,
+  BrownTonesHtml,
+  GreenTonesHtml,
+  TaupeTonesHtml,
+  OrangeTonesHtml,
+  SignalScaleTonesHtml,
+  DarkGrayTonesHtml,
+  WhiteHtml,
+} from './colors';
 import { normalizeStyles } from './normalizeStyles';
 
 export const GlobalStyles = createGlobalStyle`
@@ -6,37 +19,26 @@ export const GlobalStyles = createGlobalStyle`
   ${normalizeStyles}
 
   :root {
-    /* Standard colors */
-    --color-black: #000000;
-    --color-white: #ffffff;
-    --color-lavender: #5B5FFF;
-    /* Secondary colors */
-    --color-sunYellow: #E6C669;
-    --color-caramelBrown: #D3924E;
-    --color-signalOrange: #EB6E3D;
-    --color-eveningTaupe: #BA7F6B;
-    --color-petitePink: #E39994;
-    --color-springGreen: #B6B77E;
     /* Alert colors */
     --color-warningRed: #B1060F;
     --color-successGreen: #34C759;
 
-    /* Shades */
-    --color-background-card: rgba(245, 245, 245, 1);
-    --color-hairlines: rgba(0, 0, 0, 0.2);
-    --color-mutedText: rgba(0, 0, 0, 0.6);
-    --color-mutedTextLight: rgba(255, 255, 255, 0.6);
-    --color-darkBg: rgba(255, 255, 255, 0.12);
-    --color-lightGrey: rgba(0, 0, 0, 0.04);
-    --color-borderGrey: rgba(0, 0, 0, 0.12);
-    --color-alertRedBg: rgba(177, 6, 15, 0.06);
-    --color-lavender30: #CECFFF;
-    --color-hawkes: #EAEEFE;
-    --color-grayText: #747474;
+    ${BlueTonesHtml}
+    ${YellowTonesHtml}
+    ${BrownTonesHtml}
+    ${TaupeTonesHtml}
+    ${PinkTonesHtml}
+    ${OrangeTonesHtml}
+    ${GreenTonesHtml}
+    ${DarkGrayTonesHtml}
+    ${BrightGrayTonesHtml}
+    ${SignalScaleTonesHtml}
+    ${WhiteHtml}
 
     /* Font sizes */
     --font-size-12: 12px;
     --font-size-14: 14px;
+    --font-size-16: 16px;
     --font-size-18: 18px;
     --font-size-20: 20px;
     --font-size-22: 22px;
@@ -57,8 +59,8 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: 64px;
 
     /* Borders */
-    --border-primary: 1px solid #9E9E9E;
-    --border-error: 2px solid var(--color-warningRed);
+    --border-primary: 1px solid var(--color-grey62);
+    --border-error: 2px solid var(--color-hotOrange);
 
     /* Border radius */
     --border-radius: 6px;

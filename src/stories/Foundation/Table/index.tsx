@@ -1,30 +1,28 @@
 import React from 'react';
 import { TableData, TableColumn } from '../../../../src/shared/types';
 import styled from 'styled-components';
-import { Carrot } from './Carrot';
 import { TableRow } from './TableRow';
-import { Flex } from '../Flex';
+import TableHeaderItem from './TableHeaderItem';
+import { Spinner } from '../Spinner';
 
 const StyledTable = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
   border-spacing: 0;
+  font-size: var(--font-size-16);
 `;
 
-const TH = styled.td<{ align: 'left' | 'right' | 'center'; width: string }>`
-  text-align: ${(p) => p.align};
-  width: 1fr;
+const HeaderRow = styled.thead`
+  th {
+    border-bottom: 1px solid var(--color-grey91);
+  }
 `;
 
 export type Direction = 'ASC' | 'DESC';
-interface Ordering {
+export interface Ordering {
   field: string;
   direction: Direction;
 }
 
-const invertedDirection: { [key: string]: Direction } = {
-  ASC: 'DESC',
-  DESC: 'ASC',
-};
 export interface TableProps {
   className?: string;
   rows: TableData[];
@@ -35,6 +33,7 @@ export interface TableProps {
   onSaveRow?: (row: TableData) => void;
   onSaveNewRow?: (row: TableData) => void;
   removeRow?: (rowId: string) => void;
+  loading?: boolean;
 }
 
 /**
@@ -50,67 +49,35 @@ export const Table = ({
   onSaveNewRow,
   onSaveRow,
   removeRow,
+  loading,
 }: TableProps) => (
   <StyledTable fullWidth={fullWidth} className={className}>
-    <thead>
+    <HeaderRow>
       <tr>
-        {columns.map(
-          ({
-            align = 'left',
-            header,
-            width = 'auto',
-            isSortable,
-            columnKey,
-          }) => {
-            const onClick = () => {
-              const isCurrentlySelected = ordering.field === columnKey;
-              const direction = isCurrentlySelected
-                ? invertedDirection[ordering.direction]
-                : 'ASC';
-              setOrdering({
-                field: columnKey,
-                direction: direction,
-              });
-            };
-            return (
-              <React.Fragment key={`header_column_${columnKey}`}>
-                <TH align={align} width={width}>
-                  <Flex>
-                    {header}
-                    {isSortable && align !== 'right' && (
-                      <Carrot
-                        onClick={onClick}
-                        currentSorting={ordering.field === columnKey}
-                        direction={ordering.direction}
-                      />
-                    )}
-                  </Flex>
-                </TH>
-                {isSortable && align === 'right' && (
-                  <TH align='right' width='30px'>
-                    <Carrot
-                      onClick={onClick}
-                      currentSorting={ordering.field === columnKey}
-                      direction={ordering.direction}
-                    />
-                  </TH>
-                )}
-              </React.Fragment>
-            );
-          }
-        )}
+        {columns.map((c) => (
+          <TableHeaderItem
+            key={`${c.columnKey}_header`}
+            {...c}
+            ordering={ordering}
+            setOrdering={setOrdering}
+          />
+        ))}
+        {/*Empty table header for edit column*/}
+        <th />
       </tr>
-    </thead>
+    </HeaderRow>
     <tbody>
-      {rows.map((r) => (
-        <TableRow
-          columns={columns}
-          row={r}
-          key={`row_${r.id}`}
-          onSave={r.isNewRow ? onSaveNewRow : onSaveRow}
-          removeRow={removeRow}
-        />
-      ))}
+      {loading && <Spinner />}
+      {!loading &&
+        rows.map((r) => (
+          <TableRow
+            columns={columns}
+            row={r}
+            key={`row_${r.id}`}
+            onSave={r.isNewRow ? onSaveNewRow : onSaveRow}
+            removeRow={removeRow}
+          />
+        ))}
     </tbody>
   </StyledTable>
 );
