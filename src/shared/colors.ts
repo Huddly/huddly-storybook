@@ -125,6 +125,12 @@ export enum SignalScaleTonesEnum {
 export const SignalScaleTonesHtml = getColorHtml(SignalScaleTonesEnum);
 export type SignalScaleTones = keyof typeof SignalScaleTonesEnum;
 
+export enum WhiteEnum {
+  white = '#fff',
+}
+export const WhiteHtml = getColorHtml(WhiteEnum);
+export type White = keyof typeof WhiteEnum;
+
 export type StandardColors = 'black' | 'lavender' | 'white';
 export type SecondaryColors =
   | 'sunYellow'
@@ -146,3 +152,19 @@ export type Colors =
   | BrightGrayTones
   | DarkGrayTones
   | StandardColors;
+
+const ColorValues = {
+  ...BlueTonesEnum,
+  ...YellowTonesEnum,
+  ...OrangeTonesEnum,
+  ...TaupeTonesEnum,
+  ...PinkTonesEnum,
+  ...BrownTonesEnum,
+  ...GreenTonesEnum,
+  ...SignalScaleTonesEnum,
+  ...BrightGrayTonesEnum,
+  ...DarkGrayTonesEnum,
+  ...WhiteEnum,
+};
+
+export const getHexColor = (colorName: Colors) => ColorValues[colorName];

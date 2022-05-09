@@ -20,12 +20,12 @@ const Wrapper = styled.div<WrapperProps>`
 
   &:hover,
   &:focus {
-    background-color: var(--color-lightGrey);
+    background-color: var(--color-grey35);
   }
 
   ${({ darkBg }) =>
     darkBg &&
-    `background-color: var(--color-grayText);
+    `background-color: var(--color-grey35);
     color: var(--color-white);
     
     &:hover, &:focus {

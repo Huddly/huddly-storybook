@@ -44,61 +44,81 @@ const OverviewTemplate = () => {
       <Flex direction='column'>
         <Text size='16'>Blue Tones</Text>
         {Object.keys(BlueTonesEnum).map((key: BlueTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Yellow Tones</Text>
         {Object.keys(YellowTonesEnum).map((key: YellowTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Brown Tones</Text>
         {Object.keys(BrownTonesEnum).map((key: BrownTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Taupe Tones</Text>
         {Object.keys(TaupeTonesEnum).map((key: TaupeTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Pink Tones</Text>
         {Object.keys(PinkTonesEnum).map((key: PinkTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Orange Tones</Text>
         {Object.keys(OrangeTonesEnum).map((key: OrangeTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Green Tones</Text>
         {Object.keys(GreenTonesEnum).map((key: GreenTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Dark Gray Tones</Text>
         {Object.keys(DarkGrayTonesEnum).map((key: DarkGrayTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Bright Gray Tones</Text>
         {Object.keys(BrightGrayTonesEnum).map((key: BrightGrayTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
       <Flex direction='column'>
         <Text size='16'>Signal Scale Tones</Text>
         {Object.keys(SignalScaleTonesEnum).map((key: SignalScaleTones) => (
-          <StyledColor color={key}>{key}</StyledColor>
+          <StyledColor key={key} color={key}>
+            {key}
+          </StyledColor>
         ))}
       </Flex>
     </Flex>
