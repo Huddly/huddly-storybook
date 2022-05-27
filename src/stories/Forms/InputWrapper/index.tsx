@@ -43,7 +43,7 @@ const HintWrapper = styled.div<WrapperProps>`
   }
 `;
 
-const Hint = styled.div`
+const HintText = styled.div`
   color: var(--color-grayText);
   font-size: var(--font-size-12);
 `;
@@ -118,7 +118,9 @@ export const InputWrapper = React.forwardRef(
 
         {hint && !alert && (
           <HintWrapper {...HintWrapperProps}>
-            <Hint id={ariaErrorMessageId}>{hint}</Hint>
+            <HintText id={ariaErrorMessageId} className='hint-text'>
+              {hint}
+            </HintText>
           </HintWrapper>
         )}
 
@@ -126,6 +128,7 @@ export const InputWrapper = React.forwardRef(
           <HintWrapper {...HintWrapperProps}>
             <AlertText
               id={ariaErrorMessageId}
+              className='alert-text'
               severity='error'
               hideIcon={hasBoxyErrorStyle}
             >
