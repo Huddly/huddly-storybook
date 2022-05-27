@@ -134,29 +134,29 @@ export type White = keyof typeof WhiteEnum;
 
 /* Standard colors */
 export enum StandardColorsEnum {
-  'black',
-  'lavender',
-  'white',
+  black = DarkGrayTonesEnum.black,
+  lavender = BlueTonesEnum.lavender,
+  white = WhiteEnum.white,
 }
 export const StandardColorsHtml = getColorHtml(StandardColorsEnum);
 export type StandardColors = keyof typeof StandardColorsEnum;
 
 /* Secondary colors */
 export enum SecondaryColorsEnum {
-  'sunYellow',
-  'caramelBrown',
-  'papayaOrange',
-  'eveningTaupe',
-  'petitePink',
-  'springGreen',
+  sunYellow = YellowTonesEnum.sunYellow,
+  caramelBrown = BrownTonesEnum.caramelBrown,
+  papayaOrange = OrangeTonesEnum.papayaOrange,
+  eveningTaupe = TaupeTonesEnum.eveningTaupe,
+  petitePink = PinkTonesEnum.petitePink,
+  springGreen = GreenTonesEnum.springGreen,
 }
 export const SecondaryColorsHtml = getColorHtml(SecondaryColorsEnum);
 export type SecondaryColors = keyof typeof SecondaryColorsEnum;
 
 /* Indication colors */
 export enum IndicationColorsEnum {
-  'inidiaicationRed',
-  'indicationGreen',
+  inidiaicationRed = SignalScaleTonesEnum.signalOrange,
+  indicationGreen = GreenTonesEnum.springGreen, // Not sure if this is the right color
 }
 export const IndicationColorsHtml = getColorHtml(IndicationColorsEnum);
 export type IndicationColors = keyof typeof IndicationColorsEnum;
