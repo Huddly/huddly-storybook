@@ -112,15 +112,9 @@ export const InputWrapper = React.forwardRef(
       hasError: !!alert,
     };
 
-    console.log(childrenWithGlobalInputProps);
-
     return (
-      <Wrapper className={className} {...HintWrapperProps}>
-        <span className='testing-ref' ref={ref}>
-          Testing Ref Element
-        </span>
-
-        {/* {childrenWithGlobalInputProps} */}
+      <Wrapper className={className} {...HintWrapperProps} ref={ref}>
+        {childrenWithGlobalInputProps}
 
         {hint && !alert && (
           <HintWrapper {...HintWrapperProps}>
