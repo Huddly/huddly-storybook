@@ -125,21 +125,42 @@ export enum SignalScaleTonesEnum {
 export const SignalScaleTonesHtml = getColorHtml(SignalScaleTonesEnum);
 export type SignalScaleTones = keyof typeof SignalScaleTonesEnum;
 
+/* White */
 export enum WhiteEnum {
   white = '#fff',
 }
 export const WhiteHtml = getColorHtml(WhiteEnum);
 export type White = keyof typeof WhiteEnum;
 
-export type StandardColors = 'black' | 'lavender' | 'white';
-export type SecondaryColors =
-  | 'sunYellow'
-  | 'caramelBrown'
-  | 'papayaOrange'
-  | 'eveningTaupe'
-  | 'petitePink'
-  | 'springGreen';
-export type IndicationColors = 'indicationRed' | 'indicationGreen';
+/* Standard colors */
+export enum StandardColorsEnum {
+  'black',
+  'lavender',
+  'white',
+}
+export const StandardColorsHtml = getColorHtml(StandardColorsEnum);
+export type StandardColors = keyof typeof StandardColorsEnum;
+
+/* Secondary colors */
+export enum SecondaryColorsEnum {
+  'sunYellow',
+  'caramelBrown',
+  'papayaOrange',
+  'eveningTaupe',
+  'petitePink',
+  'springGreen',
+}
+export const SecondaryColorsHtml = getColorHtml(SecondaryColorsEnum);
+export type SecondaryColors = keyof typeof SecondaryColorsEnum;
+
+/* Indication colors */
+export enum IndicationColorsEnum {
+  'inidiaicationRed',
+  'indicationGreen',
+}
+export const IndicationColorsHtml = getColorHtml(IndicationColorsEnum);
+export type IndicationColors = keyof typeof IndicationColorsEnum;
+
 export type Colors =
   | BlueTones
   | YellowTones
