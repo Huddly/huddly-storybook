@@ -13,8 +13,7 @@
       "*": ["./node_modules/*"]
     },
     "typeRoots": ["./node_modules/@types"],
-    "types": ["node"],
-    "preserveConstEnums": true
+    "types": ["node"]
   },
   "include": ["./src/stories/**/*", "./src/**/*"],
   "exclude": ["node_modules"]

@@ -6,7 +6,7 @@ const getColorHtml = (colors: any) => {
 };
 
 /* Blue Tones */
-export enum BlueTonesEnum {
+export declare enum BlueTonesEnum {
   whisperBlue = '#E5EBFE',
   plumbagoBlue = '#A6B9FF',
   lavender = '#5B5FFF',
@@ -18,7 +18,7 @@ export const BlueTonesHtml = getColorHtml(BlueTonesEnum);
 export type BlueTones = keyof typeof BlueTonesEnum;
 
 /* Yellow Tones */
-export enum YellowTonesEnum {
+export declare enum YellowTonesEnum {
   whisperYellow = '#FFF6D4',
   cheesecakeYellow = '#FFEEA8',
   sunYellow = '#E6C669',
@@ -30,7 +30,7 @@ export const YellowTonesHtml = getColorHtml(YellowTonesEnum);
 export type YellowTones = keyof typeof YellowTonesEnum;
 
 /* Brown Tones */
-export enum BrownTonesEnum {
+export declare enum BrownTonesEnum {
   whisperOrange = '#FBDFBC',
   apricotOrange = '#F7BF79',
   caramelBrown = '#D3924E',
@@ -42,7 +42,7 @@ export const BrownTonesHtml = getColorHtml(BrownTonesEnum);
 export type BrownTones = keyof typeof BrownTonesEnum;
 
 /* Taupe Tones */
-export enum TaupeTonesEnum {
+export declare enum TaupeTonesEnum {
   whisperTaupe = '#F6DCD2',
   macaronTaupe = '#EDBAA6',
   eveningTaupe = '#BA7F6B',
@@ -54,7 +54,7 @@ export const TaupeTonesHtml = getColorHtml(TaupeTonesEnum);
 export type TaupeTones = keyof typeof TaupeTonesEnum;
 
 /* Pink Tones */
-export enum PinkTonesEnum {
+export declare enum PinkTonesEnum {
   whisperPink = '#FFE2DD',
   candyflossPink = '#FFC3BA',
   petitePink = '#E39994',
@@ -66,7 +66,7 @@ export const PinkTonesHtml = getColorHtml(PinkTonesEnum);
 export type PinkTones = keyof typeof PinkTonesEnum;
 
 /* Orange Tones */
-export enum OrangeTonesEnum {
+export declare enum OrangeTonesEnum {
   whisperCoral = '#FFD5BD',
   cantaloupeOrange = '#FFAE80',
   papayaOrange = '#E07B4C',
@@ -78,7 +78,7 @@ export const OrangeTonesHtml = getColorHtml(OrangeTonesEnum);
 export type OrangeTones = keyof typeof OrangeTonesEnum;
 
 /* Green Tones */
-export enum GreenTonesEnum {
+export declare enum GreenTonesEnum {
   whisperGreen = '#EDEED8',
   greenTea = '#DCDEB1',
   springGreen = '#B6B77E',
@@ -90,7 +90,7 @@ export const GreenTonesHtml = getColorHtml(GreenTonesEnum);
 export type GreenTones = keyof typeof GreenTonesEnum;
 
 /* Dark gray Tones*/
-export enum DarkGrayTonesEnum {
+export declare enum DarkGrayTonesEnum {
   grey45 = '#747474',
   grey35 = '#595959',
   grey25 = '#404040',
@@ -102,7 +102,7 @@ export const DarkGrayTonesHtml = getColorHtml(DarkGrayTonesEnum);
 export type DarkGrayTones = keyof typeof DarkGrayTonesEnum;
 
 /* Bright Gray Tones */
-export enum BrightGrayTonesEnum {
+export declare enum BrightGrayTonesEnum {
   grey98 = '#FAFAFA',
   grey96 = '#F5F5F5',
   grey91 = '#E8E8E8',
@@ -114,7 +114,7 @@ export const BrightGrayTonesHtml = getColorHtml(BrightGrayTonesEnum);
 export type BrightGrayTones = keyof typeof BrightGrayTonesEnum;
 
 /* Signal scale tones */
-export enum SignalScaleTonesEnum {
+export declare enum SignalScaleTonesEnum {
   whisperCoral = '#FFD5BD',
   coralOrange = '#FF9C6B',
   signalOrange = '#EB6E3D',
@@ -126,14 +126,14 @@ export const SignalScaleTonesHtml = getColorHtml(SignalScaleTonesEnum);
 export type SignalScaleTones = keyof typeof SignalScaleTonesEnum;
 
 /* White */
-export enum WhiteEnum {
+export declare enum WhiteEnum {
   white = '#fff',
 }
 export const WhiteHtml = getColorHtml(WhiteEnum);
 export type White = keyof typeof WhiteEnum;
 
 /* Standard colors */
-export enum StandardColorsEnum {
+export declare enum StandardColorsEnum {
   black = DarkGrayTonesEnum.black,
   lavender = BlueTonesEnum.lavender,
   white = WhiteEnum.white,
@@ -142,7 +142,7 @@ export const StandardColorsHtml = getColorHtml(StandardColorsEnum);
 export type StandardColors = keyof typeof StandardColorsEnum;
 
 /* Secondary colors */
-export enum SecondaryColorsEnum {
+export declare enum SecondaryColorsEnum {
   sunYellow = YellowTonesEnum.sunYellow,
   caramelBrown = BrownTonesEnum.caramelBrown,
   papayaOrange = OrangeTonesEnum.papayaOrange,
@@ -154,7 +154,7 @@ export const SecondaryColorsHtml = getColorHtml(SecondaryColorsEnum);
 export type SecondaryColors = keyof typeof SecondaryColorsEnum;
 
 /* Indication colors */
-export enum IndicationColorsEnum {
+export declare enum IndicationColorsEnum {
   inidiaicationRed = SignalScaleTonesEnum.signalOrange,
   indicationGreen = GreenTonesEnum.springGreen, // Not sure if this is the right color
 }
