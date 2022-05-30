@@ -1,20 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "outDir": "./lib",
-        "sourceMap": true,
-        "esModuleInterop": true,
-        "strictNullChecks": false,
-        "jsx": "react-jsx",
-        "lib": ["es6", "dom"],
-        "baseUrl": ".",
-        "paths": {
-            "*": ["./node_modules/*"]
-        },
-        "typeRoots": ["./node_modules/@types"],
-        "types": ["node"]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./lib",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strictNullChecks": false,
+    "jsx": "react-jsx",
+    "lib": ["es6", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./node_modules/*"]
     },
-    "include": ["./src/stories/**/*", "./src/**/*"],
-    "exclude": ["node_modules"]
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
+    "preserveConstEnums": true
+  },
+  "include": ["./src/stories/**/*", "./src/**/*"],
+  "exclude": ["node_modules"]
 }
