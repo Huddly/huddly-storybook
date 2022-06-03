@@ -35,3 +35,9 @@ export interface TableData {
   isNewRow?: boolean;
   isEditable?: boolean;
 }
+
+export type Direction = 'ASC' | 'DESC';
+export interface Ordering {
+  field: string;
+  direction: Direction;
+}

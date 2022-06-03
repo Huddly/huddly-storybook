@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from '../Flex';
-import { Direction, Ordering } from '.';
+import { Direction, Ordering } from '../../../shared/types';
 import { Carrot } from './Carrot';
 
 const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`
