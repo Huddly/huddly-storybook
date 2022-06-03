@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableData, TableColumn } from '../../../../src/shared/types';
+import { TableData, TableColumn, Ordering } from '../../../../src/shared/types';
 import styled from 'styled-components';
 import { TableRow } from './TableRow';
 import TableHeaderItem from './TableHeaderItem';
@@ -16,12 +16,6 @@ const HeaderRow = styled.thead`
     border-bottom: 1px solid var(--color-grey91);
   }
 `;
-
-export type Direction = 'ASC' | 'DESC';
-export interface Ordering {
-  field: string;
-  direction: Direction;
-}
 
 export interface TableProps {
   className?: string;
@@ -67,7 +61,13 @@ export const Table = ({
       </tr>
     </HeaderRow>
     <tbody>
-      {loading && <Spinner />}
+      {loading && (
+        <tr>
+          <td>
+            <Spinner />
+          </td>
+        </tr>
+      )}
       {!loading &&
         rows.map((r) => (
           <TableRow

@@ -29,6 +29,7 @@ export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
 export { Icon } from './stories/Foundation/Icon';
 export { IconButton } from './stories/Foundation/IconButton';
+export { Slider } from './stories/Foundation/Slider';
 export { Spinner } from './stories/Foundation/Spinner';
 export { Table } from './stories/Foundation/Table';
 export { TableRow } from './stories/Foundation/Table/TableRow';
