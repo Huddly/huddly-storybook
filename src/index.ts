@@ -35,3 +35,4 @@ export { Spinner } from './stories/Foundation/Spinner';
 export { Table } from './stories/Foundation/Table';
 export { TableRow } from './stories/Foundation/Table/TableRow';
 export { Text } from './stories/Foundation/Text';
+export { Tooltip } from './stories/Foundation/Tooltip';
