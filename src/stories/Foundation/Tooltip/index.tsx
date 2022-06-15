@@ -49,7 +49,7 @@ export interface Props {
  * Tooltip component
  */
 export const Tooltip = ({ text, children, className }: Props) => (
-  <Wrapper className={className}>
+  <Wrapper className={className} role='tooltip'>
     <ToolTips direction='column'>
       <ToolTipText color='white'>{text}</ToolTipText>
       <Triangle />
