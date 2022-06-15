@@ -19,29 +19,3 @@ const BasicTemplate = () => {
 };
 
 export const Basic = BasicTemplate.bind({});
-
-const RedWrapper = styled.div`
-  background: var(--color-lavender);
-  margin-top: var(--spacing-32);
-  width: 200px;
-`;
-
-const StyledTip = styled(Tooltip)`
-  width: 100%;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-`;
-
-const StretchedTemplate = () => {
-  return (
-    <RedWrapper>
-      <StyledTip text='Click me'>
-        <StyledButton onClick={() => console.log('click')}>Button</StyledButton>
-      </StyledTip>
-    </RedWrapper>
-  );
-};
-
-export const Stretched = StretchedTemplate.bind({});
