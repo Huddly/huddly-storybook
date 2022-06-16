@@ -16,6 +16,7 @@ export { Label } from './stories/Forms/Label';
 export { Radio } from './stories/Forms/Radio';
 export { Select } from './stories/Forms/Select';
 export { TextArea } from './stories/Forms/TextArea';
+export { TextButton } from './stories/Forms/TextButton';
 
 /**
  * Foundation
