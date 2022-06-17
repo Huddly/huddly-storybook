@@ -9,6 +9,7 @@ interface TDProps {
 
 const TD = styled.td<TDProps>`
   text-align: ${(p) => p.align};
+  text-align: ${(p) => `-webkit-${p.align}`};
 `;
 
 const TR = styled.tr`
