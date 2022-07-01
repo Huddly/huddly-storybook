@@ -11,11 +11,7 @@ import {
 import { GlobalInputProps } from '../../../shared/types';
 import { Select, Input, Flex } from '../../../';
 
-interface WrapperProps {
-  hasError?: boolean;
-}
-
-const Wrapper = styled(Flex)<WrapperProps>`
+const Wrapper = styled(Flex)`
   select {
     width: calc(var(--spacing-48) * 2);
   }
@@ -49,6 +45,10 @@ const geoLocateRegionCode = async (): Promise<string> => {
 };
 
 export interface PhoneInputProps extends GlobalInputProps {
+  /**
+   * Whether to use the users IP to determine the region code. Defaults to false.
+   * Use this with caution as it may not be GDPR compliant and/or licensed.
+   */
   geoLocate?: boolean;
 }
 
@@ -122,7 +122,7 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
   );
 
   return (
-    <Wrapper className={className} hasError={hasError} columnGap={8}>
+    <Wrapper className={className} columnGap={8}>
       <Select
         aria-describedby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
