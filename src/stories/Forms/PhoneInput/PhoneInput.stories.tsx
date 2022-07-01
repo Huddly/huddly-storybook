@@ -26,18 +26,14 @@ const Template = ({ alert, hint, id, isRequired }) => {
 };
 
 const FormikTemplate = ({ alert, hint, id, isRequired }) => {
-  const test = (e) => {
-    console.log(e);
-  };
-
   return (
-    <Formik initialValues={{ phoneNumber: '48498869' }} onSubmit={console.log}>
+    <Formik initialValues={{ phoneNumber: '' }} onSubmit={console.log}>
       {({ values, handleChange, handleBlur, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <pre>{JSON.stringify(values, null, 2)}</pre>
           <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
             <Label>Label</Label>
-            <PhoneInput geoLocate={true} onChange={test} onBlur={handleBlur} value={values.phoneNumber} />
+            <PhoneInput geoLocate={true} onChange={handleChange} onBlur={handleBlur} value={values.phoneNumber} />
           </InputWrapper>
           <button type='submit'>Yeet!</button>
         </form>
