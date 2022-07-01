@@ -96,9 +96,14 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
     setPhoneNumber(phoneNumber);
   };
 
-  useEffect(function handleGeoLocate(): void {
-    if (regionCode || !geoLocate) return;
-    geoLocateRegionCode().then((r) => setRegionCode(r));
+  useEffect(function handleInitialRegionCode(): void {
+    if (regionCode) return;
+    if (geoLocate) {
+      geoLocateRegionCode().then((r) => setRegionCode(r));
+    } else {
+      const firstCountryCode = Number(countryCodes[0]);
+      setRegionCode(getRegionCodeForCountryCode(firstCountryCode));
+    }
   }, []);
 
   useEffect(
