@@ -84,6 +84,10 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
     const countryCode = Number(e.target.value);
     const regionCode = getRegionCodeForCountryCode(countryCode);
     setRegionCode(regionCode);
+    // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // remove all non-numeric characters
+    const newPhoneNumber = getAsYouType(regionCode).reset(cleanedPhoneNumber); // format the phone number
+    setPhoneNumber(newPhoneNumber);
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
