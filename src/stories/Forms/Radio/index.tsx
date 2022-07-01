@@ -23,8 +23,7 @@ const Wrapper = styled.div<WrapperProps>`
       border-radius: var(--spacing-16);
       content: '';
 
-      border: ${({ hasError }) =>
-        hasError ? 'var(--border-error)' : 'var(--border-primary)'};
+      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
     }
 
     a {
@@ -64,40 +63,38 @@ export interface RadioProps extends Omit<GlobalInputProps, 'value'> {
 /**
  * Radio component
  */
-export const Radio = React.forwardRef(
-  (props: RadioProps, ref: React.RefObject<HTMLInputElement>) => {
-    const {
-      ariaDescribedBy,
-      ariaErrorMessage,
-      children,
-      className,
-      hasError,
-      id,
-      isRequired,
-      name,
-      value,
-      ...additionalInputProps
-    } = props;
+export const Radio = React.forwardRef((props: RadioProps, ref: React.RefObject<HTMLInputElement>) => {
+  const {
+    ariaDescribedBy,
+    ariaErrorMessage,
+    children,
+    className,
+    hasError,
+    id,
+    isRequired,
+    name,
+    value,
+    ...additionalInputProps
+  } = props;
 
-    return (
-      <Wrapper className={className} hasError={hasError}>
-        <input
-          aria-describedby={ariaDescribedBy}
-          aria-errormessage={ariaErrorMessage}
-          aria-invalid={hasError}
-          checked={value}
-          id={id}
-          name={name || id}
-          ref={ref}
-          required={isRequired}
-          type='radio'
-          {...additionalInputProps}
-        />
+  return (
+    <Wrapper className={className} hasError={hasError}>
+      <input
+        aria-describedby={ariaDescribedBy}
+        aria-errormessage={ariaErrorMessage}
+        aria-invalid={hasError}
+        checked={value}
+        id={id}
+        name={name || id}
+        ref={ref}
+        required={isRequired}
+        type='radio'
+        {...additionalInputProps}
+      />
 
-        <label htmlFor={id}>
-          <span>{children}</span>
-        </label>
-      </Wrapper>
-    );
-  }
-);
+      <label htmlFor={id}>
+        <span>{children}</span>
+      </label>
+    </Wrapper>
+  );
+});

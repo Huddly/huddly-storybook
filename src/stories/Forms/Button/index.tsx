@@ -39,14 +39,12 @@ const ButtonElement = styled.button<{
   cursor: pointer;
 
   :hover {
-    background: ${(p) =>
-      p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover};
+    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover)};
     border: ${(p) => `solid 2px ${ButtonStateColors[p.color].hover}`};
   }
 
   :active {
-    background: ${(p) =>
-      p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active};
+    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active)};
     border: ${(p) => `solid 2px ${ButtonStateColors[p.color].active}`};
   }
 
@@ -111,9 +109,7 @@ export const Button = ({
       height={size}
     >
       <ButtonLabel hide={loading}>{children}</ButtonLabel>
-      {loading && (
-        <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />
-      )}
+      {loading && <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />}
     </ButtonElement>
   );
 };

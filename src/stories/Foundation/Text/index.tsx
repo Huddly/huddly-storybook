@@ -20,22 +20,9 @@ export interface TextProps {
 /**
  * Text component
  */
-export const Text = ({
-  size = '14',
-  color = 'black',
-  type = 'p',
-  bold,
-  children,
-  className,
-}: TextProps) => {
+export const Text = ({ size = '14', color = 'black', type = 'p', bold, children, className }: TextProps) => {
   return (
-    <Wrapper
-      as={type as TextProps['type']}
-      bold={bold}
-      size={size}
-      color={color}
-      className={className}
-    >
+    <Wrapper as={type as TextProps['type']} bold={bold} size={size} color={color} className={className}>
       {children}
     </Wrapper>
   );

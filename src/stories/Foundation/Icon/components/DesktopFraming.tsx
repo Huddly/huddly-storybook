@@ -6,11 +6,7 @@ export interface Props {
   title?: string;
 }
 
-export const DesktopFraming = ({
-  className,
-  color = '#262626',
-  title,
-}: Props) => {
+export const DesktopFraming = ({ className, color = '#262626', title }: Props) => {
   return (
     <svg
       width='24'

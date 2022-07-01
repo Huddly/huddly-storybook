@@ -13,8 +13,7 @@ const StyledInput = styled.input<{ vertical: boolean; length: number }>`
   height: 22px;
   background: transparent;
   -webkit-appearance: none;
-  transform: ${(p) =>
-    p.vertical ? `rotate(270deg) translate(-${p.length}px)` : ''};
+  transform: ${(p) => (p.vertical ? `rotate(270deg) translate(-${p.length}px)` : '')};
   transform-origin: ${(p) => (p.vertical ? 'top left' : '')};
   &::-webkit-slider-runnable-track {
     height: ${(p) => (p.vertical ? '8px' : '8px')};

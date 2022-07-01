@@ -19,14 +19,7 @@ export const Horizontal = () => {
   };
   return (
     <Wrapper>
-      <Slider
-        min={0}
-        max={100}
-        vertical={false}
-        value={value}
-        length={250}
-        onChange={onChange}
-      />
+      <Slider min={0} max={100} vertical={false} value={value} length={250} onChange={onChange} />
     </Wrapper>
   );
 };
@@ -39,14 +32,7 @@ export const Vertical = () => {
   return (
     <>
       <VerticalWrapper>
-        <Slider
-          min={0}
-          max={100}
-          length={250}
-          vertical={true}
-          value={value}
-          onChange={onChange}
-        />
+        <Slider min={0} max={100} length={250} vertical={true} value={value} onChange={onChange} />
       </VerticalWrapper>
     </>
   );

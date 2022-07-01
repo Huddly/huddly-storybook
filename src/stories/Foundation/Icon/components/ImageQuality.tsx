@@ -6,11 +6,7 @@ export interface Props {
   title?: string;
 }
 
-export const ImageQuality = ({
-  className,
-  color = '#262626',
-  title,
-}: Props) => {
+export const ImageQuality = ({ className, color = '#262626', title }: Props) => {
   return (
     <svg
       width='24'

@@ -46,13 +46,7 @@ const getIcon = (severity: AlertTextProps['severity']) => {
 /**
  * AlertText component
  */
-export const AlertText = ({
-  children,
-  className,
-  hideIcon,
-  id,
-  severity = 'info',
-}: AlertTextProps) => {
+export const AlertText = ({ children, className, hideIcon, id, severity = 'info' }: AlertTextProps) => {
   return (
     <Wrapper className={className} id={id} role='alert'>
       {!hideIcon && <i aria-hidden='true'>{getIcon(severity)}</i>}
