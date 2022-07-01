@@ -51,12 +51,7 @@ export const GridWithGridItems = {
         <GridItem alignSelf='stretch' justifySelf='stretch'>
           <div style={boxStyle}>Stretched</div>
         </GridItem>
-        <GridItem
-          alignSelf='stretch'
-          justifySelf='stretch'
-          columnStart={3}
-          rowStart={3}
-        >
+        <GridItem alignSelf='stretch' justifySelf='stretch' columnStart={3} rowStart={3}>
           <div style={boxStyle}>Placed in column 3 row 3</div>
         </GridItem>
       </>

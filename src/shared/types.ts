@@ -20,10 +20,7 @@ export interface TableColumn {
   align?: 'left' | 'right' | 'center';
   width?: string;
   valueFormatter?: (row: TableData) => React.ReactNode;
-  editFormatter?: (
-    row: TableData,
-    setRowData: (row: TableData) => void
-  ) => React.ReactNode;
+  editFormatter?: (row: TableData, setRowData: (row: TableData) => void) => React.ReactNode;
   isSortable?: boolean;
 }
 

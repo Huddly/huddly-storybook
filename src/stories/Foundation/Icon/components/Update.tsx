@@ -27,12 +27,7 @@ export const Update = ({ className, color = '#262626', title }: Props) => {
       </g>
       <defs>
         <clipPath id='clip0_262_10546'>
-          <rect
-            width='24'
-            height='24'
-            fill='white'
-            transform='matrix(1 1.74846e-07 1.74846e-07 -1 0 24)'
-          />
+          <rect width='24' height='24' fill='white' transform='matrix(1 1.74846e-07 1.74846e-07 -1 0 24)' />
         </clipPath>
       </defs>
     </svg>
