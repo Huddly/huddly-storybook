@@ -2,7 +2,7 @@ import { TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Table } from '.';
 import { Input } from '../../Forms/Input';
-import { Select } from '../../Forms/Select';
+import { NativeSelect as Select } from '../../Forms/NativeSelect';
 import { Text } from '../Text';
 import { useState } from 'react';
 import { Checkbox } from '../../Forms/Checkbox';

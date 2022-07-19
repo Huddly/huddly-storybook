@@ -27,14 +27,14 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-export interface SelectProps extends GlobalInputProps {
+export interface NativeSelectProps extends GlobalInputProps {
   children: React.ReactNode;
 }
 
 /**
  * Select component
  */
-export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject<HTMLSelectElement>) => {
+export const NativeSelect = React.forwardRef((props: NativeSelectProps, ref: React.RefObject<HTMLSelectElement>) => {
   const {
     ariaDescribedBy,
     ariaErrorMessage,

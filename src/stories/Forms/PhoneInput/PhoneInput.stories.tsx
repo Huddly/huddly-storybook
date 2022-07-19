@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { PhoneInput } from '.';
 import { InputWrapper, Label } from '../../../index';

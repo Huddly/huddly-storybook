@@ -9,7 +9,7 @@ import {
   getExample,
 } from 'awesome-phonenumber';
 import { GlobalInputProps } from '../../../shared/types';
-import { Select, Input, Flex } from '../../../';
+import { NativeSelect, Input, Flex } from '../../../';
 
 const Wrapper = styled(Flex)`
   select {
@@ -128,7 +128,7 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
 
   return (
     <Wrapper className={className} columnGap={8}>
-      <Select
+      <NativeSelect
         aria-describedby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
@@ -144,7 +144,7 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
             +{countryCode}
           </option>
         ))}
-      </Select>
+      </NativeSelect>
 
       <Input
         aria-describedby={ariaDescribedBy}
