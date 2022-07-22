@@ -2,12 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from '../../..';
 import styled from 'styled-components';
 import { useOnClickOutside } from '../../../shared/hooks';
-import { OptionProps } from './Option';
-interface SelectButtonProps {
-  isOpen?: boolean;
-  hasValue?: boolean;
-  hasError?: boolean;
-}
+import { Option, OptionProps } from './Option';
+import { GlobalInputProps } from '../../../shared/types';
 
 const Wrapper = styled.div`
   position: relative;
@@ -22,7 +18,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const SelectButton = styled.button<SelectButtonProps>`
+const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasError: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,28 +26,39 @@ const SelectButton = styled.button<SelectButtonProps>`
   padding: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: 3px;
-  color: ${(p) => (p.hasValue ? 'var(--color-grey60)' : 'var(--color-grey86)')};
+  color: ${(p) => (p.hasLabel ? 'var(--color-grey60)' : 'var(--color-grey86)')};
   cursor: pointer;
   background-color: var(--color-grey96);
   column-gap: var(--spacing-16);
   width: 100%;
 
-  .select-content {
-    display: flex;
-    align-items: center;
-    column-gap: var(--spacing-8);
-
-    &,
-    & > * {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  &:focus,
+  &:focus-within {
+    border: var(--border-active);
   }
 
   .chevron {
     transition: 0.15s ease-in-out;
     ${(p) => (p.isOpen ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
+  }
+`;
+
+const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
+  display: block;
+
+  ${(p) =>
+    p.hasNestedContent &&
+    `
+      display: flex;
+      align-items: center;
+      column-gap: var(--spacing-8);
+    `}
+
+  &,
+    & > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 
@@ -81,7 +88,12 @@ const SelectList = styled.ul<{ height: number }>`
   border-radius: 3px;
   overflow-y: auto;
   list-style: none;
-  border: var(--border-active);
+  border: var(--border-primary);
+
+  &:focus,
+  &:focus-within {
+    border: var(--border-active);
+  }
 
   &:after {
     z-index: -2;
@@ -95,6 +107,16 @@ const SelectList = styled.ul<{ height: number }>`
   }
 `;
 
+const SelectListEmptyMessage = styled.div`
+  padding: var(--spacing-16);
+  text-align: center;
+  pointer-events: none;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`;
+
 const SelectListHoverBackground = styled.span`
   opacity: 0;
   z-index: -1;
@@ -106,6 +128,16 @@ const SelectListHoverBackground = styled.span`
   background-color: var(--color-whisperBlue);
   transition: height 100ms ease-in-out, opacity 120ms ease-in-out 70ms, transform 120ms ease-out 12ms;
   will-change: height, opacity, transform;
+`;
+
+const HiddenSelectedValueInput = styled.input`
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
 `;
 
 const getSelectListHeight = (showItems: number, selectListRef: React.RefObject<HTMLUListElement>): number => {
@@ -160,17 +192,61 @@ const handleSelectHoverBackground = (
   };
 };
 
-export interface SelectProps {
-  // only allow options in childen
-  children: React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[] | React.ReactElement<OptionProps>[][];
-  className?: string;
-  hasError?: boolean;
-  id?: string;
-  isRequired?: boolean;
-  name?: string;
-  onChange?: (value: string) => void;
+const getLabelOfSelectedValue = (children: SelectProps['children'], selected: string | null) => {
+  if (!selected) return null;
+  const selectedItem = React.Children.toArray(children).find((child) => {
+    if (!React.isValidElement(child)) return false;
+    return child.props.value.toString() === selected.toString();
+  }) as React.ReactElement<OptionProps> | undefined;
+  if (!selectedItem) return null;
+  return selectedItem.props.children;
+};
+
+const validateChildren = (children: SelectProps['children']) => {
+  return React.Children.toArray(children).every((child) => {
+    if (!React.isValidElement(child)) return false;
+    return child.type === Option;
+  });
+};
+
+const getSelectContentAsString = (node: string | React.ReactNode): string | null => {
+  if (!node) return null;
+  if (typeof node === 'string') return node;
+  return React.Children.map(node, (child) => {
+    if (!React.isValidElement(child)) return;
+    const innerChild = child.props.children;
+    if (typeof innerChild === 'string' || typeof innerChild === 'number') return innerChild;
+  }).join(' ');
+};
+
+const getChildrenByQuery = (children: SelectProps['children'], query: string) => {
+  return React.Children.toArray(children).filter((child: React.ReactElement<OptionProps>) => {
+    if (!React.isValidElement(child)) return true;
+
+    const searchContent = [];
+    if (typeof child.props.children === 'string') {
+      searchContent.push(child.props.children);
+    }
+    if (child.props.value) {
+      searchContent.push(child.props.value);
+    }
+    React.Children.forEach(child.props.children, (subchild) => {
+      if (!React.isValidElement(subchild)) return;
+      if (typeof subchild.props.children !== 'string') return;
+      searchContent.push(subchild.props.children);
+    });
+
+    const searchContentString = searchContent.join(' ').toLowerCase();
+    return searchContentString.indexOf(query.toLowerCase()) !== -1;
+  });
+};
+
+export interface SelectProps extends GlobalInputProps {
+  /**
+   * Option components to be rendered.
+   */
+  children: React.ReactNode;
   showItems?: number;
-  value?: string;
 }
 
 /**
@@ -178,17 +254,27 @@ export interface SelectProps {
  */
 export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
   const {
+    ariaDescribedBy,
+    ariaErrorMessage,
     children,
     className,
     hasError,
     id,
     isRequired,
     name,
+    onBlur,
     onChange,
-    value,
     showItems = 6,
-    ...additionalSelectProps
+    value,
+    ...additionalPhoneInputProps
   } = props;
+
+  if (!validateChildren(children)) {
+    throw new Error('Select component: children can only contain Option components.');
+  }
+
+  const selectName = name || id;
+  const placeholder = '- Select option -';
 
   const selectWrapperRef = useRef<HTMLDivElement>(null);
   const selectButtonRef = useRef<HTMLButtonElement>(null);
@@ -199,171 +285,189 @@ export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(value);
   const [selectListHeight, setSelectListHeight] = useState(0);
-  const [showFilterSearch, setShowFilterSearch] = useState(false);
   const [filterSearch, setFilterSearch] = useState('');
 
-  const placeholder = '- Select option -';
-
-  useEffect(
-    function handleKeyboardNavigation() {
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (['Escape', 'ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
-          e.preventDefault();
-        }
-
-        const selectList = selectListRef.current;
-        const selectListChildren = selectList?.children as NodeListOf<HTMLElement>;
-        if (!selectListChildren) return;
-
-        const activeElement = document.activeElement as HTMLElement;
-        const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
-
-        switch (e.key) {
-          case 'Escape':
-            setIsOpen(false);
-            break;
-
-          case 'ArrowUp':
-            if (activeElementIndex === 0) {
-              selectList.focus();
-            } else {
-              selectListChildren[activeElementIndex - 1].focus();
-            }
-            break;
-
-          case 'ArrowDown':
-            if (activeElementIndex === selectListChildren.length - 1) {
-              selectList.focus();
-            } else {
-              selectListChildren[activeElementIndex + 1].focus();
-            }
-            break;
-
-          case 'Enter':
-            if (activeElementIndex !== -1) {
-              selectListChildren[activeElementIndex].click();
-            }
-            break;
-
-          case ' ':
-            if (activeElement === selectButtonRef.current) {
-              setIsOpen(!isOpen);
-            }
-            break;
-          default:
-            if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
-            setShowFilterSearch(true);
-            if (filterSearchRef.current) {
-              filterSearchRef.current.focus();
-            }
-            break;
-        }
-      };
-
-      window.addEventListener('keydown', handleKeyDown);
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    },
-    [isOpen, setShowFilterSearch]
-  );
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
-
-    if (!isOpen && filterSearch.length <= 0) {
-      setShowFilterSearch(false);
-    }
-  };
-
-  const handleValueSelect = ({ target }) => {
-    const selectedValue = target.dataset.value;
-    console.log(selectedValue);
-    setFilterSearch('');
-    setIsOpen(false);
-    setSelected(selectedValue);
-    setShowFilterSearch(false);
-    onChange && onChange(selectedValue);
-  };
-
-  const handleSelectedLabel = (selected: string | null) => {
-    if (!selected) return placeholder;
-    const selectedItem: SelectProps['children'] = React.Children.toArray(children).find((child) => {
-      if (!React.isValidElement(child)) return false;
-      return child.props.value === selected;
-    });
-    return selectedItem.props.children;
-  };
-
-  const filterChildren = (children: React.ReactNode) => {
-    if (!filterSearch) return children;
-    return React.Children.toArray(children).filter((child) => {
-      if (!React.isValidElement(child)) return true;
-
-      const searchContent = [];
-      if (typeof child.props.children === 'string') {
-        searchContent.push(child.props.children);
-      }
-      if (child.props.value) {
-        searchContent.push(child.props.value);
-      }
-      React.Children.forEach(child.props.children, (child) => {
-        if (!React.isValidElement(child)) return;
-        if (typeof child.props.children !== 'string') return;
-        searchContent.push(child.props.children);
-      });
-
-      const searchContentString = searchContent.join(' ').toLowerCase();
-      return searchContentString.indexOf(filterSearch.toLowerCase()) !== -1;
-    });
-  };
-
-  const selectContent = handleSelectedLabel(selected);
-  const filteredChildren = filterChildren(children);
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setSelectListHeight(getSelectListHeight(showItems, selectListRef));
-      handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
-      console.log('updzted');
-    }, 10);
-  }, [selectListRef, children, filterSearch, isOpen]);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const selectList = selectListRef.current;
+      const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
+      if (!selectListChildren) return;
+
+      const activeElement = document.activeElement as HTMLElement;
+      const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
+
+      if (['Escape', 'ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
+        e.preventDefault();
+      }
+
+      switch (e.key) {
+        case ' ':
+          if (activeElement === selectButtonRef.current && !isOpen) {
+            setIsOpen(true);
+          }
+          break;
+
+        case 'Escape':
+          setIsOpen(false);
+          selectButtonRef?.current?.focus();
+          break;
+
+        case 'ArrowUp':
+          if (activeElementIndex === 0) {
+            selectList.focus();
+          } else {
+            selectListChildren[activeElementIndex - 1].focus();
+          }
+          break;
+
+        case 'ArrowDown':
+          if (activeElementIndex === selectListChildren.length - 1) {
+            selectList.focus();
+          } else {
+            selectListChildren[activeElementIndex + 1].focus();
+          }
+          break;
+
+        case 'Enter':
+          if (activeElementIndex !== -1) {
+            selectListChildren[activeElementIndex].click();
+          }
+          break;
+        case 'Tab':
+          filterSearchRef.current.setAttribute('tabindex', activeElement === selectButtonRef.current ? '-1' : '0');
+          break;
+        default:
+          if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
+          if (filterSearchRef.current) {
+            filterSearchRef.current.focus();
+          }
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setSelectListHeight(getSelectListHeight(showItems, selectListRef));
+    handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
+  }, [selectListRef, children, filterSearch]);
 
   useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
+  const handleValueSelect = (event) => {
+    const { target } = event;
+    const selectedValue = target.dataset.value;
+    if (!selectedValue) {
+      console.error('Select component: value is not defined', target);
+      return;
+    }
+    setFilterSearch('');
+    setIsOpen(false);
+    setSelected(selectedValue);
+    selectButtonRef?.current?.focus();
+    onChange &&
+      onChange({ target: { name: selectName, id, value: selectedValue } } as React.ChangeEvent<HTMLInputElement>);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    onBlur && onBlur({ target: { name: selectName, id, value: selected } } as React.FocusEvent<HTMLInputElement>);
+  };
+
+  const selectContent = getLabelOfSelectedValue(children, selected);
+  const selectContentAsString = getSelectContentAsString(selectContent);
+  const filteredChildren = getChildrenByQuery(children, filterSearch);
+  const filteredChildrenEmpty = React.Children.toArray(filteredChildren).length === 0;
+
   return (
-    <Wrapper className={className} ref={selectWrapperRef} role=''>
+    <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
       <SelectButton
-        ref={selectButtonRef}
-        hasValue={!!selected}
+        aria-activedescendant={selected}
+        aria-errormessage={ariaErrorMessage}
+        aria-expanded={isOpen}
+        aria-haspopup='listbox'
+        aria-labelledby={`${ariaDescribedBy || ''} ${id}-select-button`}
+        aria-owns={`${id}-select-list`}
         hasError={hasError}
+        hasLabel={!!selectContent}
+        id={`${id}-select-button`}
         isOpen={isOpen}
-        onClick={handleOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        ref={selectButtonRef}
+        title={selectContentAsString}
+        type='button'
+        value={selected}
       >
-        {showFilterSearch && isOpen ? (
+        {isOpen ? (
           <FilterSearch
-            type='text'
-            ref={filterSearchRef}
-            value={filterSearch}
+            aria-autocomplete='list'
+            aria-controls={`${id}-select-list`}
             onChange={(e) => setFilterSearch(e.target.value)}
             placeholder='Search options ...'
+            ref={filterSearchRef}
+            type='text'
+            tabIndex={-1}
+            value={filterSearch}
           />
         ) : (
-          <>
-            <span className='select-content'>{selectContent}</span>
-            <Icon name='ChevronDown' className='chevron' aria-hidden />
-          </>
+          <SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
+            {selectContent || placeholder}
+          </SelectedContent>
         )}
+        <Icon name='ChevronDown' className='chevron' aria-hidden='true' />
       </SelectButton>
 
       {children && (
-        <SelectListWrapper height={selectListHeight} isOpen={isOpen} aria-expanded={isOpen}>
+        <SelectListWrapper
+          aria-activedescendant={selected}
+          aria-errormessage={ariaErrorMessage}
+          aria-expanded={isOpen}
+          aria-labelledby={ariaDescribedBy}
+          aria-multiselectable='false'
+          height={selectListHeight}
+          id={`${id}-select-list`}
+          isOpen={isOpen}
+          role='listbox'
+          tabIndex={isOpen ? 0 : -1}
+        >
           <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
           <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
             {filteredChildren}
+            {filteredChildrenEmpty && (
+              <SelectListEmptyMessage>
+                <Icon name='Cross' className='cross' />
+                <span>No options found</span>
+              </SelectListEmptyMessage>
+            )}
           </SelectList>
         </SelectListWrapper>
       )}
+
+      <HiddenSelectedValueInput
+        aria-errormessage={ariaErrorMessage}
+        aria-invalid={hasError}
+        aria-labelledby={ariaDescribedBy}
+        id={id}
+        name={selectName}
+        onChange={onChange}
+        onClick={() => selectButtonRef?.current?.click()}
+        placeholder={placeholder}
+        ref={ref}
+        required={isRequired}
+        tabIndex={-1}
+        type='text'
+        value={selected || ''}
+        {...additionalPhoneInputProps}
+      />
     </Wrapper>
   );
 });

@@ -9,6 +9,8 @@ export interface GlobalInputProps {
   id?: string;
   isRequired?: boolean;
   name?: string;
+  onBlur?: (event: React.FocusEvent) => void;
+  onChange?: (event: React.ChangeEvent) => void;
   value?: string;
   [x: string]: any;
 }

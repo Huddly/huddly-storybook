@@ -9,10 +9,10 @@ import {
   getExample,
 } from 'awesome-phonenumber';
 import { GlobalInputProps } from '../../../shared/types';
-import { NativeSelect, Input, Flex } from '../../../';
+import { Select, Option, Input, Flex } from '../../../';
 
 const Wrapper = styled(Flex)`
-  select {
+  .country-code-select {
     width: calc(var(--spacing-48) * 2);
   }
 `;
@@ -121,17 +121,18 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
       const pn = parsePhoneNumber(phoneNumber, regionCode);
       const json = pn.toJSON();
       const value = pn.getNumber();
-      onChange({ target: { ...json, id, name: inputName, value } });
+      onChange({ target: { ...json, id, name: inputName, value } } as React.ChangeEvent<HTMLInputElement>);
     },
     [regionCode, phoneNumber]
   );
 
   return (
     <Wrapper className={className} columnGap={8}>
-      <NativeSelect
-        aria-describedby={ariaDescribedBy}
+      <Select
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
+        className='country-code-select'
         hasError={hasError}
         id={`${id}-country-code`}
         name={`${inputName}-country-code`}
@@ -140,14 +141,14 @@ export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.R
         value={getCountryCodeForRegionCode(regionCode)}
       >
         {countryCodes.map((countryCode) => (
-          <option key={countryCode} value={countryCode}>
+          <Option key={countryCode} value={countryCode}>
             +{countryCode}
-          </option>
+          </Option>
         ))}
-      </NativeSelect>
+      </Select>
 
       <Input
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         hasError={hasError}

@@ -40,7 +40,7 @@ export const Option = React.forwardRef((props: OptionProps, ref: React.RefObject
   const { children, value } = props;
 
   return (
-    <Wrapper ref={ref} tabIndex={0} data-value={value}>
+    <Wrapper ref={ref} role='option' tabIndex={0} data-value={value}>
       {children}
     </Wrapper>
   );

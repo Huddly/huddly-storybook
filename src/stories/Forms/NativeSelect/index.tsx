@@ -51,7 +51,7 @@ export const NativeSelect = React.forwardRef((props: NativeSelectProps, ref: Rea
   return (
     <Wrapper className={className} hasError={hasError}>
       <select
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         id={id}

@@ -39,7 +39,7 @@ export const TextArea = React.forwardRef((props: GlobalInputProps, ref: React.Re
   return (
     <Wrapper className={className} hasError={hasError}>
       <textarea
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         id={id}

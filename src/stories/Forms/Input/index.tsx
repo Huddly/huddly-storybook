@@ -59,7 +59,7 @@ export const Input = React.forwardRef((props: InputProps, ref: React.RefObject<H
   return (
     <Wrapper aria-hidden={type === 'hidden'} className={className} hasError={hasError} isHidden={type === 'hidden'}>
       <input
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         id={id}

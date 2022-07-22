@@ -80,7 +80,7 @@ export const Checkbox = React.forwardRef((props: CheckboxProps, ref: React.RefOb
   return (
     <Wrapper className={className} hasError={hasError}>
       <input
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         checked={value}

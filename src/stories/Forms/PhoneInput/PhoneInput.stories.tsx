@@ -10,6 +10,7 @@ export const Primary = {
   args: {
     id: 'phoneNumber',
     geoLocate: true,
+    isRequired: true,
   },
 };
 
@@ -25,14 +26,23 @@ const Template = ({ alert, hint, id, isRequired }) => {
 };
 
 const FormikTemplate = ({ alert, hint, id, isRequired }) => {
+  const key = Primary.args.id;
+
   return (
-    <Formik initialValues={{ phoneNumber: '' }} onSubmit={console.log}>
-      {({ values, handleChange, handleBlur, handleSubmit }) => (
+    <Formik
+      initialValues={{ [key]: '' }}
+      onSubmit={console.log}
+      validate={(v) => {
+        console.log('validating');
+        if (v[key] === '') return { [key]: 'This is a required field.' };
+      }}
+    >
+      {({ values, handleChange, handleBlur, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <pre>{JSON.stringify(values, null, 2)}</pre>
-          <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+          <InputWrapper alert={errors[key] as string} hint={hint} id={id} isRequired={isRequired}>
             <Label>Label</Label>
-            <PhoneInput geoLocate={true} onChange={handleChange} onBlur={handleBlur} value={values.phoneNumber} />
+            <PhoneInput geoLocate={true} onChange={handleChange} onBlur={handleBlur} value={values[key]} />
           </InputWrapper>
           <button type='submit'>Yeet!</button>
         </form>

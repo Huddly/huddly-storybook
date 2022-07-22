@@ -80,7 +80,7 @@ export const Radio = React.forwardRef((props: RadioProps, ref: React.RefObject<H
   return (
     <Wrapper className={className} hasError={hasError}>
       <input
-        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaDescribedBy}
         aria-errormessage={ariaErrorMessage}
         aria-invalid={hasError}
         checked={value}
