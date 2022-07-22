@@ -17,12 +17,7 @@ export const Plus = ({ className, color = '#262626', title }: Props) => {
       className={className}
     >
       <title>{title || 'Plus icon'}</title>
-      <path
-        fillRule='evenodd'
-        clipRule='evenodd'
-        d='M11 13L11 21H13V13H21V11H13V3H11L11 11H3V13H11Z'
-        fill={color}
-      />
+      <path fillRule='evenodd' clipRule='evenodd' d='M11 13L11 21H13V13H21V11H13V3H11L11 11H3V13H11Z' fill={color} />
     </svg>
   );
 };

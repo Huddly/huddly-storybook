@@ -13,8 +13,9 @@ export { Fieldset } from './stories/Forms/Fieldset';
 export { Input } from './stories/Forms/Input';
 export { InputWrapper } from './stories/Forms/InputWrapper';
 export { Label } from './stories/Forms/Label';
+export { NativeSelect } from './stories/Forms/NativeSelect';
 export { Radio } from './stories/Forms/Radio';
-export { Select } from './stories/Forms/Select';
+export { Select, Option } from './stories/Forms/Select';
 export { TextArea } from './stories/Forms/TextArea';
 export { TextButton } from './stories/Forms/TextButton';
 

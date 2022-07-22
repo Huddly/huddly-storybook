@@ -17,11 +17,7 @@ const Wrapper = styled.div<CardProps>`
 /**
  * Card component
  */
-export const Card = ({
-  background = 'white',
-  children,
-  className,
-}: CardProps) => {
+export const Card = ({ background = 'white', children, className }: CardProps) => {
   return (
     <Wrapper background={background} className={className}>
       {children}

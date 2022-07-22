@@ -59,8 +59,9 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: 64px;
 
     /* Borders */
-    --border-primary: 1px solid var(--color-grey62);
+    --border-primary: 2px solid var(--color-grey76);
     --border-error: 2px solid var(--color-hotOrange);
+    --border-active: 2px solid var(--color-lavender);
 
     /* Border radius */
     --border-radius: 6px;

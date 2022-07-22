@@ -79,9 +79,7 @@ export const PanTilt = ({
         ? (position.x - wrapperCenterX) / (wrapperCenterX - rectangleCenterX)
         : 0;
     const tiltValue =
-      wrapperCenterY - rectangleCenterY !== 0
-        ? (position.y - wrapperCenterY) / (wrapperCenterY - rectangleCenterY)
-        : 0;
+      wrapperCenterY - rectangleCenterY !== 0 ? (position.y - wrapperCenterY) / (wrapperCenterY - rectangleCenterY) : 0;
 
     updatePosition(panValue, tiltValue);
   };

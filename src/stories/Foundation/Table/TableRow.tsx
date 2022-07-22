@@ -50,33 +50,20 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
 
   return (
     <TR>
-      {columns.map(
-        (
-          {
-            align = 'left',
-            columnKey,
-            editFormatter,
-            valueFormatter,
-            isSortable,
-          },
-          i
-        ) => {
-          let renderValue = valueFormatter
-            ? valueFormatter(rowValue)
-            : rowValue[columnKey] ?? '';
+      {columns.map(({ align = 'left', columnKey, editFormatter, valueFormatter, isSortable }, i) => {
+        let renderValue = valueFormatter ? valueFormatter(rowValue) : rowValue[columnKey] ?? '';
 
-          if (isEditing && editFormatter) {
-            renderValue = editFormatter(rowValue, setRowValue);
-          }
-
-          return (
-            <React.Fragment key={`column_${i}_row_${row.id}}`}>
-              <TD align={align}>{renderValue}</TD>
-              {isSortable && align === 'right' && <TD align='right' />}
-            </React.Fragment>
-          );
+        if (isEditing && editFormatter) {
+          renderValue = editFormatter(rowValue, setRowValue);
         }
-      )}
+
+        return (
+          <React.Fragment key={`column_${i}_row_${row.id}}`}>
+            <TD align={align}>{renderValue}</TD>
+            {isSortable && align === 'right' && <TD align='right' />}
+          </React.Fragment>
+        );
+      })}
       <TD align='right'>
         {isEditing && (
           <Button onClick={onCancel} secondary>
@@ -85,18 +72,8 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
         )}
         {row.isEditable && (
           <>
-            {isEditing && (
-              <Button onClick={toggleEditing}>
-                {isEditing ? 'Save' : 'Edit'}
-              </Button>
-            )}
-            {!isEditing && (
-              <IconButton
-                onClick={toggleEditing}
-                icon='Edit'
-                tooltipText='Edit'
-              />
-            )}
+            {isEditing && <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>}
+            {!isEditing && <IconButton onClick={toggleEditing} icon='Edit' tooltipText='Edit' />}
           </>
         )}
       </TD>

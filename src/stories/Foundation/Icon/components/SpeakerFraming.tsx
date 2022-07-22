@@ -6,11 +6,7 @@ export interface Props {
   title?: string;
 }
 
-export const SpeakerFraming = ({
-  className,
-  color = '#262626',
-  title,
-}: Props) => {
+export const SpeakerFraming = ({ className, color = '#262626', title }: Props) => {
   return (
     <svg
       width='24'
