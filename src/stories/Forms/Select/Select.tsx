@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Icon } from '../../..';
 import styled from 'styled-components';
-import { useOnClickOutside } from '../../../shared/hooks';
-import { Option, OptionProps } from './Option';
 import { GlobalInputProps } from '../../../shared/types';
+import { Icon } from '../../..';
+import { Option, OptionProps } from './Option';
+import { useOnClickOutside } from '../../../shared/hooks';
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,13 +23,13 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   justify-content: space-between;
   align-items: center;
   height: var(--spacing-48);
-  padding: var(--spacing-16);
+  padding: var(--spacing-16) var(--spacing-8) var(--spacing-16) var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: 3px;
   color: ${(p) => (p.hasLabel ? 'var(--color-grey60)' : 'var(--color-grey86)')};
   cursor: pointer;
   background-color: var(--color-grey96);
-  column-gap: var(--spacing-16);
+  column-gap: var(--spacing-8);
   width: 100%;
 
   &:focus,
@@ -213,6 +213,7 @@ const getSelectContentAsString = (node: string | React.ReactNode): string | null
   if (!node) return null;
   if (typeof node === 'string') return node;
   return React.Children.map(node, (child) => {
+    if (typeof child === 'string') return child;
     if (!React.isValidElement(child)) return;
     const innerChild = child.props.children;
     if (typeof innerChild === 'string' || typeof innerChild === 'number') return innerChild;
@@ -230,11 +231,13 @@ const getChildrenByQuery = (children: SelectProps['children'], query: string) =>
     if (child.props.value) {
       searchContent.push(child.props.value);
     }
-    React.Children.forEach(child.props.children, (subchild) => {
+    const innerSearchContent = React.Children.map(child.props.children, (subchild) => {
+      if (typeof subchild === 'string') return subchild;
       if (!React.isValidElement(subchild)) return;
       if (typeof subchild.props.children !== 'string') return;
-      searchContent.push(subchild.props.children);
+      return subchild.props.children;
     });
+    searchContent.push(...innerSearchContent);
 
     const searchContentString = searchContent.join(' ').toLowerCase();
     return searchContentString.indexOf(query.toLowerCase()) !== -1;
@@ -338,7 +341,7 @@ export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject
           }
           break;
         case 'Tab':
-          filterSearchRef.current.setAttribute('tabindex', activeElement === selectButtonRef.current ? '-1' : '0');
+          filterSearchRef?.current?.setAttribute('tabindex', activeElement === selectButtonRef.current ? '-1' : '0');
           break;
         default:
           if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;

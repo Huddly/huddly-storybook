@@ -21,6 +21,7 @@ const Wrapper = styled.li`
     max-width: var(--spacing-32);
     max-height: var(--spacing-32);
     object-fit: contain;
+    flex-shrink: 0;
   }
 
   & > * {
