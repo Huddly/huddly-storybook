@@ -1,5 +1,5 @@
 import React from 'react';
-import { Direction } from '../../../shared/types';
+import { Direction } from '@shared/types';
 import styled from 'styled-components';
 
 const Wrapper = styled.button<{

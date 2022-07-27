@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GlobalInputProps } from '../../../shared/types';
+import rem from '@shared/pxToRem';
+import { GlobalInputProps } from '@shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
@@ -35,13 +36,15 @@ const Wrapper = styled.div<WrapperProps>`
   input[type='radio'] {
     opacity: 0;
     position: absolute;
-    left: -99999px; // This is to hide the radio without affecting screen readers
+    left: ${rem(
+      -99999
+    )}; // This is to hide the radio without affecting screen readers
 
     // Focus ring
     &:focus + label:before {
-      outline: 1px dotted #212121; // Fallback to non-webkit browsers
-      outline: 5px auto -webkit-focus-ring-color;
-      outline-offset: 3px;
+      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
+      outline: ${rem(5)} auto -webkit-focus-ring-color;
+      outline-offset: ${rem(3)};
     }
 
     // Checked radio style

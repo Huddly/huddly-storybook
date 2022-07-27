@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../../shared/colors';
+import rem from '@shared/pxToRem';
+import { Colors } from '@shared/colors';
 
 export interface ColorProps {
   color: Colors;

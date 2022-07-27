@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 import { Success, Info, Warning, Failed } from '../../Icons';
-import { ErrorSeverity } from '../../../shared/types';
+import { ErrorSeverity } from '@shared/types';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
