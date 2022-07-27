@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TableColumn, TableData } from '@shared/types';
 import styled from 'styled-components';
-import { Button } from '../../Forms/Button';
+import { Button } from '@components/Forms/Button';
 import { IconButton } from '../IconButton';
 interface TDProps {
   align: 'left' | 'right' | 'center';

@@ -11,8 +11,8 @@
     "baseUrl": ".",
     "paths": {
       "@shared/*": ["src/shared/*"],
-      "@components/*": ["src/stories/*"],
-      "*": ["./node_modules/*"]
+      "@components": ["src/index"],
+      "@components/*": ["src/stories/*"]
     },
     "typeRoots": ["./node_modules/@types"],
     "types": ["node"]

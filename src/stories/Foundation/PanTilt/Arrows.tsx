@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
 
 const StyledPath = styled.path`
   cursor: move;

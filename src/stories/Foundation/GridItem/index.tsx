@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
 
 export interface GridItemProps {
   /*

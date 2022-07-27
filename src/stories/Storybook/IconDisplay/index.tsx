@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import rem from '@shared/pxToRem';
-import { Icon } from '../../Foundation/Icon';
+import { Icon } from '@components/Foundation/Icon';
 
 interface WrapperProps {
   darkBg: boolean;
