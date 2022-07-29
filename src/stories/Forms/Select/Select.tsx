@@ -26,20 +26,29 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   padding: var(--spacing-16) var(--spacing-8) var(--spacing-16) var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: 3px;
-  color: ${(p) => (p.hasLabel ? 'var(--color-grey60)' : 'var(--color-grey86)')};
+  color: ${(p) => (p.hasLabel ? 'var(--color-grey15)' : 'var(--color-grey55)')};
   cursor: pointer;
   background-color: var(--color-grey96);
   column-gap: var(--spacing-8);
   width: 100%;
 
+  &:hover {
+    background-color: var(--color-grey99);
+  }
+
   &:focus,
   &:focus-within {
+    background-color: var(--color-grey99);
     border: var(--border-active);
   }
 
   .chevron {
     transition: 0.15s ease-in-out;
     ${(p) => (p.isOpen ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
+
+    path {
+      fill: var(--color-grey35);
+    }
   }
 `;
 
@@ -103,18 +112,20 @@ const SelectList = styled.ul<{ height: number }>`
     width: 100%;
     height: 100%;
     content: '';
-    background-color: var(--color-grey96);
+    background-color: var(--color-grey99);
   }
 `;
 
-const SelectListEmptyMessage = styled.div`
-  padding: var(--spacing-16);
-  text-align: center;
+const SelectListNoResults = styled.div`
+  padding: 13px var(--spacing-16);
+  color: var(--color-grey45);
   pointer-events: none;
-  flex-direction: column;
   align-items: center;
   display: flex;
-  justify-content: center;
+
+  path {
+    fill: var(--color-grey35);
+  }
 `;
 
 const SelectListHoverBackground = styled.span`
@@ -448,10 +459,10 @@ export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject
           <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
             {filteredChildren}
             {filteredChildrenEmpty && (
-              <SelectListEmptyMessage>
+              <SelectListNoResults>
                 <Icon name='Cross' className='cross' />
-                <span>No options found</span>
-              </SelectListEmptyMessage>
+                <span>No results found</span>
+              </SelectListNoResults>
             )}
           </SelectList>
         </SelectListWrapper>

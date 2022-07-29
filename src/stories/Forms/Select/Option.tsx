@@ -24,6 +24,10 @@ const Wrapper = styled.li`
     flex-shrink: 0;
   }
 
+  & > *:first-child:is(figure, img, svg) {
+    margin-left: -4px;
+  }
+
   & > * {
     pointer-events: none;
   }

@@ -91,6 +91,7 @@ export type GreenTones = keyof typeof GreenTonesEnum;
 
 /* Dark gray Tones*/
 export enum DarkGrayTonesEnum {
+  grey55 = '#8C8C8C',
   grey45 = '#747474',
   grey35 = '#595959',
   grey25 = '#404040',
@@ -103,6 +104,7 @@ export type DarkGrayTones = keyof typeof DarkGrayTonesEnum;
 
 /* Bright Gray Tones */
 export enum BrightGrayTonesEnum {
+  grey99 = '#FCFCFC',
   grey98 = '#FAFAFA',
   grey96 = '#F5F5F5',
   grey91 = '#E8E8E8',
