@@ -320,6 +320,7 @@ export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject
           break;
 
         case 'ArrowUp':
+          if (activeElementIndex === -1) return;
           if (activeElementIndex === 0) {
             selectList.focus();
           } else {
@@ -328,6 +329,7 @@ export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject
           break;
 
         case 'ArrowDown':
+          if (activeElementIndex === -1) return;
           if (activeElementIndex === selectListChildren.length - 1) {
             selectList.focus();
           } else {
