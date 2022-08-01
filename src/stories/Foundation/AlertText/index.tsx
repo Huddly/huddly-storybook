@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Success, Info, Warning, Failed } from '../../Icons';
+import { InfoSmall, WarningSmall } from '@huddly/frokost/havre18px';
 import { ErrorSeverity } from '../../../shared/types';
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -11,10 +12,6 @@ const Wrapper = styled.div`
 
   i {
     display: inline-flex;
-    svg {
-      width: var(--spacing-16);
-      height: var(--spacing-16);
-    }
   }
 `;
 
@@ -33,13 +30,13 @@ export interface AlertTextProps {
 const getIcon = (severity: AlertTextProps['severity']) => {
   switch (severity) {
     case 'success':
-      return <Success />;
+      return <InfoSmall />;
     case 'info':
-      return <Info />;
+      return <InfoSmall />;
     case 'warning':
-      return <Warning />;
+      return <WarningSmall />;
     case 'error':
-      return <Failed />;
+      return <WarningSmall />;
   }
 };
 
