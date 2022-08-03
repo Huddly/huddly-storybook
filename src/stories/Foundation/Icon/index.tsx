@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { useMemo, Suspense } from 'react';
 import { getHexColor, Colors } from '../../../shared/colors';
 
 export interface IconProps {
@@ -24,23 +24,30 @@ export const Icon = ({
   /**
    * Dynamically load the icon from the correct pack
    */
-  const DynamicIcon = React.lazy(() =>
-    // Don't try to simplify this path, webpack will not like it
-    import(`node_modules/@huddly/frokost/dist/${pack}`)
-      .then((module) => {
-        if (!module[name]) {
-          throw new Error(`Icon "${name}" not found in pack "${pack}"`);
-        }
-        return { default: module[name] };
-      })
-      .catch(() => {
-        throw new Error(`Icon pack "${pack}" not found`);
-      })
+
+  const LazyIcon = useMemo(
+    () =>
+      React.lazy(() =>
+        import(`node_modules/@huddly/frokost/dist/${pack}`)
+          .then((module) => {
+            if (!module[name]) {
+              throw new Error(`Icon "${name}" not found in pack "${pack}"`);
+            }
+            return { default: module[name] };
+          })
+          .catch(() => {
+            throw new Error(`Icon pack "${pack}" not found`);
+          })
+          .finally(() => {
+            console.log('Icon loaded');
+          })
+      ),
+    [name, pack]
   );
 
   return (
     <Suspense fallback={null}>
-      <DynamicIcon className={className} color={getHexColor(color)} />
+      <LazyIcon className={className} color={getHexColor(color)} />
     </Suspense>
   );
 };
