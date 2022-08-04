@@ -38,7 +38,8 @@ const HintWrapper = styled.div<WrapperProps>`
       margin-left: var(--spacing-24); // Align with checkbox/radio label
     `}
 
-    ${({ boxyErrorStyle, hasError }) => boxyErrorStyle && hasError && `color: var(--color-warningRed);`}
+    ${({ boxyErrorStyle, hasError }) =>
+      boxyErrorStyle && hasError && `color: var(--color-warningRed);`}
   }
 `;
 
@@ -59,73 +60,80 @@ export interface InputWrapperProps {
 /**
  * InputWrapper component
  */
-export const InputWrapper = React.forwardRef((props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-  const { id, alert, children, className, hint, isRequired } = props;
-  // Set aria id's. These are used for inputs and the helper texts.
-  const ariaDescribedById = hint ? `${id}-hint` : undefined;
-  const ariaErrorMessageId = alert ? `${id}-error` : undefined;
+export const InputWrapper = React.forwardRef(
+  (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
+    const { id, alert, children, className, hint, isRequired } = props;
+    // Set aria id's. These are used for inputs and the helper texts.
+    const ariaDescribedById = hint ? `${id}-hint` : undefined;
+    const ariaErrorMessageId = alert ? `${id}-error` : undefined;
 
-  /*
-   * Define global child/input props.
-   * These are used to pass down to the children.
-   */
-  const globalInputProps = {
-    ariaDescribedBy: ariaDescribedById,
-    ariaErrorMessage: ariaErrorMessageId,
-    hasError: alert ? true : undefined,
-    id,
-    isRequired,
-  };
+    /*
+     * Define global child/input props.
+     * These are used to pass down to the children.
+     */
+    const globalInputProps = {
+      ariaDescribedBy: ariaDescribedById,
+      ariaErrorMessage: ariaErrorMessageId,
+      hasError: alert ? true : undefined,
+      id,
+      isRequired,
+    };
 
-  /**
-   * Pass globalInputProps to children.
-   * If the component is a fragment, we need to pass props to each child inside the fragment.
-   * However, if the child is not a valid react component, don't pass props at all.
-   */
-  const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
-    if (child.type === React.Fragment) {
-      return React.Children.map(child.props.children, (child) => {
-        if (typeof child?.type === 'string') return child;
-        return React.cloneElement(child, globalInputProps);
-      });
-    }
+    /**
+     * Pass globalInputProps to children.
+     * If the component is a fragment, we need to pass props to each child inside the fragment.
+     * However, if the child is not a valid react component, don't pass props at all.
+     */
+    const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
+      if (child.type === React.Fragment) {
+        return React.Children.map(child.props.children, (child) => {
+          if (typeof child?.type === 'string') return child;
+          return React.cloneElement(child, globalInputProps);
+        });
+      }
 
-    if (typeof child?.type === 'string') return child;
-    return React.cloneElement(child, globalInputProps);
-  });
+      if (typeof child?.type === 'string') return child;
+      return React.cloneElement(child, globalInputProps);
+    });
 
-  /*
-   * We apply special error styles for inputs such as checkboxes and radio buttons.
-   */
-  const hasBoxyErrorStyle = childrenWithGlobalInputProps?.some((child) => {
-    const componentsThatApply = [Checkbox, Radio];
-    return componentsThatApply.includes(child?.type);
-  });
+    /*
+     * We apply special error styles for inputs such as checkboxes and radio buttons.
+     */
+    const hasBoxyErrorStyle = childrenWithGlobalInputProps?.some((child) => {
+      const componentsThatApply = [Checkbox, Radio];
+      return componentsThatApply.includes(child?.type);
+    });
 
-  const HintWrapperProps = {
-    boxyErrorStyle: hasBoxyErrorStyle,
-    hasError: !!alert,
-  };
+    const HintWrapperProps = {
+      boxyErrorStyle: hasBoxyErrorStyle,
+      hasError: !!alert,
+    };
 
-  return (
-    <Wrapper className={className} {...HintWrapperProps} ref={ref}>
-      {childrenWithGlobalInputProps}
+    return (
+      <Wrapper className={className} {...HintWrapperProps} ref={ref}>
+        {childrenWithGlobalInputProps}
 
-      {hint && !alert && (
-        <HintWrapper {...HintWrapperProps}>
-          <HintText id={ariaErrorMessageId} className='hint-text'>
-            {hint}
-          </HintText>
-        </HintWrapper>
-      )}
+        {hint && !alert && (
+          <HintWrapper {...HintWrapperProps}>
+            <HintText id={ariaErrorMessageId} className='hint-text'>
+              {hint}
+            </HintText>
+          </HintWrapper>
+        )}
 
-      {alert && (
-        <HintWrapper {...HintWrapperProps}>
-          <AlertText id={ariaErrorMessageId} className='alert-text' severity='error' hideIcon={hasBoxyErrorStyle}>
-            {alert}
-          </AlertText>
-        </HintWrapper>
-      )}
-    </Wrapper>
-  );
-});
+        {alert && (
+          <HintWrapper {...HintWrapperProps}>
+            <AlertText
+              id={ariaErrorMessageId}
+              className='alert-text'
+              severity='error'
+              hideIcon={hasBoxyErrorStyle}
+            >
+              {alert}
+            </AlertText>
+          </HintWrapper>
+        )}
+      </Wrapper>
+    );
+  }
+);

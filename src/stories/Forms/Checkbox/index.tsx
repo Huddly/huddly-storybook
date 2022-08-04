@@ -63,38 +63,40 @@ export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
 /**
  * Checkbox component
  */
-export const Checkbox = React.forwardRef((props: CheckboxProps, ref: React.RefObject<HTMLInputElement>) => {
-  const {
-    ariaDescribedBy,
-    ariaErrorMessage,
-    children,
-    className,
-    hasError,
-    id,
-    isRequired,
-    name,
-    value,
-    ...additionalInputProps
-  } = props;
+export const Checkbox = React.forwardRef(
+  (props: CheckboxProps, ref: React.RefObject<HTMLInputElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      children,
+      className,
+      hasError,
+      id,
+      isRequired,
+      name,
+      value,
+      ...additionalInputProps
+    } = props;
 
-  return (
-    <Wrapper className={className} hasError={hasError}>
-      <input
-        aria-labelledby={ariaDescribedBy}
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        checked={value}
-        id={id}
-        name={name || id}
-        ref={ref}
-        required={isRequired}
-        type='checkbox'
-        {...additionalInputProps}
-      />
+    return (
+      <Wrapper className={className} hasError={hasError}>
+        <input
+          aria-labelledby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          checked={value}
+          id={id}
+          name={name || id}
+          ref={ref}
+          required={isRequired}
+          type='checkbox'
+          {...additionalInputProps}
+        />
 
-      <label htmlFor={id}>
-        <span>{children}</span>
-      </label>
-    </Wrapper>
-  );
-});
+        <label htmlFor={id}>
+          <span>{children}</span>
+        </label>
+      </Wrapper>
+    );
+  }
+);

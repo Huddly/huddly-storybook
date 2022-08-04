@@ -31,9 +31,15 @@ const columns = [
       </>
     ),
     align: 'left',
-    valueFormatter: (row: TableData) => <Checkbox id={`name_${row.name}`}>{row.name ?? ''}</Checkbox>,
+    valueFormatter: (row: TableData) => (
+      <Checkbox id={`name_${row.name}`}>{row.name ?? ''}</Checkbox>
+    ),
     editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
-      <Input id='name' onChange={(e) => onChange({ ...row, name: e.target.value })} value={row.name ?? ''} />
+      <Input
+        id='name'
+        onChange={(e) => onChange({ ...row, name: e.target.value })}
+        value={row.name ?? ''}
+      />
     ),
     isSortable: true,
   },
@@ -43,7 +49,11 @@ const columns = [
     align: 'left',
     valueFormatter: (row: TableData) => <Text color='lavender'>{row['office'] ?? ''}</Text>,
     editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
-      <Input id='office' value={row.office ?? ''} onChange={(e) => onChange({ ...row, office: e.target.value })} />
+      <Input
+        id='office'
+        value={row.office ?? ''}
+        onChange={(e) => onChange({ ...row, office: e.target.value })}
+      />
     ),
   },
   {
@@ -77,7 +87,11 @@ const columns = [
         return <div />;
       }
       return (
-        <Select id='timeZone' value={row.timeZone} onChange={(e) => onChange({ ...row, timeZone: e.target.value })}>
+        <Select
+          id='timeZone'
+          value={row.timeZone}
+          onChange={(e) => onChange({ ...row, timeZone: e.target.value })}
+        >
           <option>UTC +1</option>
           <option>UTC +2</option>
           <option>UTC +3</option>

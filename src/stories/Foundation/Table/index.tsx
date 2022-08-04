@@ -49,7 +49,12 @@ export const Table = ({
     <HeaderRow>
       <tr>
         {columns.map((c) => (
-          <TableHeaderItem key={`${c.columnKey}_header`} {...c} ordering={ordering} setOrdering={setOrdering} />
+          <TableHeaderItem
+            key={`${c.columnKey}_header`}
+            {...c}
+            ordering={ordering}
+            setOrdering={setOrdering}
+          />
         ))}
         {/*Empty table header for edit column*/}
         <th />

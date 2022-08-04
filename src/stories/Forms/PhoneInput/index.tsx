@@ -55,113 +55,117 @@ export interface PhoneInputProps extends GlobalInputProps {
 /**
  * PhoneInput component
  */
-export const PhoneInput = React.forwardRef((props: PhoneInputProps, ref: React.RefObject<HTMLInputElement>) => {
-  const {
-    ariaDescribedBy,
-    ariaErrorMessage,
-    className,
-    geoLocate = false,
-    hasError,
-    id,
-    isRequired,
-    name,
-    onChange,
-    value,
-    ...additionalPhoneInputProps
-  } = props;
+export const PhoneInput = React.forwardRef(
+  (props: PhoneInputProps, ref: React.RefObject<HTMLInputElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      className,
+      geoLocate = false,
+      hasError,
+      id,
+      isRequired,
+      name,
+      onChange,
+      value,
+      ...additionalPhoneInputProps
+    } = props;
 
-  const inputName = name || id;
-  const countryCodes = getSupportedCallingCodes().filter((cc) =>
-    isNaN(Number(getRegionCodeForCountryCode(Number(cc))))
-  ); // Filter to remove toll-free, premium numbers etc...
-  const splitValue = getSplitValue(value);
+    const inputName = name || id;
+    const countryCodes = getSupportedCallingCodes().filter((cc) =>
+      isNaN(Number(getRegionCodeForCountryCode(Number(cc))))
+    ); // Filter to remove toll-free, premium numbers etc...
+    const splitValue = getSplitValue(value);
 
-  const [regionCode, setRegionCode] = useState<string>(splitValue?.regionCode || '');
-  const [phoneNumber, setPhoneNumber] = useState<string>(splitValue?.phoneNumber || '');
-  const [placeholder, setPlaceholder] = useState<string>('');
+    const [regionCode, setRegionCode] = useState<string>(splitValue?.regionCode || '');
+    const [phoneNumber, setPhoneNumber] = useState<string>(splitValue?.phoneNumber || '');
+    const [placeholder, setPlaceholder] = useState<string>('');
 
-  const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const countryCode = Number(e.target.value);
-    const regionCode = getRegionCodeForCountryCode(countryCode);
-    setRegionCode(regionCode);
-    // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
-    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // remove all non-numeric characters
-    const newPhoneNumber = getAsYouType(regionCode).reset(cleanedPhoneNumber); // format the phone number
-    setPhoneNumber(newPhoneNumber);
-  };
+    const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+      const countryCode = Number(e.target.value);
+      const regionCode = getRegionCodeForCountryCode(countryCode);
+      setRegionCode(regionCode);
+      // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
+      const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // remove all non-numeric characters
+      const newPhoneNumber = getAsYouType(regionCode).reset(cleanedPhoneNumber); // format the phone number
+      setPhoneNumber(newPhoneNumber);
+    };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const cleanedValue = e.target.value.replace(/\D/g, ''); // remove all non-numeric characters
-    const phoneNumber = getAsYouType(regionCode).reset(cleanedValue); // format the phone number
-    setPhoneNumber(phoneNumber);
-  };
+    const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const cleanedValue = e.target.value.replace(/\D/g, ''); // remove all non-numeric characters
+      const phoneNumber = getAsYouType(regionCode).reset(cleanedValue); // format the phone number
+      setPhoneNumber(phoneNumber);
+    };
 
-  useEffect(function handleInitialRegionCode(): void {
-    if (regionCode) return;
-    if (geoLocate) {
-      geoLocateRegionCode().then((r) => setRegionCode(r));
-    } else {
-      const firstCountryCode = Number(countryCodes[0]);
-      setRegionCode(getRegionCodeForCountryCode(firstCountryCode));
-    }
-  }, []);
+    useEffect(function handleInitialRegionCode(): void {
+      if (regionCode) return;
+      if (geoLocate) {
+        geoLocateRegionCode().then((r) => setRegionCode(r));
+      } else {
+        const firstCountryCode = Number(countryCodes[0]);
+        setRegionCode(getRegionCodeForCountryCode(firstCountryCode));
+      }
+    }, []);
 
-  useEffect(
-    function handlePlaceholder(): void {
-      if (!regionCode || isNaN(Number(phoneNumber))) return;
-      const example = getExample(regionCode).toJSON().number.national;
-      setPlaceholder(example);
-    },
-    [regionCode]
-  );
+    useEffect(
+      function handlePlaceholder(): void {
+        if (!regionCode || isNaN(Number(phoneNumber))) return;
+        const example = getExample(regionCode).toJSON().number.national;
+        setPlaceholder(example);
+      },
+      [regionCode]
+    );
 
-  useEffect(
-    function handleOnChange(): void {
-      if (typeof onChange !== 'function') return;
-      const pn = parsePhoneNumber(phoneNumber, regionCode);
-      const json = pn.toJSON();
-      const value = pn.getNumber();
-      onChange({ target: { ...json, id, name: inputName, value } } as React.ChangeEvent<HTMLInputElement>);
-    },
-    [regionCode, phoneNumber]
-  );
+    useEffect(
+      function handleOnChange(): void {
+        if (typeof onChange !== 'function') return;
+        const pn = parsePhoneNumber(phoneNumber, regionCode);
+        const json = pn.toJSON();
+        const value = pn.getNumber();
+        onChange({
+          target: { ...json, id, name: inputName, value },
+        } as React.ChangeEvent<HTMLInputElement>);
+      },
+      [regionCode, phoneNumber]
+    );
 
-  return (
-    <Wrapper className={className} columnGap={8}>
-      <Select
-        aria-labelledby={ariaDescribedBy}
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        className='country-code-select'
-        hasError={hasError}
-        id={`${id}-country-code`}
-        name={`${inputName}-country-code`}
-        onChange={handleCountryCodeChange}
-        required={isRequired}
-        value={getCountryCodeForRegionCode(regionCode)}
-      >
-        {countryCodes.map((countryCode) => (
-          <Option key={countryCode} value={countryCode}>
-            +{countryCode}
-          </Option>
-        ))}
-      </Select>
+    return (
+      <Wrapper className={className} columnGap={8}>
+        <Select
+          aria-labelledby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          className='country-code-select'
+          hasError={hasError}
+          id={`${id}-country-code`}
+          name={`${inputName}-country-code`}
+          onChange={handleCountryCodeChange}
+          required={isRequired}
+          value={getCountryCodeForRegionCode(regionCode)}
+        >
+          {countryCodes.map((countryCode) => (
+            <Option key={countryCode} value={countryCode}>
+              +{countryCode}
+            </Option>
+          ))}
+        </Select>
 
-      <Input
-        aria-labelledby={ariaDescribedBy}
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        hasError={hasError}
-        id={id}
-        name={inputName}
-        onChange={handlePhoneNumberChange}
-        placeholder={placeholder}
-        ref={ref}
-        required={isRequired}
-        type='text'
-        value={phoneNumber}
-        {...additionalPhoneInputProps}
-      />
-    </Wrapper>
-  );
-});
+        <Input
+          aria-labelledby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          hasError={hasError}
+          id={id}
+          name={inputName}
+          onChange={handlePhoneNumberChange}
+          placeholder={placeholder}
+          ref={ref}
+          required={isRequired}
+          type='text'
+          value={phoneNumber}
+          {...additionalPhoneInputProps}
+        />
+      </Wrapper>
+    );
+  }
+);

@@ -34,35 +34,37 @@ export interface NativeSelectProps extends GlobalInputProps {
 /**
  * Select component
  */
-export const NativeSelect = React.forwardRef((props: NativeSelectProps, ref: React.RefObject<HTMLSelectElement>) => {
-  const {
-    ariaDescribedBy,
-    ariaErrorMessage,
-    children,
-    className,
-    hasError,
-    id,
-    isRequired,
-    name,
-    value,
-    ...additionalInputProps
-  } = props;
+export const NativeSelect = React.forwardRef(
+  (props: NativeSelectProps, ref: React.RefObject<HTMLSelectElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      children,
+      className,
+      hasError,
+      id,
+      isRequired,
+      name,
+      value,
+      ...additionalInputProps
+    } = props;
 
-  return (
-    <Wrapper className={className} hasError={hasError}>
-      <select
-        aria-labelledby={ariaDescribedBy}
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        id={id}
-        name={name || id}
-        ref={ref}
-        required={isRequired}
-        value={value}
-        {...additionalInputProps}
-      >
-        {children}
-      </select>
-    </Wrapper>
-  );
-});
+    return (
+      <Wrapper className={className} hasError={hasError}>
+        <select
+          aria-labelledby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          id={id}
+          name={name || id}
+          ref={ref}
+          required={isRequired}
+          value={value}
+          {...additionalInputProps}
+        >
+          {children}
+        </select>
+      </Wrapper>
+    );
+  }
+);

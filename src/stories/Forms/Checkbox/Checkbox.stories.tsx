@@ -10,7 +10,8 @@ export const Primary = {
     id: 'example',
     children: (
       <>
-        Confirm that you have read and accepted our <a href='#'>Privacy Policy</a> and <a href='#'>Terms of Service</a>.
+        Confirm that you have read and accepted our <a href='#'>Privacy Policy</a> and{' '}
+        <a href='#'>Terms of Service</a>.
       </>
     ),
   },

@@ -15,12 +15,10 @@ export const Primary = {
 
 const Template = ({ alert, hint, id, isRequired, geoLocate }) => {
   return (
-    <>
-      <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
-        <Label>Label</Label>
-        <PhoneInput geoLocate={geoLocate} />
-      </InputWrapper>
-    </>
+    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+      <Label>Label</Label>
+      <PhoneInput geoLocate={geoLocate} />
+    </InputWrapper>
   );
 };
 

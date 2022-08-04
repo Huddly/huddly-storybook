@@ -46,6 +46,8 @@ const CountriesFromApiTemplate = ({ alert, hint, id, isRequired, showItems }) =>
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       <Label>Countries</Label>
       <Select showItems={showItems}>
+        <Option value='pink'>Pink</Option>
+
         {countries.map(({ name, alpha2Code, flags }) => (
           <Option key={alpha2Code} value={alpha2Code}>
             <img src={flags.png} alt={`Flag of ${name}`} loading='lazy' />

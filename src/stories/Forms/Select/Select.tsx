@@ -137,7 +137,8 @@ const SelectListHoverBackground = styled.span`
   width: 100%;
   pointer-events: none;
   background-color: var(--color-whisperBlue);
-  transition: height 100ms ease-in-out, opacity 120ms ease-in-out 70ms, transform 120ms ease-out 12ms;
+  transition: height 100ms ease-in-out, opacity 120ms ease-in-out 70ms,
+    transform 120ms ease-out 12ms;
   will-change: height, opacity, transform;
 `;
 
@@ -151,7 +152,10 @@ const HiddenSelectedValueInput = styled.input`
   pointer-events: none;
 `;
 
-const getSelectListHeight = (showItems: number, selectListRef: React.RefObject<HTMLUListElement>): number => {
+const getSelectListHeight = (
+  showItems: number,
+  selectListRef: React.RefObject<HTMLUListElement>
+): number => {
   const selectList = selectListRef.current;
   const selectListChildren = selectList?.children;
   if (!selectListChildren) return 0;
@@ -180,7 +184,9 @@ const handleSelectHoverBackground = (
     const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
     selectListHoverBackgroundRef.current.style.opacity = '1';
     selectListHoverBackgroundRef.current.style.height = `${rect.height + separatorLineWidth}px`;
-    selectListHoverBackgroundRef.current.style.transform = `translateY(${rect.y - parentRect.y - parentRectBorder}px)`;
+    selectListHoverBackgroundRef.current.style.transform = `translateY(${
+      rect.y - parentRect.y - parentRectBorder
+    }px)`;
   };
 
   const hideHoverBackground = () => {
@@ -266,224 +272,237 @@ export interface SelectProps extends GlobalInputProps {
 /**
  * Select component
  */
-export const Select = React.forwardRef((props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
-  const {
-    ariaDescribedBy,
-    ariaErrorMessage,
-    children,
-    className,
-    hasError,
-    id,
-    isRequired,
-    name,
-    onBlur,
-    onChange,
-    showItems = 6,
-    value,
-    ...additionalPhoneInputProps
-  } = props;
+export const Select = React.forwardRef(
+  (props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      children,
+      className,
+      hasError,
+      id,
+      isRequired,
+      name,
+      onBlur,
+      onChange,
+      showItems = 6,
+      value,
+      ...additionalPhoneInputProps
+    } = props;
 
-  if (!validateChildren(children)) {
-    throw new Error('Select component: children can only contain Option components.');
-  }
-
-  const selectName = name || id;
-  const placeholder = '- Select option -';
-
-  const selectWrapperRef = useRef<HTMLDivElement>(null);
-  const selectButtonRef = useRef<HTMLButtonElement>(null);
-  const selectListRef = useRef<HTMLUListElement>(null);
-  const selectListHoverBackgroundRef = useRef<HTMLSpanElement>(null);
-  const filterSearchRef = useRef<HTMLInputElement>(null);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(value);
-  const [selectListHeight, setSelectListHeight] = useState(0);
-  const [filterSearch, setFilterSearch] = useState('');
-
-  useEffect(() => {
-    setSelected(value);
-  }, [value]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const selectList = selectListRef.current;
-      const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
-      if (!selectListChildren) return;
-
-      const activeElement = document.activeElement as HTMLElement;
-      const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
-
-      if (['Escape', 'ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
-        e.preventDefault();
-      }
-
-      switch (e.key) {
-        case ' ':
-          if (activeElement === selectButtonRef.current && !isOpen) {
-            setIsOpen(true);
-          }
-          break;
-
-        case 'Escape':
-          setIsOpen(false);
-          selectButtonRef?.current?.focus();
-          break;
-
-        case 'ArrowUp':
-          if (activeElementIndex === -1) return;
-          if (activeElementIndex === 0) {
-            selectList.focus();
-          } else {
-            selectListChildren[activeElementIndex - 1].focus();
-          }
-          break;
-
-        case 'ArrowDown':
-          if (activeElementIndex === -1) return;
-          if (activeElementIndex === selectListChildren.length - 1) {
-            selectList.focus();
-          } else {
-            selectListChildren[activeElementIndex + 1].focus();
-          }
-          break;
-
-        case 'Enter':
-          if (activeElementIndex !== -1) {
-            selectListChildren[activeElementIndex].click();
-          }
-          break;
-        case 'Tab':
-          filterSearchRef?.current?.setAttribute('tabindex', activeElement === selectButtonRef.current ? '-1' : '0');
-          break;
-        default:
-          if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
-          if (filterSearchRef.current) {
-            filterSearchRef.current.focus();
-          }
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    setSelectListHeight(getSelectListHeight(showItems, selectListRef));
-    handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
-  }, [selectListRef, children, filterSearch]);
-
-  useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
-
-  const handleValueSelect = (event) => {
-    const { target } = event;
-    const selectedValue = target.dataset.value;
-    if (!selectedValue) {
-      console.error('Select component: value is not defined', target);
-      return;
+    if (!validateChildren(children)) {
+      throw new Error('Select component: children can only contain Option components.');
     }
-    setFilterSearch('');
-    setIsOpen(false);
-    setSelected(selectedValue);
-    selectButtonRef?.current?.focus();
-    onChange &&
-      onChange({ target: { name: selectName, id, value: selectedValue } } as React.ChangeEvent<HTMLInputElement>);
-  };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.currentTarget.contains(e.relatedTarget)) return;
-    onBlur && onBlur({ target: { name: selectName, id, value: selected } } as React.FocusEvent<HTMLInputElement>);
-  };
+    const selectName = name || id;
+    const placeholder = '- Select option -';
 
-  const selectContent = getLabelOfSelectedValue(children, selected);
-  const selectContentAsString = getSelectContentAsString(selectContent);
-  const filteredChildren = getChildrenByQuery(children, filterSearch);
-  const filteredChildrenEmpty = React.Children.toArray(filteredChildren).length === 0;
+    const selectWrapperRef = useRef<HTMLDivElement>(null);
+    const selectButtonRef = useRef<HTMLButtonElement>(null);
+    const selectListRef = useRef<HTMLUListElement>(null);
+    const selectListHoverBackgroundRef = useRef<HTMLSpanElement>(null);
+    const filterSearchRef = useRef<HTMLInputElement>(null);
 
-  return (
-    <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
-      <SelectButton
-        aria-activedescendant={selected}
-        aria-errormessage={ariaErrorMessage}
-        aria-expanded={isOpen}
-        aria-haspopup='listbox'
-        aria-labelledby={`${ariaDescribedBy || ''} ${id}-select-button`}
-        aria-owns={`${id}-select-list`}
-        hasError={hasError}
-        hasLabel={!!selectContent}
-        id={`${id}-select-button`}
-        isOpen={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
-        ref={selectButtonRef}
-        title={selectContentAsString}
-        type='button'
-        value={selected}
-      >
-        {isOpen ? (
-          <FilterSearch
-            aria-autocomplete='list'
-            aria-controls={`${id}-select-list`}
-            onChange={(e) => setFilterSearch(e.target.value)}
-            placeholder='Search options ...'
-            ref={filterSearchRef}
-            type='text'
-            tabIndex={-1}
-            value={filterSearch}
-          />
-        ) : (
-          <SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
-            {selectContent || placeholder}
-          </SelectedContent>
-        )}
-        <Icon name='ChevronDown' className='chevron' aria-hidden='true' />
-      </SelectButton>
+    const [isOpen, setIsOpen] = useState(false);
+    const [selected, setSelected] = useState<string | null>(value);
+    const [selectListHeight, setSelectListHeight] = useState(0);
+    const [filterSearch, setFilterSearch] = useState('');
 
-      {children && (
-        <SelectListWrapper
+    useEffect(() => {
+      setSelected(value);
+    }, [value]);
+
+    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        const selectList = selectListRef.current;
+        const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
+        if (!selectListChildren) return;
+
+        const activeElement = document.activeElement as HTMLElement;
+        const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
+
+        if (['Escape', 'ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
+          e.preventDefault();
+        }
+
+        switch (e.key) {
+          case ' ':
+            if (activeElement === selectButtonRef.current && !isOpen) {
+              setIsOpen(true);
+            }
+            break;
+
+          case 'Escape':
+            setIsOpen(false);
+            selectButtonRef?.current?.focus();
+            break;
+
+          case 'ArrowUp':
+            if (activeElementIndex === -1) return;
+            if (activeElementIndex === 0) {
+              selectList.focus();
+            } else {
+              selectListChildren[activeElementIndex - 1].focus();
+            }
+            break;
+
+          case 'ArrowDown':
+            if (activeElementIndex === -1) return;
+            if (activeElementIndex === selectListChildren.length - 1) {
+              selectList.focus();
+            } else {
+              selectListChildren[activeElementIndex + 1].focus();
+            }
+            break;
+
+          case 'Enter':
+            if (activeElementIndex !== -1) {
+              selectListChildren[activeElementIndex].click();
+            }
+            break;
+          case 'Tab':
+            filterSearchRef?.current?.setAttribute(
+              'tabindex',
+              activeElement === selectButtonRef.current ? '-1' : '0'
+            );
+            break;
+          default:
+            if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
+            if (filterSearchRef.current) {
+              filterSearchRef.current.focus();
+            }
+            break;
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isOpen]);
+
+    useEffect(() => {
+      setSelectListHeight(getSelectListHeight(showItems, selectListRef));
+      handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
+    }, [selectListRef, children, filterSearch]);
+
+    useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
+
+    const handleValueSelect = (event) => {
+      const { target } = event;
+      const selectedValue = target.dataset.value;
+      if (!selectedValue) {
+        console.error('Select component: value is not defined', target);
+        return;
+      }
+      setFilterSearch('');
+      setIsOpen(false);
+      setSelected(selectedValue);
+      selectButtonRef?.current?.focus();
+      onChange &&
+        onChange({
+          target: { name: selectName, id, value: selectedValue },
+        } as React.ChangeEvent<HTMLInputElement>);
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (e.currentTarget.contains(e.relatedTarget)) return;
+      onBlur &&
+        onBlur({
+          target: { name: selectName, id, value: selected },
+        } as React.FocusEvent<HTMLInputElement>);
+    };
+
+    const selectContent = getLabelOfSelectedValue(children, selected);
+    const selectContentAsString = getSelectContentAsString(selectContent);
+    const filteredChildren = getChildrenByQuery(children, filterSearch);
+    const filteredChildrenEmpty = React.Children.toArray(filteredChildren).length === 0;
+
+    return (
+      <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
+        <SelectButton
           aria-activedescendant={selected}
           aria-errormessage={ariaErrorMessage}
           aria-expanded={isOpen}
-          aria-labelledby={ariaDescribedBy}
-          aria-multiselectable='false'
-          height={selectListHeight}
-          id={`${id}-select-list`}
+          aria-haspopup='listbox'
+          aria-labelledby={`${ariaDescribedBy || ''} ${id}-select-button`}
+          aria-owns={`${id}-select-list`}
+          hasError={hasError}
+          hasLabel={!!selectContent}
+          id={`${id}-select-button`}
           isOpen={isOpen}
-          role='listbox'
-          tabIndex={isOpen ? 0 : -1}
+          onClick={() => setIsOpen(!isOpen)}
+          ref={selectButtonRef}
+          title={selectContentAsString}
+          type='button'
+          value={selected}
         >
-          <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
-          <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
-            {filteredChildren}
-            {filteredChildrenEmpty && (
-              <SelectListNoResults>
-                <Icon name='Cross' className='cross' />
-                <span>No results found</span>
-              </SelectListNoResults>
-            )}
-          </SelectList>
-        </SelectListWrapper>
-      )}
+          {isOpen ? (
+            <FilterSearch
+              aria-autocomplete='list'
+              aria-controls={`${id}-select-list`}
+              onChange={(e) => setFilterSearch(e.target.value)}
+              placeholder='Search options ...'
+              ref={filterSearchRef}
+              type='text'
+              tabIndex={-1}
+              value={filterSearch}
+            />
+          ) : (
+            <SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
+              {selectContent || placeholder}
+            </SelectedContent>
+          )}
+          <Icon name='ChevronDown' className='chevron' aria-hidden='true' />
+        </SelectButton>
 
-      <HiddenSelectedValueInput
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        aria-labelledby={ariaDescribedBy}
-        id={id}
-        name={selectName}
-        onChange={onChange}
-        onClick={() => selectButtonRef?.current?.click()}
-        placeholder={placeholder}
-        ref={ref}
-        required={isRequired}
-        tabIndex={-1}
-        type='text'
-        value={selected || ''}
-        {...additionalPhoneInputProps}
-      />
-    </Wrapper>
-  );
-});
+        {children && (
+          <SelectListWrapper
+            aria-activedescendant={selected}
+            aria-errormessage={ariaErrorMessage}
+            aria-expanded={isOpen}
+            aria-labelledby={ariaDescribedBy}
+            aria-multiselectable='false'
+            height={selectListHeight}
+            id={`${id}-select-list`}
+            isOpen={isOpen}
+            role='listbox'
+            tabIndex={isOpen ? 0 : -1}
+          >
+            <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
+            <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
+              {filteredChildren}
+              {filteredChildrenEmpty && (
+                <SelectListNoResults>
+                  <Icon name='Cross' className='cross' />
+                  <span>No results found</span>
+                </SelectListNoResults>
+              )}
+            </SelectList>
+          </SelectListWrapper>
+        )}
+
+        {/**
+         * This is a text input used for accissibility purposes.
+         */}
+        <HiddenSelectedValueInput
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          aria-labelledby={ariaDescribedBy}
+          id={id}
+          name={selectName}
+          onChange={onChange}
+          onClick={() => selectButtonRef?.current?.click()}
+          placeholder={placeholder}
+          ref={ref}
+          required={isRequired}
+          tabIndex={-1}
+          type='text'
+          value={selected || ''}
+          {...additionalPhoneInputProps}
+        />
+      </Wrapper>
+    );
+  }
+);

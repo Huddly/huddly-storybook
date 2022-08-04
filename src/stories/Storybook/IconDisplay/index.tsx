@@ -69,7 +69,9 @@ const copyStringToClipboard = (str: string): void => {
 };
 
 const copyIconJsx = (children: React.ReactNode): void => {
-  const iconChild = Array.isArray(children) ? children.find((child) => child.type === Icon) : children;
+  const iconChild = Array.isArray(children)
+    ? children.find((child) => child.type === Icon)
+    : children;
 
   if (!iconChild) {
     throw new Error('IconDisplay expects an icon');

@@ -27,7 +27,15 @@ const invertedDirection: { [key: string]: Direction } = {
   DESC: 'ASC',
 };
 
-const TableHeaderItem = ({ ordering, columnKey, header, align = 'left', width, isSortable, setOrdering }: Props) => {
+const TableHeaderItem = ({
+  ordering,
+  columnKey,
+  header,
+  align = 'left',
+  width,
+  isSortable,
+  setOrdering,
+}: Props) => {
   const onClick = () => {
     const isCurrentlySelected = ordering.field === columnKey;
     const direction = isCurrentlySelected ? invertedDirection[ordering.direction] : 'ASC';
@@ -42,13 +50,21 @@ const TableHeaderItem = ({ ordering, columnKey, header, align = 'left', width, i
         <Flex justify={align === 'right' ? 'flex-end' : 'flex-start'}>
           {header}
           {isSortable && align !== 'right' && (
-            <Carrot onClick={onClick} currentSorting={ordering.field === columnKey} direction={ordering.direction} />
+            <Carrot
+              onClick={onClick}
+              currentSorting={ordering.field === columnKey}
+              direction={ordering.direction}
+            />
           )}
         </Flex>
       </TH>
       {isSortable && align === 'right' && (
         <TH align='right' width='30px'>
-          <Carrot onClick={onClick} currentSorting={ordering.field === columnKey} direction={ordering.direction} />
+          <Carrot
+            onClick={onClick}
+            currentSorting={ordering.field === columnKey}
+            direction={ordering.direction}
+          />
         </TH>
       )}
     </React.Fragment>

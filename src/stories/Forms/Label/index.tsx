@@ -50,7 +50,15 @@ export interface LabelProps {
 /**
  * Label component
  */
-export const Label = ({ children, className, helpLabel, helpLink, htmlFor, id, isRequired }: LabelProps) => {
+export const Label = ({
+  children,
+  className,
+  helpLabel,
+  helpLink,
+  htmlFor,
+  id,
+  isRequired,
+}: LabelProps) => {
   return (
     <Wrapper className={className}>
       <label htmlFor={htmlFor || id}>

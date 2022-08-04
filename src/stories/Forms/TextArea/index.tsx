@@ -23,32 +23,34 @@ const Wrapper = styled.div<WrapperProps>`
 /**
  * TextArea component
  */
-export const TextArea = React.forwardRef((props: GlobalInputProps, ref: React.RefObject<HTMLTextAreaElement>) => {
-  const {
-    ariaDescribedBy,
-    ariaErrorMessage,
-    className,
-    hasError,
-    id,
-    isRequired,
-    name,
-    value,
-    ...additionalInputProps
-  } = props;
+export const TextArea = React.forwardRef(
+  (props: GlobalInputProps, ref: React.RefObject<HTMLTextAreaElement>) => {
+    const {
+      ariaDescribedBy,
+      ariaErrorMessage,
+      className,
+      hasError,
+      id,
+      isRequired,
+      name,
+      value,
+      ...additionalInputProps
+    } = props;
 
-  return (
-    <Wrapper className={className} hasError={hasError}>
-      <textarea
-        aria-labelledby={ariaDescribedBy}
-        aria-errormessage={ariaErrorMessage}
-        aria-invalid={hasError}
-        id={id}
-        name={name || id}
-        ref={ref}
-        required={isRequired}
-        value={value}
-        {...additionalInputProps}
-      />
-    </Wrapper>
-  );
-});
+    return (
+      <Wrapper className={className} hasError={hasError}>
+        <textarea
+          aria-labelledby={ariaDescribedBy}
+          aria-errormessage={ariaErrorMessage}
+          aria-invalid={hasError}
+          id={id}
+          name={name || id}
+          ref={ref}
+          required={isRequired}
+          value={value}
+          {...additionalInputProps}
+        />
+      </Wrapper>
+    );
+  }
+);

@@ -41,12 +41,14 @@ export interface OptionProps {
 /**
  * Option component
  */
-export const Option = React.forwardRef((props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
-  const { children, value } = props;
+export const Option = React.forwardRef(
+  (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
+    const { children, value } = props;
 
-  return (
-    <Wrapper ref={ref} role='option' tabIndex={0} data-value={value}>
-      {children}
-    </Wrapper>
-  );
-});
+    return (
+      <Wrapper ref={ref} role='option' tabIndex={0} data-value={value}>
+        {children}
+      </Wrapper>
+    );
+  }
+);

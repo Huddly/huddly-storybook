@@ -16,12 +16,16 @@ export default {
 };
 
 const OverviewTemplate = ({ color }) => {
-  const initialIcons: Array<keyof typeof icons> = Object.keys(icons).sort() as Array<keyof typeof icons>;
+  const initialIcons: Array<keyof typeof icons> = Object.keys(icons).sort() as Array<
+    keyof typeof icons
+  >;
   const [iconResults, setIconResults] = useState(initialIcons);
 
   const filter = (e) => {
     const value = e.target.value;
-    const filteredIcons = initialIcons.filter((icon) => icon.toLowerCase().includes(value.toLowerCase()));
+    const filteredIcons = initialIcons.filter((icon) =>
+      icon.toLowerCase().includes(value.toLowerCase())
+    );
     setIconResults(filteredIcons);
   };
 
