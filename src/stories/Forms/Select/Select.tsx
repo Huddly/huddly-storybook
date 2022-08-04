@@ -352,23 +352,19 @@ export const Select = React.forwardRef(
             break;
 
           case 'ArrowUp':
-            if (activeElementIndex === -1) {
+            if (activeElementIndex === 0 || activeElementIndex === -1) {
               selectList.focus();
             }
-            if (activeElementIndex === 0) {
-              selectList.focus();
-            } else {
+            if (activeElementIndex > 0) {
               selectListChildren[activeElementIndex - 1].focus();
             }
             break;
 
           case 'ArrowDown':
-            if (activeElementIndex === -1) {
+            if (activeElementIndex === selectListChildren.length - 1 || activeElementIndex === -1) {
               selectList.focus();
             }
-            if (activeElementIndex === selectListChildren.length - 1) {
-              selectList.focus();
-            } else {
+            if (activeElementIndex < selectListChildren.length - 1) {
               selectListChildren[activeElementIndex + 1].focus();
             }
             break;
