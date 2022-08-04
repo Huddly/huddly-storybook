@@ -11,10 +11,8 @@ import {
 import { GlobalInputProps } from '../../../shared/types';
 import { Select, Option, Input, Flex } from '../../../';
 
-const Wrapper = styled(Flex)`
-  .country-code-select {
-    width: calc(var(--spacing-48) * 2);
-  }
+const StyledSelect = styled(Select)`
+  width: calc(var(--spacing-40) * 3);
 `;
 
 /**
@@ -130,12 +128,11 @@ export const PhoneInput = React.forwardRef(
     );
 
     return (
-      <Wrapper className={className} columnGap={8}>
-        <Select
+      <Flex className={className} columnGap={8}>
+        <StyledSelect
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
-          className='country-code-select'
           hasError={hasError}
           id={`${id}-country-code`}
           name={`${inputName}-country-code`}
@@ -148,7 +145,7 @@ export const PhoneInput = React.forwardRef(
               +{countryCode}
             </Option>
           ))}
-        </Select>
+        </StyledSelect>
 
         <Input
           aria-labelledby={ariaDescribedBy}
@@ -165,7 +162,7 @@ export const PhoneInput = React.forwardRef(
           value={phoneNumber}
           {...additionalPhoneInputProps}
         />
-      </Wrapper>
+      </Flex>
     );
   }
 );
