@@ -42,6 +42,12 @@ const geoLocateRegionCode = async (): Promise<string> => {
   }
 };
 
+const sanitizeAndFormatPhoneNumber = (value: string, regionCode: string): string => {
+  value = value.replace(/\D/g, ''); // remove all non-numeric characters
+  value = getAsYouType(regionCode).reset(value); // format the phone number
+  return value;
+};
+
 export interface PhoneInputProps extends GlobalInputProps {
   /**
    * Whether to use the users IP to determine the region code. Defaults to false.
@@ -84,14 +90,12 @@ export const PhoneInput = React.forwardRef(
       const regionCode = getRegionCodeForCountryCode(countryCode);
       setRegionCode(regionCode);
       // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
-      const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // remove all non-numeric characters
-      const newPhoneNumber = getAsYouType(regionCode).reset(cleanedPhoneNumber); // format the phone number
+      const newPhoneNumber = sanitizeAndFormatPhoneNumber(phoneNumber, regionCode);
       setPhoneNumber(newPhoneNumber);
     };
 
     const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const cleanedValue = e.target.value.replace(/\D/g, ''); // remove all non-numeric characters
-      const phoneNumber = getAsYouType(regionCode).reset(cleanedValue); // format the phone number
+      const phoneNumber = sanitizeAndFormatPhoneNumber(e.target.value, regionCode);
       setPhoneNumber(phoneNumber);
     };
 

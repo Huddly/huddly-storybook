@@ -52,6 +52,9 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   }
 `;
 
+/**
+ * The selected content inside the SelectButton.
+ */
 const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
   display: block;
 
@@ -116,6 +119,9 @@ const SelectList = styled.ul<{ height: number }>`
   }
 `;
 
+/**
+ * Shows up then there are no options to select.
+ */
 const SelectListNoResults = styled.div`
   padding: 13px var(--spacing-16);
   color: var(--color-grey45);
@@ -128,6 +134,10 @@ const SelectListNoResults = styled.div`
   }
 `;
 
+/**
+ * Used to animate the hover background color of the select list items.
+ * It moves with the mouse cursor/focus.
+ */
 const SelectListHoverBackground = styled.span`
   opacity: 0;
   z-index: -1;
@@ -142,6 +152,10 @@ const SelectListHoverBackground = styled.span`
   will-change: height, opacity, transform;
 `;
 
+/**
+ * Text input used for accissibility purposes.
+ * It's hidden from the user but accessible to screen readers.
+ */
 const HiddenSelectedValueInput = styled.input`
   position: absolute;
   width: 0px;
@@ -483,9 +497,6 @@ export const Select = React.forwardRef(
           </SelectListWrapper>
         )}
 
-        {/**
-         * This is a text input used for accissibility purposes.
-         */}
         <HiddenSelectedValueInput
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
