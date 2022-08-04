@@ -352,7 +352,9 @@ export const Select = React.forwardRef(
             break;
 
           case 'ArrowUp':
-            if (activeElementIndex === -1) return;
+            if (activeElementIndex === -1) {
+              selectList.focus();
+            }
             if (activeElementIndex === 0) {
               selectList.focus();
             } else {
@@ -361,7 +363,9 @@ export const Select = React.forwardRef(
             break;
 
           case 'ArrowDown':
-            if (activeElementIndex === -1) return;
+            if (activeElementIndex === -1) {
+              selectList.focus();
+            }
             if (activeElementIndex === selectListChildren.length - 1) {
               selectList.focus();
             } else {
@@ -381,7 +385,7 @@ export const Select = React.forwardRef(
             );
             break;
           default:
-            if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
+            if ((!/^[a-zA-Z0-9]$/.test(e.key) && e.key !== 'Backspace') || !isOpen) return;
             if (filterSearchRef.current) {
               filterSearchRef.current.focus();
             }
