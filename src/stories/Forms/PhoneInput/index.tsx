@@ -116,7 +116,7 @@ export const PhoneInput = React.forwardRef(
 
     useEffect(
       function handleOnChange(): void {
-        if (typeof onChange !== 'function') return;
+        if (!onChange) return;
         const pn = parsePhoneNumber(phoneNumber, regionCode);
         const json = pn.toJSON();
         const value = pn.getNumber();
