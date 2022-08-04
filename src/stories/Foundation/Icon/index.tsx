@@ -24,11 +24,10 @@ export const Icon = ({
   /**
    * Dynamically load the icon from the correct pack
    */
-
   const LazyIcon = useMemo(
     () =>
       React.lazy(() =>
-        import(`node_modules/@huddly/frokost/dist/${pack}`)
+        import(`node_modules/@huddly/frokost/dist/${pack}/index.js`)
           .then((module) => {
             if (!module[name]) {
               throw new Error(`Icon "${name}" not found in pack "${pack}"`);

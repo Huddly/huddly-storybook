@@ -29,7 +29,7 @@ export const Primary = () => {
   return (
     <Grid alignItems='start' columns='320px 290px' columnGap={4}>
       <PanTilt updatePosition={updatePosition} zoom={zoom + 0.5} width={320} />
-      <div>
+      <nav>
         <IconButton icon='Plus' onClick={zoomIn} />
         <Slider
           min={zoomMin}
@@ -41,7 +41,7 @@ export const Primary = () => {
           length={195}
         />
         <IconButton icon='Minus' onClick={zoomOut} />
-      </div>
+      </nav>
     </Grid>
   );
 };
