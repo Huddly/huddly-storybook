@@ -37,9 +37,6 @@ export const Icon = ({
           .catch(() => {
             throw new Error(`Icon pack "${pack}" not found`);
           })
-          .finally(() => {
-            console.log('Icon loaded');
-          })
       ),
     [name, pack]
   );
