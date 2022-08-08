@@ -14,15 +14,14 @@ const StyledInput = styled.input<{ vertical: boolean; length: number }>`
   height: ${rem(22)};
   background: transparent;
   -webkit-appearance: none;
-  transform: ${(p) =>
-    p.vertical ? `rotate(270deg) translate(${rem(p.length)})` : ''};
-  transform-origin: ${(p) => (p.vertical ? 'top left' : '')};
+
   &::-webkit-slider-runnable-track {
     height: ${(p) => (p.vertical ? rem(8) : rem(8))};
     border-radius: ${rem(420)};
     background-color: var(--color-grey91);
     cursor: pointer;
   }
+
   &::-webkit-slider-thumb {
     box-sizing: border-box;
     width: ${rem(22)};
@@ -33,6 +32,12 @@ const StyledInput = styled.input<{ vertical: boolean; length: number }>`
     -webkit-appearance: none;
     border: ${rem(3)} solid white;
   }
+
+  /* Styling for vertical slider */
+  ${(p) =>
+    p.vertical &&
+    `transform: rotate(270deg) translate(${rem(-p.length)});
+    transform-origin: top left;`}
 `;
 
 export interface SliderProps {

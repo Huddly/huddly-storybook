@@ -18,7 +18,7 @@ const ButtonElement = styled.button<{ color: Colors }>`
 
   &:hover {
     background: var(--color-grey91);
-    box-shadow: ${rem(0)} ${rem(0)} ${rem(0)} ${rem(3)} var(--color-grey91);
+    box-shadow: 0 0 0 ${rem(3)} var(--color-grey91);
     div {
       display: flex;
     }
