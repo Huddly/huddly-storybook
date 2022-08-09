@@ -1,6 +1,7 @@
 import React from 'react';
-import { Colors } from '../../../shared/colors';
+import { Colors } from '@shared/colors';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 
 export interface CardProps {
   background?: Colors;
@@ -9,7 +10,7 @@ export interface CardProps {
 }
 
 const Wrapper = styled.div<CardProps>`
-  border-radius: 8px;
+  border-radius: ${rem(8)};
   background-color: ${(p) => `var(--color-${p.background})`};
   padding: var(--spacing-16);
 `;

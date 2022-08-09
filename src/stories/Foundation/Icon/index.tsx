@@ -1,6 +1,6 @@
 import React from 'react';
 import * as icons from './components';
-import { getHexColor, Colors } from '../../../shared/colors';
+import { getHexColor, Colors } from '@shared/colors';
 
 export type Icons = keyof typeof icons;
 export interface IconProps {

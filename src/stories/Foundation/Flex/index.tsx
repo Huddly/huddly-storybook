@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spacing8 } from '../../../shared/types';
-import { Colors } from '../../../shared/colors';
+import { Spacing8 } from '@shared/types';
+import { Colors } from '@shared/colors';
 
 export interface FlexProps {
   direction?: 'row' | 'row-reverse' | 'column' | 'column-revers';

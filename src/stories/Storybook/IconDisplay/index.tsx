@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from '../../Foundation/Icon';
+import rem from '@shared/pxToRem';
+import { Icon } from '@components/Foundation/Icon';
 
 interface WrapperProps {
   darkBg: boolean;
@@ -10,7 +11,7 @@ const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 90px;
+  height: ${rem(90)};
   padding: var(--spacing-16);
   border-radius: var(--border-radius);
   color: var(--color-grayText);
