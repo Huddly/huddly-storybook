@@ -6,6 +6,7 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "strictNullChecks": false,
+    "moduleResolution": "nodenext",
     "jsx": "react-jsx",
     "lib": ["es6", "dom"],
     "baseUrl": ".",
