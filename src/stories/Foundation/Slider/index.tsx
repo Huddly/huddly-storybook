@@ -16,7 +16,7 @@ const StyledInput = styled.input<{ vertical: boolean; length: number }>`
   -webkit-appearance: none;
 
   &::-webkit-slider-runnable-track {
-    height: ${(p) => (p.vertical ? rem(8) : rem(8))};
+    height: ${rem(8)};
     border-radius: ${rem(420)};
     background-color: var(--color-grey91);
     cursor: pointer;
@@ -26,7 +26,7 @@ const StyledInput = styled.input<{ vertical: boolean; length: number }>`
     box-sizing: border-box;
     width: ${rem(22)};
     height: ${rem(22)};
-    margin-top: ${(p) => (p.vertical ? rem(-7) : rem(-7))};
+    margin-top: ${rem(-7)};
     border-radius: 50%;
     background-color: var(--color-lavender);
     -webkit-appearance: none;
