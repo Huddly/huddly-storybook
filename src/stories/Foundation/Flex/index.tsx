@@ -40,27 +40,32 @@ const Wrapper = styled.div<FlexProps>`
 /**
  * Flex component
  */
-export const Flex = ({
-  direction = 'row',
-  wrap = 'nowrap',
-  justify = 'flex-start',
-  align = 'center',
-  rowGap,
-  columnGap,
-  children,
-  className,
-}: FlexProps) => {
-  return (
-    <Wrapper
-      direction={direction}
-      wrap={wrap}
-      justify={justify}
-      align={align}
-      rowGap={rowGap}
-      columnGap={columnGap}
-      className={className}
-    >
-      {children}
-    </Wrapper>
-  );
-};
+export const Flex = React.forwardRef(
+  (props: FlexProps, ref: React.RefObject<HTMLDivElement>) => {
+    const {
+      direction = 'row',
+      wrap = 'nowrap',
+      justify = 'flex-start',
+      align = 'center',
+      rowGap,
+      columnGap,
+      children,
+      className,
+    } = props;
+
+    return (
+      <Wrapper
+        align={align}
+        className={className}
+        columnGap={columnGap}
+        direction={direction}
+        justify={justify}
+        ref={ref}
+        rowGap={rowGap}
+        wrap={wrap}
+      >
+        {children}
+      </Wrapper>
+    );
+  }
+);

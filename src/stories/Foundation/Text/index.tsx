@@ -17,26 +17,34 @@ export interface TextProps {
   children: React.ReactNode;
   className?: string;
 }
+
+type TextElement = HTMLParagraphElement | HTMLHeadingElement | HTMLSpanElement;
+
 /**
  * Text component
  */
-export const Text = ({
-  size = '14',
-  color = 'black',
-  type = 'p',
-  bold,
-  children,
-  className,
-}: TextProps) => {
-  return (
-    <Wrapper
-      as={type as TextProps['type']}
-      bold={bold}
-      size={size}
-      color={color}
-      className={className}
-    >
-      {children}
-    </Wrapper>
-  );
-};
+export const Text = React.forwardRef(
+  (props: TextProps, ref: React.RefObject<TextElement>) => {
+    const {
+      size = '14',
+      color = 'black',
+      type = 'p',
+      bold,
+      children,
+      className,
+    } = props;
+
+    return (
+      <Wrapper
+        as={type as TextProps['type']}
+        bold={bold}
+        className={className}
+        color={color}
+        ref={ref}
+        size={size}
+      >
+        {children}
+      </Wrapper>
+    );
+  }
+);
