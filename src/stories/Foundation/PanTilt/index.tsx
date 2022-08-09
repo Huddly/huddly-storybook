@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import { BlueTonesEnum } from '../../../shared/colors';
+import rem from '@shared/pxToRem';
+import { BlueTonesEnum } from '@shared/colors';
 import Arrows from './Arrows';
 
 const Wrapper = styled.div<{ width: number; height: number }>`
   background: var(--color-grey91);
-  width: ${(p) => `${p.width}px`};
-  height: ${(p) => `${p.height}px`};
+  width: ${(p) => rem(p.width)};
+  height: ${(p) => rem(p.height)};
   border-radius: var(--spacing-8);
 `;
 

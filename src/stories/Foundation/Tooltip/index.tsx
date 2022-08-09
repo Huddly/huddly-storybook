@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 
 import { Text } from '../Text';
 import { Flex } from '../Flex';
@@ -19,7 +20,7 @@ const ToolTips = styled(Flex)`
   position: absolute;
   // top and left is relative to size of wrapper
   left: 50%;
-  top: -4px;
+  top: ${rem(-4)};
   // transform is relative to size of tooltip
   transform: translate(-50%, -100%);
 `;
@@ -27,16 +28,16 @@ const ToolTips = styled(Flex)`
 const ToolTipText = styled(Text)`
   background: black;
   padding: var(--spacing-4) var(--spacing-8);
-  border-radius: 2px;
+  border-radius: ${rem(2)};
   white-space: nowrap;
 `;
 
 const Triangle = styled.span`
   width: 0;
   height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid black;
+  border-left: ${rem(5)} solid transparent;
+  border-right: ${rem(5)} solid transparent;
+  border-top: ${rem(5)} solid black;
 `;
 
 export interface Props {

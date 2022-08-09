@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GlobalInputProps } from '../../../shared/types';
+import rem from '@shared/pxToRem';
+import { GlobalInputProps } from '@shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
@@ -11,7 +12,7 @@ const Wrapper = styled.div<WrapperProps>`
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: 120px;
+    height: ${rem(120)};
     padding: var(--spacing-16);
     border: ${(p) =>
       p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner } from '../../Foundation/Spinner';
+import rem from '@shared/pxToRem';
+import { Spinner } from '@components/Foundation/Spinner';
 
 const ButtonElement = styled.button<{
   fontSize: ButtonSizes;
@@ -9,7 +10,7 @@ const ButtonElement = styled.button<{
   position: relative;
   justify-content: center;
   align-items: center;
-  font-size: ${(p) => `${p.fontSize}px`};
+  font-size: ${(p) => rem(p.fontSize)};
   padding: 0 var(--spacing-24);
   color: var(--color-grey45);
   font-family: var(--font-family);
@@ -31,9 +32,9 @@ const ButtonElement = styled.button<{
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-lavender);
-    outline-offset: 8px;
-    border-radius: 8px;
+    outline: ${rem(2)} solid var(--color-lavender);
+    outline-offset: ${rem(8)};
+    border-radius: ${rem(8)};
   }
 `;
 

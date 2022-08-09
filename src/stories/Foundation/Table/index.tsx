@@ -1,6 +1,7 @@
 import React from 'react';
-import { TableData, TableColumn, Ordering } from '../../../../src/shared/types';
+import { TableData, TableColumn, Ordering } from '@shared/types';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 import { TableRow } from './TableRow';
 import TableHeaderItem from './TableHeaderItem';
 import { Spinner } from '../Spinner';
@@ -13,7 +14,7 @@ const StyledTable = styled.table<{ fullWidth: boolean }>`
 
 const HeaderRow = styled.thead`
   th {
-    border-bottom: 1px solid var(--color-grey91);
+    border-bottom: ${rem(1)} solid var(--color-grey91);
   }
 `;
 

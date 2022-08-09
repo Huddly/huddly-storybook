@@ -1,5 +1,5 @@
 import React, { useMemo, Suspense } from 'react';
-import { getHexColor, Colors } from '../../../shared/colors';
+import { getHexColor, Colors } from '@shared/colors';
 
 export interface IconProps {
   className?: string;

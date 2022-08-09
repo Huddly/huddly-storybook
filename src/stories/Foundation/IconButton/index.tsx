@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../../shared/colors';
-import { Icon, IconProps } from '../Icon';
-import { Spinner } from '../Spinner';
-import { Tooltip } from '../Tooltip';
+
+import rem from '@shared/pxToRem';
+import { Colors } from '@shared/colors';
+import { Icon, Spinner, Tooltip } from '@components';
+import { IconProps } from '@components/Foundation/Icon';
 
 const ButtonElement = styled.button<{ color: Colors }>`
   cursor: pointer;
@@ -12,12 +13,12 @@ const ButtonElement = styled.button<{ color: Colors }>`
   padding: 0;
   width: var(--spacing-24);
   height: var(--spacing-24);
-  border-radius: 2px;
+  border-radius: ${rem(2)};
   position: relative;
 
   &:hover {
     background: var(--color-grey91);
-    box-shadow: 0px 0px 0px 3px var(--color-grey91);
+    box-shadow: 0 0 0 ${rem(3)} var(--color-grey91);
     div {
       display: flex;
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { InfoSmall, WarningSmall } from '@huddly/frokost/havre18px';
-import { ErrorSeverity } from '../../../shared/types';
+import { ErrorSeverity } from '@shared/types';
 
 const Wrapper = styled.div`
   display: flex;
