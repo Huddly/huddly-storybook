@@ -72,11 +72,6 @@ const setCursorPath = (tooltip: HTMLElement, trigger: HTMLElement) => {
   path.style.fill = 'none';
   path.style.pointerEvents = 'all';
 
-  // Debug
-  // path.setAttribute('stroke-dasharray', '2');
-  // path.setAttribute('stroke', 'gray');
-  // path.setAttribute('stroke-linecap', 'round');
-
   svg.appendChild(path);
   tooltip.parentElement.prepend(svg);
 
