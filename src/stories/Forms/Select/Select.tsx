@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { GlobalInputProps } from '../../../shared/types';
-import { Icon } from '../../..';
+import rem from '@shared/pxToRem';
+import { GlobalInputProps } from '@shared/types';
+import { useOnClickOutside } from '@shared/hooks';
+import { Icon } from '@components';
 import { Option, OptionProps } from './Option';
-import { useOnClickOutside } from '../../../shared/hooks';
 
 const Wrapper = styled.div`
   position: relative;
@@ -25,7 +26,7 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   height: var(--spacing-48);
   padding: var(--spacing-16) var(--spacing-8) var(--spacing-16) var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-  border-radius: 3px;
+  border-radius: ${rem(3)};
   color: ${(p) => (p.hasLabel ? 'var(--color-grey15)' : 'var(--color-grey55)')};
   cursor: pointer;
   background-color: var(--color-grey96);
@@ -83,7 +84,7 @@ const FilterSearch = styled.input`
 `;
 
 const SelectListWrapper = styled.div<{ height: number; isOpen: boolean }>`
-  height: ${(p) => (p.isOpen ? `${p.height}px` : '0px')};
+  height: ${(p) => (p.isOpen ? rem(p.height) : rem(0))};
   margin: var(--spacing-4) 0 0 0;
   overflow: hidden;
   position: absolute;
@@ -94,10 +95,10 @@ const SelectListWrapper = styled.div<{ height: number; isOpen: boolean }>`
 `;
 
 const SelectList = styled.ul<{ height: number }>`
-  height: ${(p) => `${p.height}px`};
+  height: ${(p) => rem(p.height)};
   margin: 0;
   padding: 0;
-  border-radius: 3px;
+  border-radius: ${rem(3)};
   overflow-y: auto;
   list-style: none;
   border: var(--border-primary);
@@ -123,7 +124,7 @@ const SelectList = styled.ul<{ height: number }>`
  * Shows up then there are no options to select.
  */
 const SelectListNoResults = styled.div`
-  padding: 13px var(--spacing-16);
+  padding: ${rem(13)} var(--spacing-16);
   color: var(--color-grey45);
   pointer-events: none;
   align-items: center;
@@ -158,8 +159,8 @@ const SelectListHoverBackground = styled.span`
  */
 const HiddenSelectedValueInput = styled.input`
   position: absolute;
-  width: 0px;
-  height: 0px;
+  width: ${rem(0)};
+  height: ${rem(0)};
   overflow: hidden;
   z-index: -1;
   opacity: 0;
@@ -197,10 +198,10 @@ const handleSelectHoverBackground = (
     const rect = node.getBoundingClientRect();
     const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
     selectListHoverBackgroundRef.current.style.opacity = '1';
-    selectListHoverBackgroundRef.current.style.height = `${rect.height + separatorLineWidth}px`;
-    selectListHoverBackgroundRef.current.style.transform = `translateY(${
+    selectListHoverBackgroundRef.current.style.height = rem(rect.height + separatorLineWidth);
+    selectListHoverBackgroundRef.current.style.transform = `translateY(${rem(
       rect.y - parentRect.y - parentRectBorder
-    }px)`;
+    )})`;
   };
 
   const hideHoverBackground = () => {

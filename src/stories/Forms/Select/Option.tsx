@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 
 const Wrapper = styled.li`
   display: flex;
   position: relative;
   align-items: center;
-  padding: 13px var(--spacing-16);
+  padding: ${rem(13)} var(--spacing-16);
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
 
   &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey91);
+    border-bottom: ${rem(1)} solid var(--color-grey91);
   }
 
   figure,
@@ -25,7 +26,7 @@ const Wrapper = styled.li`
   }
 
   & > *:first-child:is(figure, img, svg) {
-    margin-left: -4px;
+    margin-left: ${rem(-4)};
   }
 
   & > * {
