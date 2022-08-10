@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../../shared/colors';
-import { Icon, Icons } from '../Icon';
-import { Spinner } from '../Spinner';
-import { Tooltip } from '../Tooltip';
+
+import rem from '@shared/pxToRem';
+import { Colors } from '@shared/colors';
+import { Icon, Spinner, Tooltip } from '@components';
+import { IconProps } from '@components/Foundation/Icon';
 
 const ButtonElement = styled.button<{ color: Colors }>`
   cursor: pointer;
@@ -12,12 +13,12 @@ const ButtonElement = styled.button<{ color: Colors }>`
   padding: 0;
   width: var(--spacing-24);
   height: var(--spacing-24);
-  border-radius: 2px;
+  border-radius: ${rem(2)};
   position: relative;
 
   &:hover {
     background: var(--color-grey91);
-    box-shadow: 0px 0px 0px 3px var(--color-grey91);
+    box-shadow: 0 0 0 ${rem(3)} var(--color-grey91);
     div {
       display: flex;
     }
@@ -29,7 +30,6 @@ const ButtonElement = styled.button<{ color: Colors }>`
 `;
 
 export interface IconButtonProps {
-  icon: Icons;
   tooltipText?: string;
   className?: string;
   color?: Colors;
@@ -37,6 +37,8 @@ export interface IconButtonProps {
   loading?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  icon: IconProps['name'];
+  pack?: IconProps['pack'];
 }
 
 /**
@@ -50,6 +52,7 @@ export const IconButton = ({
   onClick,
   type = 'button',
   icon,
+  pack,
   tooltipText,
 }: IconButtonProps) => {
   const Button = () => (
@@ -62,7 +65,7 @@ export const IconButton = ({
       type={type}
     >
       {loading && <Spinner size={24} />}
-      {!loading && <Icon name={icon} />}
+      {!loading && <Icon name={icon} pack={pack} />}
     </ButtonElement>
   );
 

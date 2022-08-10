@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { AlertText, Checkbox, Radio } from '../../../index';
+import rem from '@shared/pxToRem';
+import { AlertText, Checkbox, Radio } from '@components';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
@@ -11,7 +11,7 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   display: block;
   width: 100%;
-  max-width: 400px;
+  max-width: ${rem(400)};
   margin-bottom: var(--spacing-32);
 
   // Apply special styling when boxyErrorStyle is true and the input has an error.

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spacing8 } from '../../../shared/types';
-import { StandardColors } from '../../../shared/colors';
+import { Spacing8 } from '@shared/types';
+import { StandardColors } from '@shared/colors';
 
 export interface SpinnerProps {
   className?: string;

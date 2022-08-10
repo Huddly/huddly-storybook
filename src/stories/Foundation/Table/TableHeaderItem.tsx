@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 import { Flex } from '../Flex';
-import { Direction, Ordering } from '../../../shared/types';
+import { Direction, Ordering } from '@shared/types';
 import { Carrot } from './Carrot';
 
 const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`
@@ -59,7 +60,7 @@ const TableHeaderItem = ({
         </Flex>
       </TH>
       {isSortable && align === 'right' && (
-        <TH align='right' width='30px'>
+        <TH align='right' width={rem(30)}>
           <Carrot
             onClick={onClick}
             currentSorting={ordering.field === columnKey}

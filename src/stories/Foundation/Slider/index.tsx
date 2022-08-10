@@ -1,36 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
+import rem from '@shared/pxToRem';
 
 const Wrapper = styled.div<{ vertical: boolean; length: number }>`
   position: relative;
-  width: ${(p) => (p.vertical ? '22px' : `${p.length}px`)};
-  height: ${(p) => (p.vertical ? `${p.length}px` : '22px')};
+  width: ${(p) => (p.vertical ? rem(22) : rem(p.length))};
+  height: ${(p) => (p.vertical ? rem(p.length) : rem(22))};
 `;
 
 const StyledInput = styled.input<{ vertical: boolean; length: number }>`
   position: absolute;
-  width: ${(p) => `${p.length}px`};
-  height: 22px;
+  width: ${(p) => rem(p.length)};
+  height: ${rem(22)};
   background: transparent;
   -webkit-appearance: none;
-  transform: ${(p) => (p.vertical ? `rotate(270deg) translate(-${p.length}px)` : '')};
-  transform-origin: ${(p) => (p.vertical ? 'top left' : '')};
+
   &::-webkit-slider-runnable-track {
-    height: ${(p) => (p.vertical ? '8px' : '8px')};
-    border-radius: 420px;
+    height: ${rem(8)};
+    border-radius: ${rem(420)};
     background-color: var(--color-grey91);
     cursor: pointer;
   }
+
   &::-webkit-slider-thumb {
     box-sizing: border-box;
-    width: 22px;
-    height: 22px;
-    margin-top: ${(p) => (p.vertical ? '-7px' : '-7px')};
+    width: ${rem(22)};
+    height: ${rem(22)};
+    margin-top: ${rem(-7)};
     border-radius: 50%;
     background-color: var(--color-lavender);
     -webkit-appearance: none;
-    border: 3px solid white;
+    border: ${rem(3)} solid white;
   }
+
+  /* Styling for vertical slider */
+  ${(p) =>
+    p.vertical &&
+    `transform: rotate(270deg) translate(${rem(-p.length)});
+    transform-origin: top left;`}
 `;
 
 export interface SliderProps {

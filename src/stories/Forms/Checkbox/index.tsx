@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GlobalInputProps } from '../../../shared/types';
+import rem from '@shared/pxToRem';
+import { GlobalInputProps } from '@shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
@@ -20,7 +21,7 @@ const Wrapper = styled.div<WrapperProps>`
       width: var(--spacing-16);
       height: var(--spacing-16);
       margin-right: var(--spacing-8);
-      border-radius: 2px;
+      border-radius: ${rem(2)};
       content: '';
 
       border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
@@ -34,13 +35,13 @@ const Wrapper = styled.div<WrapperProps>`
   input[type='checkbox'] {
     opacity: 0;
     position: absolute;
-    left: -99999px; // This is to hide the checkbox without affecting screen readers
+    left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
 
     // Focus ring
     &:focus + label:before {
-      outline: 1px dotted #212121; // Fallback to non-webkit browsers
-      outline: 5px auto -webkit-focus-ring-color;
-      outline-offset: 3px;
+      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
+      outline: ${rem(5)} auto -webkit-focus-ring-color;
+      outline-offset: ${rem(3)};
     }
 
     // Checked checkbox style

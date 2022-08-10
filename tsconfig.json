@@ -6,11 +6,14 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "strictNullChecks": false,
+    "moduleResolution": "nodenext",
     "jsx": "react-jsx",
     "lib": ["es6", "dom"],
     "baseUrl": ".",
     "paths": {
-      "*": ["./node_modules/*"]
+      "@shared/*": ["src/shared/*"],
+      "@components": ["src/index"],
+      "@components/*": ["src/stories/*"]
     },
     "typeRoots": ["./node_modules/@types"],
     "types": ["node"]

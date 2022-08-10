@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colors } from '../../../shared/colors';
+import { Colors } from '@shared/colors';
 import styled from 'styled-components';
 
 export const Wrapper = styled.p<TextProps>`

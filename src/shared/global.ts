@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { normalizeStyles } from '@shared/normalizeStyles';
 import {
   YellowTonesHtml,
   BlueTonesHtml,
@@ -11,8 +12,8 @@ import {
   SignalScaleTonesHtml,
   DarkGrayTonesHtml,
   WhiteHtml,
-} from './colors';
-import { normalizeStyles } from './normalizeStyles';
+} from '@shared/colors';
+import rem from '@shared/pxToRem';
 
 export const GlobalStyles = createGlobalStyle`
   /* Normalize */
@@ -36,35 +37,35 @@ export const GlobalStyles = createGlobalStyle`
     ${WhiteHtml}
 
     /* Font sizes */
-    --font-size-12: 12px;
-    --font-size-14: 14px;
-    --font-size-16: 16px;
-    --font-size-18: 18px;
-    --font-size-20: 20px;
-    --font-size-22: 22px;
-    --font-size-28: 28px;
-    --font-size-48: 48px;
-    --font-size-68: 68px;
-    --font-size-98: 98px;
+    --font-size-12: ${rem(12)};
+    --font-size-14: ${rem(14)};
+    --font-size-16: ${rem(16)};
+    --font-size-18: ${rem(18)};
+    --font-size-20: ${rem(20)};
+    --font-size-22: ${rem(22)};
+    --font-size-28: ${rem(28)};
+    --font-size-48: ${rem(48)};
+    --font-size-68: ${rem(68)};
+    --font-size-98: ${rem(98)};
 
     /* Spacing */
-    --spacing-4: 4px;
-    --spacing-8: 8px;
-    --spacing-16: 16px;
-    --spacing-24: 24px;
-    --spacing-32: 32px;
-    --spacing-40: 40px;
-    --spacing-48: 48px;
-    --spacing-56: 56px;
-    --spacing-64: 64px;
+    --spacing-4: ${rem(4)};
+    --spacing-8: ${rem(8)};
+    --spacing-16: ${rem(16)};
+    --spacing-24: ${rem(24)};
+    --spacing-32: ${rem(32)};
+    --spacing-40: ${rem(40)};
+    --spacing-48: ${rem(48)};
+    --spacing-56: ${rem(56)};
+    --spacing-64: ${rem(64)};
 
     /* Borders */
-    --border-primary: 2px solid var(--color-grey76);
-    --border-error: 2px solid var(--color-hotOrange);
-    --border-active: 2px solid var(--color-lavender);
+    --border-primary: ${rem(2)} solid var(--color-grey76);
+    --border-error: ${rem(2)} solid var(--color-hotOrange);
+    --border-active: ${rem(2)} solid var(--color-lavender);
 
     /* Border radius */
-    --border-radius: 6px;
+    --border-radius: ${rem(6)};
 
     /* Fonts */
     --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;

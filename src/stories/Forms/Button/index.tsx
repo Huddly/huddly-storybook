@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner } from '../../Foundation/Spinner';
-import { BlueTonesEnum, DarkGrayTonesEnum } from '../../../shared/colors';
+import rem from '@shared/pxToRem';
+import { Spinner } from '@components/Foundation/Spinner';
+import { BlueTonesEnum, DarkGrayTonesEnum } from '@shared/colors';
 
 const ButtonStateColors = {
   lavender: {
@@ -27,25 +28,25 @@ const ButtonElement = styled.button<{
   position: relative;
   justify-content: center;
   align-items: center;
-  height: ${(p) => `${p.height}px`};
+  height: ${(p) => rem(p.height)};
   padding: 0 var(--spacing-24);
-  border: solid 2px var(--button-color);
-  border-radius: 30px;
+  border: solid ${rem(2)} var(--button-color);
+  border-radius: ${rem(30)};
   color: ${(p) => (p.secondary ? 'var(--button-color)' : 'var(--color-white)')};
   font-family: var(--font-family);
   background: ${(p) => (p.secondary ? 'transparent' : 'var(--button-color)')};
-  font-size: ${(p) => (p.height === 32 ? '16px' : '18px')};
-  padding: ${(p) => (p.height === 32 ? '5px 12px' : '12px 20px')};
+  font-size: ${(p) => (p.height === 32 ? `${rem(16)}` : `${rem(18)}`)};
+  padding: ${(p) => (p.height === 32 ? `${rem(5)} ${rem(12)}` : `${rem(12)} ${rem(20)}`)};
   cursor: pointer;
 
   :hover {
     background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover)};
-    border: ${(p) => `solid 2px ${ButtonStateColors[p.color].hover}`};
+    border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].hover}`};
   }
 
   :active {
     background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active)};
-    border: ${(p) => `solid 2px ${ButtonStateColors[p.color].active}`};
+    border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].active}`};
   }
 
   :disabled {
@@ -56,8 +57,8 @@ const ButtonElement = styled.button<{
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-lavender);
-    outline-offset: 2px;
+    outline: ${rem(2)} solid var(--color-lavender);
+    outline-offset: ${rem(2)};
   }
 `;
 
