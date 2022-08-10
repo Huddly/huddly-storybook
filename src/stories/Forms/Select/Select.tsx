@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import rem from '@shared/pxToRem';
 import { GlobalInputProps } from '@shared/types';
 import { useOnClickOutside } from '@shared/hooks';
-import { Icon } from '@components';
 import { Option, OptionProps } from './Option';
+import { ChevronDown, Search } from '@huddly/frokost/havre';
 
 const Wrapper = styled.div`
   position: relative;
@@ -43,7 +43,7 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
     border: var(--border-active);
   }
 
-  .chevron {
+  .chevron-icon {
     transition: 0.15s ease-in-out;
     ${(p) => (p.isOpen ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
 
@@ -124,11 +124,12 @@ const SelectList = styled.ul<{ height: number }>`
  * Shows up then there are no options to select.
  */
 const SelectListNoResults = styled.div`
-  padding: ${rem(13)} var(--spacing-16);
+  padding: ${rem(12)};
   color: var(--color-grey45);
   pointer-events: none;
   align-items: center;
   display: flex;
+  column-gap: var(--spacing-8);
 
   path {
     fill: var(--color-grey35);
@@ -469,7 +470,7 @@ export const Select = React.forwardRef(
               {selectContent || placeholder}
             </SelectedContent>
           )}
-          <Icon name='ChevronDown' className='chevron' aria-hidden='true' />
+          <ChevronDown className='chevron-icon' aria-hidden='true' />
         </SelectButton>
 
         {children && (
@@ -490,7 +491,7 @@ export const Select = React.forwardRef(
               {filteredChildren}
               {filteredChildrenEmpty && (
                 <SelectListNoResults>
-                  <Icon name='Cross' className='cross' />
+                  <Search className='search-icon' />
                   <span>No results found</span>
                 </SelectListNoResults>
               )}
