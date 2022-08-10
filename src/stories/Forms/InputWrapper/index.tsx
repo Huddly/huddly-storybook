@@ -84,20 +84,17 @@ export const InputWrapper = React.forwardRef(
      * If the component is a fragment, we need to pass props to each child inside the fragment.
      * However, if the child is not a valid react component, don't pass props at all.
      */
-    const childrenWithGlobalInputProps = React.Children.map(
-      children,
-      (child) => {
-        if (child.type === React.Fragment) {
-          return React.Children.map(child.props.children, (child) => {
-            if (typeof child?.type === 'string') return child;
-            return React.cloneElement(child, globalInputProps);
-          });
-        }
-
-        if (typeof child?.type === 'string') return child;
-        return React.cloneElement(child, globalInputProps);
+    const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
+      if (child.type === React.Fragment) {
+        return React.Children.map(child.props.children, (child) => {
+          if (typeof child?.type === 'string') return child;
+          return React.cloneElement(child, globalInputProps);
+        });
       }
-    );
+
+      if (typeof child?.type === 'string') return child;
+      return React.cloneElement(child, globalInputProps);
+    });
 
     /*
      * We apply special error styles for inputs such as checkboxes and radio buttons.

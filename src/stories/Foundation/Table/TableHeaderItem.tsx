@@ -39,9 +39,7 @@ const TableHeaderItem = ({
 }: Props) => {
   const onClick = () => {
     const isCurrentlySelected = ordering.field === columnKey;
-    const direction = isCurrentlySelected
-      ? invertedDirection[ordering.direction]
-      : 'ASC';
+    const direction = isCurrentlySelected ? invertedDirection[ordering.direction] : 'ASC';
     setOrdering({
       field: columnKey,
       direction: direction,

@@ -2,7 +2,7 @@ import { TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Table } from '.';
 import { Input } from '../../Forms/Input';
-import { Select } from '../../Forms/Select';
+import { NativeSelect as Select } from '../../Forms/NativeSelect';
 import { Text } from '../Text';
 import { useState } from 'react';
 import { Checkbox } from '../../Forms/Checkbox';
@@ -47,9 +47,7 @@ const columns = [
     columnKey: 'office',
     header: 'Current office',
     align: 'left',
-    valueFormatter: (row: TableData) => (
-      <Text color='lavender'>{row['office'] ?? ''}</Text>
-    ),
+    valueFormatter: (row: TableData) => <Text color='lavender'>{row['office'] ?? ''}</Text>,
     editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
       <Input
         id='office'

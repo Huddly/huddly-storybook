@@ -36,19 +36,16 @@ const ButtonElement = styled.button<{
   font-family: var(--font-family);
   background: ${(p) => (p.secondary ? 'transparent' : 'var(--button-color)')};
   font-size: ${(p) => (p.height === 32 ? `${rem(16)}` : `${rem(18)}`)};
-  padding: ${(p) =>
-    p.height === 32 ? `${rem(5)} ${rem(12)}` : `${rem(12)} ${rem(20)}`};
+  padding: ${(p) => (p.height === 32 ? `${rem(5)} ${rem(12)}` : `${rem(12)} ${rem(20)}`)};
   cursor: pointer;
 
   :hover {
-    background: ${(p) =>
-      p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover};
+    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover)};
     border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].hover}`};
   }
 
   :active {
-    background: ${(p) =>
-      p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active};
+    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active)};
     border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].active}`};
   }
 
@@ -113,9 +110,7 @@ export const Button = ({
       height={size}
     >
       <ButtonLabel hide={loading}>{children}</ButtonLabel>
-      {loading && (
-        <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />
-      )}
+      {loading && <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />}
     </ButtonElement>
   );
 };

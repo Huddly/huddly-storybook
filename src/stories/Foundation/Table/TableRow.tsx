@@ -51,19 +51,8 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
   return (
     <TR>
       {columns.map(
-        (
-          {
-            align = 'left',
-            columnKey,
-            editFormatter,
-            valueFormatter,
-            isSortable,
-          },
-          i
-        ) => {
-          let renderValue = valueFormatter
-            ? valueFormatter(rowValue)
-            : rowValue[columnKey] ?? '';
+        ({ align = 'left', columnKey, editFormatter, valueFormatter, isSortable }, i) => {
+          let renderValue = valueFormatter ? valueFormatter(rowValue) : rowValue[columnKey] ?? '';
 
           if (isEditing && editFormatter) {
             renderValue = editFormatter(rowValue, setRowValue);
@@ -85,18 +74,8 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
         )}
         {row.isEditable && (
           <>
-            {isEditing && (
-              <Button onClick={toggleEditing}>
-                {isEditing ? 'Save' : 'Edit'}
-              </Button>
-            )}
-            {!isEditing && (
-              <IconButton
-                onClick={toggleEditing}
-                icon='Edit'
-                tooltipText='Edit'
-              />
-            )}
+            {isEditing && <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>}
+            {!isEditing && <IconButton onClick={toggleEditing} icon='Edit' tooltipText='Edit' />}
           </>
         )}
       </TD>

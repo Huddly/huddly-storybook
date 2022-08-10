@@ -15,12 +15,7 @@ export interface IconProps {
 /**
  * Icon component
  */
-export const Icon = ({
-  className,
-  color = 'black',
-  name,
-  pack = 'havre',
-}: IconProps) => {
+export const Icon = ({ className, color = 'black', name, pack = 'havre' }: IconProps) => {
   /**
    * Dynamically load the icon from the correct pack
    */

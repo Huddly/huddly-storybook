@@ -14,8 +14,7 @@ const Wrapper = styled.div<WrapperProps>`
     width: 100%;
     height: ${rem(120)};
     padding: var(--spacing-16);
-    border: ${(p) =>
-      p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
+    border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
     border-radius: var(--border-radius);
     font-family: var(--font-family-primary);
     resize: vertical;
@@ -42,7 +41,7 @@ export const TextArea = React.forwardRef(
     return (
       <Wrapper className={className} hasError={hasError}>
         <textarea
-          aria-describedby={ariaDescribedBy}
+          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}

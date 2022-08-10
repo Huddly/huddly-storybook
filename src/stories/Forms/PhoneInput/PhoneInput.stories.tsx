@@ -1,33 +1,23 @@
-import { Radio } from '.';
-import { InputWrapper } from '../../../index';
+import { PhoneInput } from '.';
+import { InputWrapper, Label } from '../../../index';
 
 export default {
-  component: Radio,
+  component: PhoneInput,
 };
 
 export const Primary = {
   args: {
-    id: 'example',
-    children: (
-      <>
-        Confirm that you have read and accepted our <a href='#'>Privacy Policy</a> and{' '}
-        <a href='#'>Terms of Service</a>.
-      </>
-    ),
+    id: 'phoneNumber',
+    geoLocate: true,
+    isRequired: true,
   },
 };
 
-export const Checked = {
-  args: {
-    ...Primary.args,
-    value: true,
-  },
-};
-
-const Template = ({ alert, children, hint, id, isRequired }) => {
+const Template = ({ alert, hint, id, isRequired, geoLocate }) => {
   return (
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
-      <Radio>{children}</Radio>
+      <Label>Label</Label>
+      <PhoneInput geoLocate={geoLocate} />
     </InputWrapper>
   );
 };

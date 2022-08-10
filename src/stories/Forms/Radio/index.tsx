@@ -24,8 +24,7 @@ const Wrapper = styled.div<WrapperProps>`
       border-radius: var(--spacing-16);
       content: '';
 
-      border: ${({ hasError }) =>
-        hasError ? 'var(--border-error)' : 'var(--border-primary)'};
+      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
     }
 
     a {
@@ -36,9 +35,7 @@ const Wrapper = styled.div<WrapperProps>`
   input[type='radio'] {
     opacity: 0;
     position: absolute;
-    left: ${rem(
-      -99999
-    )}; // This is to hide the radio without affecting screen readers
+    left: ${rem(-99999)}; // This is to hide the radio without affecting screen readers
 
     // Focus ring
     &:focus + label:before {
@@ -85,7 +82,7 @@ export const Radio = React.forwardRef(
     return (
       <Wrapper className={className} hasError={hasError}>
         <input
-          aria-describedby={ariaDescribedBy}
+          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           checked={value}

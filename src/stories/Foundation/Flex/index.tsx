@@ -13,13 +13,7 @@ export interface FlexProps {
     | 'space-between'
     | 'space-around'
     | 'space-evenly';
-  align?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'stretch'
-    | 'center'
-    | 'space-between'
-    | 'space-around';
+  align?: 'flex-start' | 'flex-end' | 'stretch' | 'center' | 'space-between' | 'space-around';
   rowGap?: Spacing8;
   columnGap?: Spacing8;
   children: React.ReactNode;

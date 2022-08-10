@@ -9,6 +9,8 @@ export interface GlobalInputProps {
   id?: string;
   isRequired?: boolean;
   name?: string;
+  onBlur?: (event: React.FocusEvent) => void;
+  onChange?: (event: React.ChangeEvent) => void;
   value?: string;
   [x: string]: any;
 }
@@ -20,10 +22,7 @@ export interface TableColumn {
   align?: 'left' | 'right' | 'center';
   width?: string;
   valueFormatter?: (row: TableData) => React.ReactNode;
-  editFormatter?: (
-    row: TableData,
-    setRowData: (row: TableData) => void
-  ) => React.ReactNode;
+  editFormatter?: (row: TableData, setRowData: (row: TableData) => void) => React.ReactNode;
   isSortable?: boolean;
 }
 

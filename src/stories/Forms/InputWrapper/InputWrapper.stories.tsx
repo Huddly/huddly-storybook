@@ -17,8 +17,8 @@ Primary.args = {
     <>
       <p>You can have whatever input inside this compontent.</p>
       <p>
-        The compontent will pass props down to its children as needed to handle
-        helper texts, error states etc...
+        The compontent will pass props down to its children as needed to handle helper texts, error
+        states etc...
       </p>
     </>
   ),

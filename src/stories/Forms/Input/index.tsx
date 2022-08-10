@@ -16,8 +16,7 @@ const Wrapper = styled.div<WrapperProps>`
     width: 100%;
     height: var(--spacing-48);
     padding: var(--spacing-16);
-    border: ${(p) =>
-      p.hasError ? 'var(--border-error)' : 'var(--border-primary)'};
+    border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
     border-radius: var(--border-radius);
     font-size: var(--font-size-16);
   }
@@ -66,7 +65,7 @@ export const Input = React.forwardRef(
         isHidden={type === 'hidden'}
       >
         <input
-          aria-describedby={ariaDescribedBy}
+          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           id={id}

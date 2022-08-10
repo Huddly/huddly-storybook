@@ -62,17 +62,11 @@ export const Label = ({
   return (
     <Wrapper className={className}>
       <label htmlFor={htmlFor || id}>
-        {children}{' '}
-        {!isRequired && <span className='required-text'>(optional)</span>}
+        {children} {!isRequired && <span className='required-text'>(optional)</span>}
       </label>
 
       {helpLink && helpLabel && (
-        <a
-          href={helpLink}
-          className='help-link'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
+        <a href={helpLink} className='help-link' target='_blank' rel='noopener noreferrer'>
           {helpLabel}
         </a>
       )}
