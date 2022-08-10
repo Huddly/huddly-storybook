@@ -1,9 +1,9 @@
-FROM node:14 AS builder
+FROM node:16 AS builder
 
 WORKDIR /app
 COPY . .
 
-RUN npm install
+RUN npm ci
 RUN npm run build-storybook
 
 # nginx state for serving content
