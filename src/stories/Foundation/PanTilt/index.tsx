@@ -19,20 +19,22 @@ export interface PanTiltProps {
   updatePosition: (pan: number, tilt: number) => void; // will return pan and tilt values between -1 and 1
   zoom: number;
   width: number;
-  initialPositionX?: number;
-  initialPositionY?: number;
+  initialPositionPan?: number;
+  initialPositionTilt?: number;
 }
 
 /**
  * PanTilt component
+ * - The zoom values should be between 0 and 1
+ * - The pan and tilt values are between -1 and 1
  */
 export const PanTilt = ({
   className,
   updatePosition,
   zoom,
   width,
-  initialPositionX,
-  initialPositionY,
+  initialPositionPan,
+  initialPositionTilt,
 }: PanTiltProps) => {
   const refRectangle = React.createRef<SVGRectElement>();
   // scale will be between 0.3 and 1, smaller than 0.3 will render to small to show arrows
@@ -53,9 +55,31 @@ export const PanTilt = ({
   const rectangleCenterX = rectangleWidth / 2;
   const rectangleCenterY = rectangleHeight / 2;
 
+  const convertToRange = (
+    [oldMin, oldMax]: [number, number],
+    value: number,
+    [newMin, newMax]: [number, number]
+  ) => {
+    const oRange = oldMax - oldMin;
+    const nRange = newMax - newMin;
+
+    return ((value - oldMin) * nRange) / oRange + newMin;
+  };
+
+  const xRange: [number, number] = [rectangleCenterX, wrapperWidth - rectangleCenterX];
+  const yRange: [number, number] = [rectangleCenterY, wrapperHeight - rectangleCenterY];
+
+  const convertXToPan = (xValue: number) => convertToRange(xRange, xValue, [-1, 1]);
+
+  const convertYToTilt = (yValue: number) => convertToRange(yRange, yValue, [-1, 1]);
+
+  const convertPanToX = (panValue: number) => convertToRange([-1, 1], panValue, xRange);
+
+  const convertTiltToY = (tiltValue: number) => convertToRange([-1, 1], tiltValue, yRange);
+
   const [position, setPosition] = useState({
-    x: initialPositionX ?? 0,
-    y: initialPositionY ?? wrapperCenterY,
+    x: initialPositionPan ? convertPanToX(initialPositionPan) : wrapperCenterX,
+    y: initialPositionTilt ? convertTiltToY(initialPositionTilt) : wrapperCenterY,
   });
 
   useEffect(() => {
@@ -74,14 +98,8 @@ export const PanTilt = ({
     // normalize values between -1 and 1
     // -1 is the value furthest to the left and top the rectangle can move, considering the zoom level
     // 1 is the value furthest to the right and bottom the rectangle can move, considering the zoom level
-    const panValue =
-      wrapperCenterX - rectangleCenterX !== 0 // when aligned in the center the nominator is 0 so the division is invalid
-        ? (position.x - wrapperCenterX) / (wrapperCenterX - rectangleCenterX)
-        : 0;
-    const tiltValue =
-      wrapperCenterY - rectangleCenterY !== 0
-        ? (position.y - wrapperCenterY) / (wrapperCenterY - rectangleCenterY)
-        : 0;
+    const panValue = convertXToPan(position.x);
+    const tiltValue = convertYToTilt(position.y);
 
     updatePosition(panValue, tiltValue);
   };
