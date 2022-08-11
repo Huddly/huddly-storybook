@@ -3,11 +3,10 @@ import styled from 'styled-components';
 
 import rem from '@shared/pxToRem';
 import { Colors } from '@shared/colors';
-import { Icon, Spinner, Tooltip } from '@components';
-import { IconProps } from '@components/Foundation/Icon';
+import { Spinner, Tooltip } from '@components';
 
-const ButtonElement = styled.button<{ color: Colors }>`
-  cursor: pointer;
+const ButtonElement = styled.button<{ color: Colors; loading: boolean }>`
+  cursor: ${(p) => (p.loading ? 'not-allowed' : 'pointer')};
   border: none;
   background: none;
   padding: 0;
@@ -37,8 +36,7 @@ export interface IconButtonProps {
   loading?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
-  icon: IconProps['name'];
-  pack?: IconProps['pack'];
+  icon: React.ComponentType;
 }
 
 /**
@@ -51,21 +49,22 @@ export const IconButton = ({
   loading,
   onClick,
   type = 'button',
-  icon,
-  pack,
+  icon: Icon,
   tooltipText,
 }: IconButtonProps) => {
   const Button = () => (
     <ButtonElement
       aria-busy={loading}
+      aria-label={tooltipText}
       className={className}
       color={color}
       disabled={disabled || loading}
       onClick={onClick}
       type={type}
+      loading={loading}
     >
       {loading && <Spinner size={24} />}
-      {!loading && <Icon name={icon} pack={pack} />}
+      {!loading && <Icon />}
     </ButtonElement>
   );
 
