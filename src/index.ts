@@ -29,7 +29,6 @@ export { ColorBox } from './stories/Foundation/ColorBox';
 export { Flex } from './stories/Foundation/Flex';
 export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
-export { Icon } from './stories/Foundation/Icon';
 export { IconButton } from './stories/Foundation/IconButton';
 export { PanTilt } from './stories/Foundation/PanTilt';
 export { Slider } from './stories/Foundation/Slider';

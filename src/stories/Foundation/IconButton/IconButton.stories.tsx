@@ -1,7 +1,8 @@
+import styled from 'styled-components';
 import { Grid } from '../Grid';
 import { Text } from '../Text';
-import styled from 'styled-components';
 import { IconButton } from '.';
+import { Edit } from '@huddly/frokost/havre';
 
 export default { component: IconButton };
 
@@ -25,9 +26,8 @@ const OverviewTemplate = (props) => {
 };
 
 export const Overview = OverviewTemplate.bind({});
+
 Overview.args = {
-  type: 'iconButton',
-  children: 'Click me',
-  icon: 'Edit',
+  icon: Edit,
   tooltipText: 'Edit',
 };
