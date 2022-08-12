@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { GlobalInputProps } from '@shared/types';
-import { useOnClickOutside } from '@shared/hooks';
+import rem from '../../../shared/pxToRem';
+import { GlobalInputProps } from '../../../shared/types';
+import { useOnClickOutside } from '../../../shared/hooks';
 import { Option, OptionProps } from './Option';
 import { ChevronDown, Search } from '@huddly/frokost/havre';
 

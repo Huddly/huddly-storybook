@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { normalizeStyles } from '@shared/normalizeStyles';
+import { normalizeStyles } from './normalizeStyles';
 import {
   YellowTonesHtml,
   BlueTonesHtml,
@@ -12,8 +12,8 @@ import {
   SignalScaleTonesHtml,
   DarkGrayTonesHtml,
   WhiteHtml,
-} from '@shared/colors';
-import rem from '@shared/pxToRem';
+} from './colors';
+import rem from './pxToRem';
 
 export const GlobalStyles = createGlobalStyle`
   /* Normalize */

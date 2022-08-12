@@ -1,7 +1,7 @@
 import React from 'react';
-import { Colors } from '@shared/colors';
+import { Colors } from '../../../shared/colors';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
 
 export interface CardProps {
   background?: Colors;

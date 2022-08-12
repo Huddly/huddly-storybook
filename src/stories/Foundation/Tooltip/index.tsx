@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
 
 import { Text } from '../Text';
 import { Flex } from '../Flex';
