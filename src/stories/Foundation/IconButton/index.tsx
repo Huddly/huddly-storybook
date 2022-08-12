@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import rem from '@shared/pxToRem';
-import { Colors } from '@shared/colors';
-import { Spinner, Tooltip } from '@components';
+import rem from '../../../shared/pxToRem';
+import { Colors } from '../../../shared/colors';
+import { Spinner, Tooltip } from '../../../index';
 
 const ButtonElement = styled.button<{ color: Colors; loading: boolean }>`
   cursor: ${(p) => (p.loading ? 'not-allowed' : 'pointer')};

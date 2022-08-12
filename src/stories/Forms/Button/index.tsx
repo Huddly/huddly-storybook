@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { Spinner } from '@components/Foundation/Spinner';
-import { BlueTonesEnum, DarkGrayTonesEnum } from '@shared/colors';
+import rem from '../../../shared/pxToRem';
+import { Spinner } from '../../Foundation/Spinner';
+import { BlueTonesEnum, DarkGrayTonesEnum } from '../../../shared/colors';
 
 const ButtonStateColors = {
   lavender: {

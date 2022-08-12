@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
 import { Flex } from '../Flex';
-import { Direction, Ordering } from '@shared/types';
+import { Direction, Ordering } from '../../../shared/types';
 import { Carrot } from './Carrot';
 
 const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`

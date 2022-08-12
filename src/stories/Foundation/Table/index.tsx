@@ -1,7 +1,7 @@
 import React from 'react';
-import { TableData, TableColumn, Ordering } from '@shared/types';
+import { TableData, TableColumn, Ordering } from '../../../shared/types';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
 import { TableRow } from './TableRow';
 import TableHeaderItem from './TableHeaderItem';
 import { Spinner } from '../Spinner';

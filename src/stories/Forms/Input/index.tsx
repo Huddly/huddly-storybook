@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GlobalInputProps } from '@shared/types';
+import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;

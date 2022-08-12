@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { BlueTonesEnum } from '@shared/colors';
+import rem from '../../../shared/pxToRem';
+import { BlueTonesEnum } from '../../../shared/colors';
 import Arrows from './Arrows';
 
 const Wrapper = styled.div<{ width: number; height: number }>`

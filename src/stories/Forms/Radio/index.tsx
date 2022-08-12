@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { GlobalInputProps } from '@shared/types';
+import rem from '../../../shared/pxToRem';
+import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
