@@ -15,10 +15,9 @@ const TD = styled.td<TDProps>`
 `;
 
 const TR = styled.tr`
-  background-color: white;
   height: var(--spacing-48);
   &:hover {
-    background-color: var(--color-grey96);
+    background-color: var(--color-grey91);
   }
 `;
 
@@ -77,7 +76,9 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
         {row.isEditable && (
           <>
             {isEditing && <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>}
-            {!isEditing && <IconButton onClick={toggleEditing} icon={Edit} tooltipText='Edit' />}
+            {!isEditing && (
+              <IconButton color='grey15' onClick={toggleEditing} icon={Edit} tooltipText='Edit' />
+            )}
           </>
         )}
       </TD>
