@@ -2,7 +2,7 @@ import React from 'react';
 import { Direction } from '../../../shared/types';
 import styled from 'styled-components';
 import { ArrowUp, ArrowDown } from '@huddly/frokost/havre18px';
-import { BrightGrayTonesEnum, DarkGrayTonesEnum } from 'src';
+import { BrightGrayTonesEnum, DarkGrayTonesEnum } from '../../../shared/colors';
 
 const Wrapper = styled.button<{
   currentSorting: boolean;
