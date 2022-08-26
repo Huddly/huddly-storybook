@@ -3,7 +3,7 @@ import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
 import { IconButton } from '../IconButton';
-import { Edit } from '@huddly/frokost/havre';
+import { MenuMeatball } from '@huddly/frokost/havre';
 
 interface TDProps {
   align: 'left' | 'right' | 'center';
@@ -77,7 +77,12 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
           <>
             {isEditing && <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>}
             {!isEditing && (
-              <IconButton color='grey15' onClick={toggleEditing} icon={Edit} tooltipText='Edit' />
+              <IconButton
+                color='grey55'
+                onClick={toggleEditing}
+                icon={MenuMeatball}
+                tooltipText='Edit'
+              />
             )}
           </>
         )}
