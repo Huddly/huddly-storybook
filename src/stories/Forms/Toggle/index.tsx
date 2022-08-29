@@ -89,7 +89,6 @@ export const Toggle = React.forwardRef(
       value,
       ...additionalInputProps
     } = props;
-    console.log(hasError);
     return (
       <Wrapper className={className} hasError={hasError}>
         <StyledInput
