@@ -529,7 +529,7 @@ export const Select = React.forwardRef(
                   hasCheckbox: multiselect,
                   selected: selectedArray.includes(child.props.value),
                   onClick: handleValueSelect,
-                });
+                } as OptionProps);
               })}
 
               {filteredChildrenEmpty && (

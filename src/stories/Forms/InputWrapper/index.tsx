@@ -36,7 +36,7 @@ const HintWrapper = styled.div<WrapperProps>`
     ${({ boxyErrorStyle }) =>
       boxyErrorStyle &&
       `position: static; // The hint/error should take up space in the box when boxyErrorStyle is true
-      margin-left: var(--spacing-24); // Align with checkbox/radio label
+      margin-left: var(--spacing-32); // Align with checkbox/radio label
     `}
 
     ${({ boxyErrorStyle, hasError }) =>
