@@ -10,6 +10,7 @@ const StyledTable = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
   border-spacing: 0;
   font-size: var(--font-size-16);
+  border-bottom: ${rem(1)} solid var(--color-grey91);
 `;
 
 const HeaderRow = styled.thead`

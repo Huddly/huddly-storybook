@@ -30,18 +30,17 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   border-radius: ${rem(3)};
   color: ${(p) => (p.hasLabel ? 'var(--color-grey15)' : 'var(--color-grey55)')};
   cursor: pointer;
-  background-color: var(--color-grey96);
+  background-color: ${(p) => (p.isOpen ? 'var(--color-grey96)' : 'var(--color-grey99)')};
   column-gap: var(--spacing-8);
   width: 100%;
 
   &:hover {
-    background-color: var(--color-grey99);
+    background-color: var(--color-grey96);
   }
 
   &:focus,
   &:focus-within {
-    background-color: var(--color-grey99);
-    border: var(--border-active);
+    background-color: var(--color-grey96);
   }
 
   .chevron-icon {
@@ -102,7 +101,7 @@ const SelectList = styled.ul<{ height: number }>`
   border-radius: ${rem(3)};
   overflow-y: auto;
   list-style: none;
-  border: var(--border-primary);
+  border: var(--border-active);
 
   &:focus,
   &:focus-within {

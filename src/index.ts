@@ -18,6 +18,7 @@ export { Radio } from './stories/Forms/Radio';
 export { Select, Option } from './stories/Forms/Select';
 export { TextArea } from './stories/Forms/TextArea';
 export { TextButton } from './stories/Forms/TextButton';
+export { Toggle } from './stories/Forms/Toggle';
 
 /**
  * Foundation

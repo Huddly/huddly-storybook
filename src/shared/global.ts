@@ -60,7 +60,7 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: ${rem(64)};
 
     /* Borders */
-    --border-primary: ${rem(2)} solid var(--color-grey76);
+    --border-primary: ${rem(2)} solid var(--color-grey86);
     --border-error: ${rem(2)} solid var(--color-hotOrange);
     --border-active: ${rem(2)} solid var(--color-lavender);
 
