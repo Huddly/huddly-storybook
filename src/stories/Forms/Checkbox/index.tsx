@@ -57,7 +57,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: boolean;
 }
 
@@ -93,10 +93,7 @@ export const Checkbox = React.forwardRef(
           type='checkbox'
           {...additionalInputProps}
         />
-
-        <label htmlFor={id}>
-          <span>{children}</span>
-        </label>
+        <label htmlFor={id}>{children && <span>{children}</span>}</label>
       </Wrapper>
     );
   }

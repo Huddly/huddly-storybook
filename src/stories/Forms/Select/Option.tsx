@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
+import { Checkbox } from '../Checkbox';
 
 const Wrapper = styled.li`
   display: flex;
@@ -29,7 +30,7 @@ const Wrapper = styled.li`
     margin-left: ${rem(-4)};
   }
 
-  & > * {
+  & > *:not() {
     pointer-events: none;
   }
 `;
@@ -37,6 +38,18 @@ const Wrapper = styled.li`
 export interface OptionProps {
   children: React.ReactNode;
   value: string;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  selected?: boolean;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  hasCheckbox?: boolean;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  onClick?: (value: string) => void;
 }
 
 /**
@@ -44,10 +57,12 @@ export interface OptionProps {
  */
 export const Option = React.forwardRef(
   (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
-    const { children, value } = props;
+    const { children, value, selected, hasCheckbox, onClick } = props;
+    const id = useId();
 
     return (
-      <Wrapper ref={ref} role='option' tabIndex={0} data-value={value}>
+      <Wrapper ref={ref} role='option' tabIndex={0} id={id} onClick={() => onClick?.(value)}>
+        {hasCheckbox && <Checkbox checked={selected} />}
         {children}
       </Wrapper>
     );

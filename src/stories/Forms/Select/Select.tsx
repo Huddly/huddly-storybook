@@ -5,6 +5,7 @@ import { GlobalInputProps } from '../../../shared/types';
 import { useOnClickOutside } from '../../../shared/hooks';
 import { Option, OptionProps } from './Option';
 import { ChevronDown, Search } from '@huddly/frokost/havre';
+import { Checkbox } from '../Checkbox/index';
 
 const Wrapper = styled.div`
   position: relative;
@@ -195,6 +196,8 @@ const handleSelectHoverBackground = (
   const parentRectBorder = parseInt(getComputedStyle(selectList).borderTopWidth, 10);
 
   const moveHoverBackground = (event: FocusEvent | MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.hasAttribute('role') || target.getAttribute('role') !== 'option') return;
     const node = event.target as HTMLElement;
     const rect = node.getBoundingClientRect();
     const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
@@ -225,14 +228,29 @@ const handleSelectHoverBackground = (
   };
 };
 
-const getLabelOfSelectedValue = (children: SelectProps['children'], selected: string | null) => {
+const getLabelFromSelectedValues = (
+  children: SelectProps['children'],
+  selected: string[] | null
+) => {
+  console.log(selected);
   if (!selected) return null;
-  const selectedItem = React.Children.toArray(children).find((child) => {
+
+  const selectedItems = React.Children.toArray(children).filter((child) => {
     if (!React.isValidElement(child)) return false;
-    return child.props.value.toString() === selected.toString();
-  }) as React.ReactElement<OptionProps> | undefined;
-  if (!selectedItem) return null;
-  return selectedItem.props.children;
+    return selected.includes(child.props.value.toString());
+  }) as React.ReactElement<OptionProps>[] | undefined;
+
+  if (!selectedItems.length) return null;
+  return selectedItems
+    .map((item) => item.props.children)
+    .reduce((acc, curr, index) => {
+      // between every selected label, splice a comma into the array
+      if (typeof curr === 'string') {
+        curr = <span key={index}>{curr}</span>;
+      }
+      if (index === 0) return [curr];
+      return [...[acc], ', ', curr];
+    }, [] as React.ReactNode[]);
 };
 
 const validateChildren = (children: SelectProps['children']) => {
@@ -253,7 +271,10 @@ const getSelectContentAsString = (node: string | React.ReactNode): string | null
   }).join(' ');
 };
 
-const getChildrenByQuery = (children: SelectProps['children'], query: string) => {
+const getChildrenByQuery = (
+  children: SelectProps['children'],
+  query: string
+): SelectProps['children'] => {
   return React.Children.toArray(children).filter((child: React.ReactElement<OptionProps>) => {
     if (!React.isValidElement(child)) return true;
 
@@ -282,7 +303,7 @@ export interface SelectProps extends GlobalInputProps {
    * Option components to be rendered.
    */
   children: React.ReactNode;
-  showItems?: number;
+  multiselect?: boolean;
 }
 
 /**
@@ -298,10 +319,10 @@ export const Select = React.forwardRef(
       hasError,
       id,
       isRequired,
+      multiselect = false,
       name,
       onBlur,
       onChange,
-      showItems = 6,
       value,
       ...additionalPhoneInputProps
     } = props;
@@ -399,26 +420,40 @@ export const Select = React.forwardRef(
     }, [isOpen]);
 
     useEffect(() => {
-      setSelectListHeight(getSelectListHeight(showItems, selectListRef));
+      setSelectListHeight(getSelectListHeight(5, selectListRef));
       handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
     }, [selectListRef, children, filterSearch]);
 
     useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
-    const handleValueSelect = (event) => {
-      const { target } = event;
-      const selectedValue = target.dataset.value;
-      if (!selectedValue) {
-        console.error('Select component: value is not defined', target);
+    const handleValueSelect = (value: string) => {
+      if (multiselect) {
+        // If multiselect is enabled, value selection is handled in handleValueCheck function
+        handleValueCheck(value);
         return;
       }
       setFilterSearch('');
       setIsOpen(false);
-      setSelected(selectedValue);
+      setSelected(value);
       selectButtonRef?.current?.focus();
       onChange &&
         onChange({
-          target: { name: selectName, id, value: selectedValue },
+          target: { name: selectName, id, value },
+        } as React.ChangeEvent<HTMLInputElement>);
+    };
+
+    const handleValueCheck = (value: string) => {
+      const selectedArray = selected ? selected.split(',') : [];
+      const valueIndex = selectedArray.indexOf(value);
+      if (valueIndex === -1) {
+        selectedArray.push(value);
+      } else {
+        selectedArray.splice(valueIndex, 1);
+      }
+      setSelected(selectedArray.join(','));
+      onChange &&
+        onChange({
+          target: { name: selectName, id, value: selectedArray.join(',') },
         } as React.ChangeEvent<HTMLInputElement>);
     };
 
@@ -430,10 +465,11 @@ export const Select = React.forwardRef(
         } as React.FocusEvent<HTMLInputElement>);
     };
 
-    const selectContent = getLabelOfSelectedValue(children, selected);
+    const selectedArray = selected ? selected.split(',') : [];
+    const selectContent = getLabelFromSelectedValues(children, selectedArray);
     const selectContentAsString = getSelectContentAsString(selectContent);
     const filteredChildren = getChildrenByQuery(children, filterSearch);
-    const filteredChildrenEmpty = React.Children.toArray(filteredChildren).length === 0;
+    const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
 
     return (
       <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
@@ -487,8 +523,16 @@ export const Select = React.forwardRef(
             tabIndex={isOpen ? 0 : -1}
           >
             <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
-            <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
-              {filteredChildren}
+            <SelectList ref={selectListRef} height={selectListHeight}>
+              {React.Children.map(filteredChildren, (child) => {
+                if (!React.isValidElement(child)) return null;
+                return React.cloneElement(child, {
+                  hasCheckbox: multiselect,
+                  selected: selectedArray.includes(child.props.value),
+                  onClick: handleValueSelect,
+                });
+              })}
+
               {filteredChildrenEmpty && (
                 <SelectListNoResults>
                   <Search className='search-icon' />
