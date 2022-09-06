@@ -231,7 +231,6 @@ const getLabelFromSelectedValues = (
   children: SelectProps['children'],
   selected: string[] | null
 ) => {
-  console.log(selected);
   if (!selected) return null;
 
   const selectedItems = React.Children.toArray(children).filter((child) => {
