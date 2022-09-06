@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
-import { AlertText, Checkbox, Radio } from '../../../index';
+import { AlertText, Checkbox, Radio, Input, Select } from '../../../index';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
   hasError: boolean;
+  labelIsIndented?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -23,6 +24,11 @@ const Wrapper = styled.div<WrapperProps>`
     padding: var(--spacing-8);
     border-radius: var(--border-radius);
     background-color: var(--color-alertRedBg);`}
+
+  // apply left margin for certain input types
+  label {
+    margin-left: ${(p) => (p.labelIsIndented ? 'var(--spacing-16)' : 0)};
+  }
 `;
 
 const HintWrapper = styled.div<WrapperProps>`
@@ -55,7 +61,6 @@ export interface InputWrapperProps {
   className?: string;
   hint?: string;
   isRequired?: boolean;
-  labelIndentation?: boolean;
 }
 
 /**
@@ -63,7 +68,7 @@ export interface InputWrapperProps {
  */
 export const InputWrapper = React.forwardRef(
   (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { id, alert, children, className, hint, isRequired, labelIndentation } = props;
+    const { id, alert, children, className, hint, isRequired } = props;
     // Set aria id's. These are used for inputs and the helper texts.
     const ariaDescribedById = hint ? `${id}-hint` : undefined;
     const ariaErrorMessageId = alert ? `${id}-error` : undefined;
@@ -86,10 +91,6 @@ export const InputWrapper = React.forwardRef(
      * However, if the child is not a valid react component, don't pass props at all.
      */
     const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
-      if (child?.props.children === 'Label') {
-        return React.cloneElement(child, { ...globalInputProps, indentation: labelIndentation });
-      }
-
       if (child.type === React.Fragment) {
         return React.Children.map(child.props.children, (child) => {
           if (typeof child?.type === 'string') return child;
@@ -109,13 +110,26 @@ export const InputWrapper = React.forwardRef(
       return componentsThatApply.includes(child?.type);
     });
 
+    /*
+     * We apply special left margin to labels of components that looks like "text fields"
+     */
+    const inputsWithIndentedLabels = [Input, Select];
+    const labelIsIndented = childrenWithGlobalInputProps?.some((child) =>
+      inputsWithIndentedLabels.includes(child.type)
+    );
+
     const HintWrapperProps = {
       boxyErrorStyle: hasBoxyErrorStyle,
       hasError: !!alert,
     };
 
     return (
-      <Wrapper className={className} {...HintWrapperProps} ref={ref}>
+      <Wrapper
+        className={className}
+        {...HintWrapperProps}
+        ref={ref}
+        labelIsIndented={labelIsIndented}
+      >
         {childrenWithGlobalInputProps}
 
         {hint && !alert && (

@@ -9,9 +9,7 @@ const Wrapper = styled.div`
   column-gap: var(--spacing-16);
 `;
 
-const StyledLabel = styled.label<{ indentation?: boolean }>`
-  padding-left: ${(p) => (p.indentation ? 'var(--spacing-16)' : 0)};
-
+const StyledLabel = styled.label`
   display: block;
   margin-bottom: var(--spacing-8);
   font-weight: bold;
@@ -43,7 +41,6 @@ export interface LabelProps {
   htmlFor?: string;
   id?: string;
   isRequired?: boolean;
-  indentation?: boolean;
 }
 
 /**
@@ -57,11 +54,10 @@ export const Label = ({
   htmlFor,
   id,
   isRequired,
-  indentation,
 }: LabelProps) => {
   return (
     <Wrapper className={className}>
-      <StyledLabel htmlFor={htmlFor || id} indentation={indentation}>
+      <StyledLabel htmlFor={htmlFor || id}>
         {children}{' '}
         {!isRequired && (
           <Text type='span' size='12'>

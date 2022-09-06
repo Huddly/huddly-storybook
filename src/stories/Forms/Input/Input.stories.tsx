@@ -11,15 +11,9 @@ export const Primary = {
   },
 };
 
-const Template = ({ alert, hint, id, isRequired, labelIndentation }) => {
+const Template = ({ alert, hint, id, isRequired }) => {
   return (
-    <InputWrapper
-      alert={alert}
-      hint={hint}
-      id={id}
-      isRequired={isRequired}
-      labelIndentation={labelIndentation}
-    >
+    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       <Label>Label</Label>
       <Input />
     </InputWrapper>
@@ -41,10 +35,4 @@ export const HasError = Template.bind({});
 HasError.args = {
   ...Primary.args,
   alert: 'This is an error message.',
-};
-
-export const HasIndentation = Template.bind({});
-HasIndentation.args = {
-  ...Primary.args,
-  labelIndentation: 'true',
 };
