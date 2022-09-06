@@ -6,7 +6,6 @@ import { AlertText, Checkbox, Radio } from '../../../index';
 interface WrapperProps {
   boxyErrorStyle: boolean;
   hasError: boolean;
-  hasCheckbox?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`

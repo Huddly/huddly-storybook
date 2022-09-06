@@ -26,13 +26,14 @@ const Wrapper = styled.li`
     flex-shrink: 0;
   }
 
-  & > *:first-child:is(figure, img, svg, .checkbox) {
+  & > *:first-child:is(figure, img, svg) {
     margin-left: ${rem(-4)};
   }
+`;
 
-  .checkbox {
-    margin-right: var(--spacing-4);
-  }
+const StyledCheckbox = styled(Checkbox)`
+  margin-left: calc(var(--spacing-4) * -1);
+  margin-right: var(--spacing-4);
 `;
 
 export interface OptionProps {
@@ -61,7 +62,7 @@ export const Option = React.forwardRef(
 
     return (
       <Wrapper ref={ref} role='option' tabIndex={0} onClick={() => onClick?.(value)}>
-        {hasCheckbox && <Checkbox className='checkbox' checked={selected} tabIndex={-1} />}
+        {hasCheckbox && <StyledCheckbox checked={selected} tabIndex={-1} />}
         {children}
       </Wrapper>
     );

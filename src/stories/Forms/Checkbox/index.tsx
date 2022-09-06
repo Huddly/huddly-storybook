@@ -5,7 +5,6 @@ import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
-  hasLabel?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -104,7 +103,7 @@ export const Checkbox = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper className={className} hasError={hasError} hasLabel={!!children}>
+      <Wrapper className={className} hasError={hasError}>
         <input
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
