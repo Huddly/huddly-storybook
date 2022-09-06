@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
-import { AlertText, Checkbox, Radio, Input, Select } from '../../../index';
+import { AlertText, Checkbox, Radio, Toggle } from '../../../index';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
@@ -111,11 +111,11 @@ export const InputWrapper = React.forwardRef(
     });
 
     /*
-     * We apply special left margin to labels of components that looks like "text fields"
+     * We apply special left margin to labels of components that looks like "text fields" and not to Checkbox, Radio and Slack
      */
-    const inputsWithIndentedLabels = [Input, Select];
-    const labelIsIndented = childrenWithGlobalInputProps?.some((child) =>
-      inputsWithIndentedLabels.includes(child.type)
+    const inputsWithoutIndentedLabels = [Checkbox, Radio, Toggle];
+    const labelIsIndented = childrenWithGlobalInputProps?.some(
+      (child) => !inputsWithoutIndentedLabels.includes(child.type)
     );
 
     const HintWrapperProps = {
