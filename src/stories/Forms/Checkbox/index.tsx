@@ -10,6 +10,9 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   label {
     display: flex;
+    position: relative;
+    align-items: center;
+    color: var(--color-grey15);
     font-size: var(--font-size-14);
     cursor: pointer;
 
@@ -18,13 +21,16 @@ const Wrapper = styled.div<WrapperProps>`
       display: block;
       box-sizing: border-box;
       flex-shrink: 0;
-      width: var(--spacing-16);
-      height: var(--spacing-16);
-      margin-right: var(--spacing-8);
+      width: var(--spacing-24);
+      height: var(--spacing-24);
       border-radius: ${rem(2)};
       content: '';
+      border: ${({ hasError }) =>
+        hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
+    }
 
-      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
+    span {
+      margin-left: var(--spacing-8);
     }
 
     a {
@@ -38,17 +44,15 @@ const Wrapper = styled.div<WrapperProps>`
     left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
 
     // Focus ring
-    &:focus-visible + label:before {
-      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
-      outline: ${rem(5)} auto -webkit-focus-ring-color;
-      outline-offset: ${rem(3)};
+    &:focus-within + label:before {
+      box-shadow: 0px 0px 0px ${rem(2)} white, 0px 0px 0px ${rem(4)} var(--color-lavender);
     }
 
     // Checked checkbox style
     &:checked + label:before {
       border-color: var(--color-lavender);
       background-color: var(--color-lavender);
-      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg enable-background='new 0 0 14 10' version='1.1' viewBox='0 0 14 10' xml:space='preserve' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23fff' d='M5.56904 8.7643L6.27614 9.47141L6.27614 9.4714L5.56904 8.7643ZM5.09763 8.7643L5.80474 8.05719L5.80474 8.05719L5.09763 8.7643ZM6.27614 9.4714L13.7071 2.04044L12.2929 0.626226L4.86193 8.05719L6.27614 9.4714ZM5.80474 8.05719L1.70711 3.95956L0.292893 5.37377L4.39052 9.4714L5.80474 8.05719ZM4.86193 8.05719C5.12228 7.79684 5.54439 7.79684 5.80474 8.05719L4.39052 9.4714C4.91122 9.9921 5.75544 9.9921 6.27614 9.47141L4.86193 8.05719Z'/%3E%3C/svg%3E%0A");
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.25 1.25L4.5 8L0.75 4.25' stroke='white' stroke-width='2'/%3E%3C/svg%3E%0A");
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -76,7 +80,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: boolean;
 }
 
@@ -112,10 +116,7 @@ export const Checkbox = React.forwardRef(
           type='checkbox'
           {...additionalInputProps}
         />
-
-        <label htmlFor={id}>
-          <span>{children}</span>
-        </label>
+        <label htmlFor={id}>{children && <span>{children}</span>}</label>
       </Wrapper>
     );
   }

@@ -41,14 +41,14 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   &:focus-within {
     background-color: var(--color-grey96);
   }
+`;
 
-  .chevron-icon {
-    transition: 0.15s ease-in-out;
-    ${(p) => (p.isOpen ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
+const RotatingChevron = styled(ChevronDown)<{ rotate: boolean }>`
+  transition: 0.15s ease-in-out;
+  ${(p) => (p.rotate ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
 
-    path {
-      fill: var(--color-grey35);
-    }
+  path {
+    fill: var(--color-grey35);
   }
 `;
 
@@ -64,6 +64,7 @@ const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
       display: flex;
       align-items: center;
       column-gap: var(--spacing-8);
+
     `}
 
   &,
@@ -194,6 +195,8 @@ const handleSelectHoverBackground = (
   const parentRectBorder = parseInt(getComputedStyle(selectList).borderTopWidth, 10);
 
   const moveHoverBackground = (event: FocusEvent | MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.hasAttribute('role') || target.getAttribute('role') !== 'option') return; // find a better way of checking this
     const node = event.target as HTMLElement;
     const rect = node.getBoundingClientRect();
     const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
@@ -224,14 +227,36 @@ const handleSelectHoverBackground = (
   };
 };
 
-const getLabelOfSelectedValue = (children: SelectProps['children'], selected: string | null) => {
+/**
+ * Get children in selected options, format them accordingly.
+ * If there are multiple selections, we comma separate them.
+ * If the value is a plain string, we wrap in in a span.
+ *
+ * This function is used to display content in the SelectedContent within the SelectButton Component.
+ */
+const getLabelFromSelectedValues = (
+  children: SelectProps['children'],
+  selected: string[] | null
+) => {
   if (!selected) return null;
-  const selectedItem = React.Children.toArray(children).find((child) => {
+  // Loop through all children and find the ones that are selected
+  const selectedItems = React.Children.toArray(children).filter((child) => {
     if (!React.isValidElement(child)) return false;
-    return child.props.value.toString() === selected.toString();
-  }) as React.ReactElement<OptionProps> | undefined;
-  if (!selectedItem) return null;
-  return selectedItem.props.children;
+    return selected.includes(child.props.value.toString());
+  }) as React.ReactElement<OptionProps>[] | undefined;
+
+  if (!selectedItems.length) return null;
+  return selectedItems
+    .map((item) => item.props.children)
+    .reduce((acc, curr, index) => {
+      // Between every selected label, splice a comma into the array
+      if (typeof curr === 'string') {
+        curr = <span key={index}>{curr}</span>; // To style strings differently, we want to wrap them in spans
+      }
+      if (index === 0) return [curr];
+      const separator = <span style={{ marginLeft: rem(-8) }}>, </span>;
+      return [...[acc], separator, curr];
+    }, [] as React.ReactNode[]);
 };
 
 const validateChildren = (children: SelectProps['children']) => {
@@ -241,6 +266,10 @@ const validateChildren = (children: SelectProps['children']) => {
   });
 };
 
+/**
+ * Used to generate the button title.
+ * Strips all HTML content except strings.
+ */
 const getSelectContentAsString = (node: string | React.ReactNode): string | null => {
   if (!node) return null;
   if (typeof node === 'string') return node;
@@ -249,10 +278,17 @@ const getSelectContentAsString = (node: string | React.ReactNode): string | null
     if (!React.isValidElement(child)) return;
     const innerChild = child.props.children;
     if (typeof innerChild === 'string' || typeof innerChild === 'number') return innerChild;
-  }).join(' ');
+  }).join('');
 };
 
-const getChildrenByQuery = (children: SelectProps['children'], query: string) => {
+/**
+ * Used to filter the options in the select list.
+ * We will dig a couple level of childrens deep to find the innerText in case the JSX is nested.
+ */
+const getChildrenByQuery = (
+  children: SelectProps['children'],
+  query: string
+): SelectProps['children'] => {
   return React.Children.toArray(children).filter((child: React.ReactElement<OptionProps>) => {
     if (!React.isValidElement(child)) return true;
 
@@ -281,7 +317,10 @@ export interface SelectProps extends GlobalInputProps {
    * Option components to be rendered.
    */
   children: React.ReactNode;
-  showItems?: number;
+  /**
+   * Multiselect will return a comma separated string of selected values on change.
+   */
+  multiselect?: boolean;
 }
 
 /**
@@ -297,10 +336,10 @@ export const Select = React.forwardRef(
       hasError,
       id,
       isRequired,
+      multiselect = false,
       name,
       onBlur,
       onChange,
-      showItems = 6,
       value,
       ...additionalPhoneInputProps
     } = props;
@@ -344,6 +383,10 @@ export const Select = React.forwardRef(
           case ' ':
             if (activeElement === selectButtonRef.current && !isOpen) {
               setIsOpen(true);
+            }
+            // Enable space to select an option when multiselect is enabled
+            if (activeElementIndex !== -1 && multiselect) {
+              selectListChildren[activeElementIndex].click();
             }
             break;
 
@@ -398,26 +441,33 @@ export const Select = React.forwardRef(
     }, [isOpen]);
 
     useEffect(() => {
-      setSelectListHeight(getSelectListHeight(showItems, selectListRef));
+      setSelectListHeight(getSelectListHeight(5, selectListRef));
       handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
     }, [selectListRef, children, filterSearch]);
 
     useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
-    const handleValueSelect = (event) => {
-      const { target } = event;
-      const selectedValue = target.dataset.value;
-      if (!selectedValue) {
-        console.error('Select component: value is not defined', target);
-        return;
+    const handleValueSelect = (value: string) => {
+      if (multiselect) {
+        const selectedArray = selected ? selected.split(',') : [];
+        const valueIndex = selectedArray.indexOf(value);
+        if (valueIndex === -1) {
+          selectedArray.push(value);
+        } else {
+          selectedArray.splice(valueIndex, 1);
+        }
+        value = selectedArray.join(',');
+      } else {
+        // Close and reset if single select
+        setFilterSearch('');
+        setIsOpen(false);
+        selectButtonRef?.current?.focus();
       }
-      setFilterSearch('');
-      setIsOpen(false);
-      setSelected(selectedValue);
-      selectButtonRef?.current?.focus();
+
+      setSelected(value);
       onChange &&
         onChange({
-          target: { name: selectName, id, value: selectedValue },
+          target: { name: selectName, id, value },
         } as React.ChangeEvent<HTMLInputElement>);
     };
 
@@ -429,10 +479,11 @@ export const Select = React.forwardRef(
         } as React.FocusEvent<HTMLInputElement>);
     };
 
-    const selectContent = getLabelOfSelectedValue(children, selected);
+    const selectedArray = selected ? selected.split(',') : [];
+    const selectContent = getLabelFromSelectedValues(children, selectedArray);
     const selectContentAsString = getSelectContentAsString(selectContent);
     const filteredChildren = getChildrenByQuery(children, filterSearch);
-    const filteredChildrenEmpty = React.Children.toArray(filteredChildren).length === 0;
+    const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
 
     return (
       <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
@@ -469,7 +520,7 @@ export const Select = React.forwardRef(
               {selectContent || placeholder}
             </SelectedContent>
           )}
-          <ChevronDown className='chevron-icon' aria-hidden='true' />
+          <RotatingChevron rotate={isOpen} aria-hidden='true' />
         </SelectButton>
 
         {children && (
@@ -486,8 +537,16 @@ export const Select = React.forwardRef(
             tabIndex={isOpen ? 0 : -1}
           >
             <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
-            <SelectList ref={selectListRef} height={selectListHeight} onClick={handleValueSelect}>
-              {filteredChildren}
+            <SelectList ref={selectListRef} height={selectListHeight}>
+              {React.Children.map(filteredChildren, (child) => {
+                if (!React.isValidElement(child)) return null;
+                return React.cloneElement(child, {
+                  hasCheckbox: multiselect,
+                  selected: selectedArray.includes(child.props.value),
+                  onClick: handleValueSelect,
+                } as OptionProps);
+              })}
+
               {filteredChildrenEmpty && (
                 <SelectListNoResults>
                   <Search className='search-icon' />
