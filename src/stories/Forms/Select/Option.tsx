@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { Checkbox } from '../Checkbox';
@@ -62,10 +62,9 @@ export interface OptionProps {
 export const Option = React.forwardRef(
   (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
     const { children, value, selected, hasCheckbox, onClick } = props;
-    const id = useId();
 
     return (
-      <Wrapper ref={ref} role='option' tabIndex={0} id={id} onClick={() => onClick?.(value)}>
+      <Wrapper ref={ref} role='option' tabIndex={0} onClick={() => onClick?.(value)}>
         {hasCheckbox && <Checkbox className='checkbox' checked={selected} tabIndex={-1} />}
         {children}
       </Wrapper>
