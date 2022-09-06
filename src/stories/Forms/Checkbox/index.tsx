@@ -23,10 +23,6 @@ const FakeCheckbox = styled.label<{ hasError: boolean }>`
     border-radius: ${rem(2)};
     content: '';
   }
-
-  a {
-    color: var(--color-lavender);
-  }
 `;
 
 const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>`

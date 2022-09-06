@@ -26,10 +26,6 @@ const Wrapper = styled.div<WrapperProps>`
 
       border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
     }
-
-    a {
-      color: var(--color-lavender);
-    }
   }
 
   input[type='radio'] {

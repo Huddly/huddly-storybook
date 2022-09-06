@@ -15,10 +15,6 @@ const StyledLabel = styled.label`
   font-weight: bold;
   font-size: var(--font-size-14);
   line-height: 1;
-
-  a {
-    color: var(--color-lavender);
-  }
 `;
 
 const HelpLink = styled.a`
@@ -59,7 +55,7 @@ export const Label = ({
     <Wrapper className={className}>
       <StyledLabel htmlFor={htmlFor || id}>
         {children}{' '}
-        {!isRequired && (
+        {isRequired === false && (
           <Text type='span' size='12'>
             (optional)
           </Text>

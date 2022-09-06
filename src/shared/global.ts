@@ -65,7 +65,7 @@ export const GlobalStyles = createGlobalStyle`
     --border-active: ${rem(2)} solid var(--color-lavender);
 
     /* Border radius */
-    --border-radius: ${rem(6)};
+    --border-radius: ${rem(3)};
 
     /* Fonts */
     --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;
@@ -80,6 +80,10 @@ export const GlobalStyles = createGlobalStyle`
   }
   body {
     font-family: var(--font-family-primary);
+    color: var(--color-grey15);
+  }
+  a {
+    color: var(--color-lavender);
   }
 
   /* Import fonts */
