@@ -5,7 +5,6 @@ import { GlobalInputProps } from '../../../shared/types';
 import { useOnClickOutside } from '../../../shared/hooks';
 import { Option, OptionProps } from './Option';
 import { ChevronDown, Search } from '@huddly/frokost/havre';
-import { Checkbox } from '../Checkbox/index';
 
 const Wrapper = styled.div`
   position: relative;
