@@ -26,12 +26,16 @@ const Wrapper = styled.li`
     flex-shrink: 0;
   }
 
-  & > *:first-child:is(figure, img, svg) {
+  & > *:first-child:is(figure, img, svg, .checkbox) {
     margin-left: ${rem(-4)};
   }
 
   & > *:not() {
     pointer-events: none;
+  }
+
+  .checkbox {
+    margin-right: var(--spacing-4);
   }
 `;
 
@@ -62,7 +66,7 @@ export const Option = React.forwardRef(
 
     return (
       <Wrapper ref={ref} role='option' tabIndex={0} id={id} onClick={() => onClick?.(value)}>
-        {hasCheckbox && <Checkbox checked={selected} />}
+        {hasCheckbox && <Checkbox className='checkbox' checked={selected} tabIndex={-1} />}
         {children}
       </Wrapper>
     );

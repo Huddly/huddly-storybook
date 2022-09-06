@@ -65,6 +65,7 @@ const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
       display: flex;
       align-items: center;
       column-gap: var(--spacing-8);
+
     `}
 
   &,
@@ -248,7 +249,7 @@ const getLabelFromSelectedValues = (
         curr = <span key={index}>{curr}</span>;
       }
       if (index === 0) return [curr];
-      return [...[acc], ', ', curr];
+      return [...[acc], <span style={{ marginLeft: rem(-8) }}>, </span>, curr];
     }, [] as React.ReactNode[]);
 };
 
@@ -267,7 +268,7 @@ const getSelectContentAsString = (node: string | React.ReactNode): string | null
     if (!React.isValidElement(child)) return;
     const innerChild = child.props.children;
     if (typeof innerChild === 'string' || typeof innerChild === 'number') return innerChild;
-  }).join(' ');
+  }).join('');
 };
 
 const getChildrenByQuery = (
@@ -365,6 +366,9 @@ export const Select = React.forwardRef(
           case ' ':
             if (activeElement === selectButtonRef.current && !isOpen) {
               setIsOpen(true);
+            }
+            if (activeElementIndex !== -1 && multiselect) {
+              selectListChildren[activeElementIndex].click();
             }
             break;
 

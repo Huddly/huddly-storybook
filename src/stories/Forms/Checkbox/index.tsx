@@ -5,15 +5,17 @@ import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
+  hasLabel?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
   label {
     display: flex;
-    font-size: var(--font-size-14);
-    cursor: pointer;
+    position: relative;
     align-items: center;
     color: var(--color-grey15);
+    font-size: var(--font-size-14);
+    cursor: pointer;
 
     // Checkbox
     &:before {
@@ -22,10 +24,14 @@ const Wrapper = styled.div<WrapperProps>`
       flex-shrink: 0;
       width: var(--spacing-24);
       height: var(--spacing-24);
-      margin-right: var(--spacing-8);
       border-radius: ${rem(2)};
       content: '';
-      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
+      border: ${({ hasError }) =>
+        hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
+    }
+
+    span {
+      margin-left: var(--spacing-8);
     }
 
     a {
@@ -39,10 +45,8 @@ const Wrapper = styled.div<WrapperProps>`
     left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
 
     // Focus ring
-    &:focus-visible + label:before {
-      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
-      outline: ${rem(5)} auto -webkit-focus-ring-color;
-      outline-offset: ${rem(3)};
+    &:focus-within + label:before {
+      box-shadow: 0px 0px 0px ${rem(2)} white, 0px 0px 0px ${rem(4)} var(--color-lavender);
     }
 
     // Checked checkbox style
@@ -100,7 +104,7 @@ export const Checkbox = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper className={className} hasError={hasError}>
+      <Wrapper className={className} hasError={hasError} hasLabel={!!children}>
         <input
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}

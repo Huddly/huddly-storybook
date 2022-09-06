@@ -19,14 +19,14 @@ const Template = ({ alert, hint, id, isRequired, showItems, multiselect }) => {
     <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
       <Label>Select a color</Label>
       <Select showItems={showItems} multiselect={multiselect}>
-        <Option value='red'>Red color</Option>
-        <Option value='green'>Green color</Option>
-        <Option value='blue'>Blue color</Option>
-        <Option value='yellow'>Yellow color</Option>
-        <Option value='purple'>Purple color</Option>
-        <Option value='orange'>Orange color</Option>
-        <Option value='pink'>Pink color</Option>
-        <Option value='brown'>Brown color</Option>
+        <Option value='red'>Red</Option>
+        <Option value='green'>Green</Option>
+        <Option value='blue'>Blue</Option>
+        <Option value='yellow'>Yellow</Option>
+        <Option value='purple'>Purple</Option>
+        <Option value='orange'>Orange</Option>
+        <Option value='pink'>Pink</Option>
+        <Option value='brown'>Brown</Option>
       </Select>
     </InputWrapper>
   );
@@ -60,17 +60,20 @@ const CountriesFromApiTemplate = ({ alert, hint, id, isRequired, multiselect }) 
 export const InWrapper = Template.bind({});
 InWrapper.args = {
   ...Primary.args,
+  multiselect: false,
 };
 
 export const HasHint = Template.bind({});
 HasHint.args = {
   ...Primary.args,
+  multiselect: false,
   hint: 'This is a hint.',
 };
 
 export const HasError = Template.bind({});
 HasError.args = {
   ...Primary.args,
+  multiselect: false,
   alert: 'This is an error message.',
 };
 
