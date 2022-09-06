@@ -30,10 +30,6 @@ const Wrapper = styled.li`
     margin-left: ${rem(-4)};
   }
 
-  & > *:not() {
-    pointer-events: none;
-  }
-
   .checkbox {
     margin-right: var(--spacing-4);
   }
