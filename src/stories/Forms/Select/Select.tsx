@@ -429,32 +429,25 @@ export const Select = React.forwardRef(
 
     const handleValueSelect = (value: string) => {
       if (multiselect) {
-        // If multiselect is enabled, value selection is handled in handleValueCheck function
-        handleValueCheck(value);
-        return;
+        const selectedArray = selected ? selected.split(',') : [];
+        const valueIndex = selectedArray.indexOf(value);
+        if (valueIndex === -1) {
+          selectedArray.push(value);
+        } else {
+          selectedArray.splice(valueIndex, 1);
+        }
+        value = selectedArray.join(',');
+      } else {
+        // Close and reset if single select
+        setFilterSearch('');
+        setIsOpen(false);
+        selectButtonRef?.current?.focus();
       }
-      setFilterSearch('');
-      setIsOpen(false);
+
       setSelected(value);
-      selectButtonRef?.current?.focus();
       onChange &&
         onChange({
           target: { name: selectName, id, value },
-        } as React.ChangeEvent<HTMLInputElement>);
-    };
-
-    const handleValueCheck = (value: string) => {
-      const selectedArray = selected ? selected.split(',') : [];
-      const valueIndex = selectedArray.indexOf(value);
-      if (valueIndex === -1) {
-        selectedArray.push(value);
-      } else {
-        selectedArray.splice(valueIndex, 1);
-      }
-      setSelected(selectedArray.join(','));
-      onChange &&
-        onChange({
-          target: { name: selectName, id, value: selectedArray.join(',') },
         } as React.ChangeEvent<HTMLInputElement>);
     };
 
