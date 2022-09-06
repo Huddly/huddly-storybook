@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
-import { AlertText, Checkbox, Radio } from '../../../index';
+import { AlertText, Checkbox, Radio, Toggle } from '../../../index';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
   hasError: boolean;
+  labelIsIndented?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -23,6 +24,11 @@ const Wrapper = styled.div<WrapperProps>`
     padding: var(--spacing-8);
     border-radius: var(--border-radius);
     background-color: var(--color-alertRedBg);`}
+
+  // apply left margin for certain input types
+  label {
+    margin-left: ${(p) => (p.labelIsIndented ? 'var(--spacing-16)' : 0)};
+  }
 `;
 
 const HintWrapper = styled.div<WrapperProps>`
@@ -104,13 +110,26 @@ export const InputWrapper = React.forwardRef(
       return componentsThatApply.includes(child?.type);
     });
 
+    /*
+     * We apply special left margin to labels of components that looks like "text fields" and not to Checkbox, Radio and Slack
+     */
+    const inputsWithoutIndentedLabels = [Checkbox, Radio, Toggle];
+    const labelIsIndented = childrenWithGlobalInputProps?.some(
+      (child) => !inputsWithoutIndentedLabels.includes(child.type)
+    );
+
     const HintWrapperProps = {
       boxyErrorStyle: hasBoxyErrorStyle,
       hasError: !!alert,
     };
 
     return (
-      <Wrapper className={className} {...HintWrapperProps} ref={ref}>
+      <Wrapper
+        className={className}
+        {...HintWrapperProps}
+        ref={ref}
+        labelIsIndented={labelIsIndented}
+      >
         {childrenWithGlobalInputProps}
 
         {hint && !alert && (

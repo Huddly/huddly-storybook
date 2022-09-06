@@ -1,39 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Text } from '../../Foundation/Text';
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   column-gap: var(--spacing-16);
+`;
 
-  label {
-    display: block;
-    margin-bottom: var(--spacing-8);
-    font-weight: bold;
-    font-size: var(--font-size-14);
-    line-height: 1;
+const StyledLabel = styled.label`
+  display: block;
+  margin-bottom: var(--spacing-8);
+  font-weight: bold;
+  font-size: var(--font-size-14);
+  line-height: 1;
 
-    .required-text {
-      font-weight: normal;
-      font-size: var(--font-size-12);
-    }
-
-    a {
-      color: var(--color-lavender);
-    }
-  }
-
-  .help-link {
-    margin-bottom: var(--spacing-8);
+  a {
     color: var(--color-lavender);
-    font-size: var(--font-size-12);
-    text-decoration: none;
+  }
+`;
 
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-    }
+const HelpLink = styled.a`
+  margin-bottom: var(--spacing-8);
+  color: var(--color-lavender);
+  font-size: var(--font-size-12);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
   }
 `;
 
@@ -61,14 +57,19 @@ export const Label = ({
 }: LabelProps) => {
   return (
     <Wrapper className={className}>
-      <label htmlFor={htmlFor || id}>
-        {children} {!isRequired && <span className='required-text'>(optional)</span>}
-      </label>
+      <StyledLabel htmlFor={htmlFor || id}>
+        {children}{' '}
+        {!isRequired && (
+          <Text type='span' size='12'>
+            (optional)
+          </Text>
+        )}
+      </StyledLabel>
 
       {helpLink && helpLabel && (
-        <a href={helpLink} className='help-link' target='_blank' rel='noopener noreferrer'>
+        <HelpLink href={helpLink} target='_blank' rel='noopener noreferrer'>
           {helpLabel}
-        </a>
+        </HelpLink>
       )}
     </Wrapper>
   );
