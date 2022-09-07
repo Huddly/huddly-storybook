@@ -50,7 +50,7 @@ export interface OptionProps {
   /**
    * This prop gets passed down from the Select component automatically.
    */
-  onClick?: (value: string) => void;
+  onChange?: (value: string) => void;
 }
 
 /**
@@ -58,11 +58,13 @@ export interface OptionProps {
  */
 export const Option = React.forwardRef(
   (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
-    const { children, value, selected, hasCheckbox, onClick } = props;
+    const { children, value, selected, hasCheckbox, onChange } = props;
 
     return (
-      <Wrapper ref={ref} role='option' tabIndex={0} onClick={() => onClick?.(value)}>
-        {hasCheckbox && <StyledCheckbox checked={selected} tabIndex={-1} />}
+      <Wrapper ref={ref} role='option' tabIndex={0} onClick={() => onChange?.(value)}>
+        {hasCheckbox && (
+          <StyledCheckbox value={selected} onChange={() => onChange?.(value)} tabIndex={-1} />
+        )}
         {children}
       </Wrapper>
     );

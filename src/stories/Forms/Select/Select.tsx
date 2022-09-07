@@ -244,17 +244,20 @@ const getLabelFromSelectedValues = (
     if (!React.isValidElement(child)) return false;
     return selected.includes(child.props.value.toString());
   }) as React.ReactElement<OptionProps>[] | undefined;
-
   if (!selectedItems.length) return null;
   return selectedItems
     .map((item) => item.props.children)
-    .reduce((acc, curr, index) => {
+    .reduce((acc, curr, i) => {
       // Between every selected label, splice a comma into the array
       if (typeof curr === 'string') {
-        curr = <span key={index}>{curr}</span>; // To style strings differently, we want to wrap them in spans
+        curr = <span key={i}>{curr}</span>; // To style strings differently, we want to wrap them in spans
       }
-      if (index === 0) return [curr];
-      const separator = <span style={{ marginLeft: rem(-8) }}>, </span>;
+      if (i === 0) return [curr];
+      const separator = (
+        <span key={`sep-${i}`} style={{ marginLeft: rem(-8) }}>
+          ,{' '}
+        </span>
+      );
       return [...[acc], separator, curr];
     }, [] as React.ReactNode[]);
 };
@@ -447,9 +450,14 @@ export const Select = React.forwardRef(
 
     useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
+    const selectedArray = selected ? selected.split(',').map((v) => v.trim()) : [];
+    const selectContent = getLabelFromSelectedValues(children, selectedArray);
+    const selectContentAsString = getSelectContentAsString(selectContent);
+    const filteredChildren = getChildrenByQuery(children, filterSearch);
+    const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
+
     const handleValueSelect = (value: string) => {
       if (multiselect) {
-        const selectedArray = selected ? selected.split(',') : [];
         const valueIndex = selectedArray.indexOf(value);
         if (valueIndex === -1) {
           selectedArray.push(value);
@@ -478,12 +486,6 @@ export const Select = React.forwardRef(
           target: { name: selectName, id, value: selected },
         } as React.FocusEvent<HTMLInputElement>);
     };
-
-    const selectedArray = selected ? selected.split(',') : [];
-    const selectContent = getLabelFromSelectedValues(children, selectedArray);
-    const selectContentAsString = getSelectContentAsString(selectContent);
-    const filteredChildren = getChildrenByQuery(children, filterSearch);
-    const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
 
     return (
       <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
@@ -543,7 +545,7 @@ export const Select = React.forwardRef(
                 return React.cloneElement(child, {
                   hasCheckbox: multiselect,
                   selected: selectedArray.includes(child.props.value),
-                  onClick: handleValueSelect,
+                  onChange: handleValueSelect,
                 } as OptionProps);
               })}
 
