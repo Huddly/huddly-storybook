@@ -21,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
 
   :root {
     /* Alert colors */
-    --color-warningRed: #B1060F;
+    --color-warningRed: #B24319;
     --color-successGreen: #34C759;
 
     ${BlueTonesHtml}
@@ -61,7 +61,7 @@ export const GlobalStyles = createGlobalStyle`
 
     /* Borders */
     --border-primary: ${rem(2)} solid var(--color-grey86);
-    --border-error: ${rem(2)} solid var(--color-hotOrange);
+    --border-error: ${rem(2)} solid var(--color-intenseOrange);
     --border-active: ${rem(2)} solid var(--color-lavender);
 
     /* Border radius */

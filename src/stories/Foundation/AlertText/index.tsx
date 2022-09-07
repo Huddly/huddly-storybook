@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { InfoSmall, WarningSmall } from '@huddly/frokost/havre18px';
 import { ErrorSeverity } from '../../../shared/types';
+import { SignalScaleTonesEnum } from '../../../shared/colors';
+import { Text } from '../../../index';
+import { Colors } from '../../../shared/colors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +26,13 @@ export interface AlertTextProps {
   severity: ErrorSeverity;
 }
 
+const SEVERITY_COLORS = {
+  success: 'oreganoGreen',
+  info: 'grey15',
+  warning: 'intenseOrange',
+  error: 'intenseOrange',
+};
+
 /**
  * TODO:
  * - Add actual icons.
@@ -34,9 +44,9 @@ const getIcon = (severity: AlertTextProps['severity']) => {
     case 'info':
       return <InfoSmall />;
     case 'warning':
-      return <WarningSmall />;
+      return <WarningSmall color={SignalScaleTonesEnum.intenseOrange} />;
     case 'error':
-      return <WarningSmall />;
+      return <WarningSmall color={SignalScaleTonesEnum.intenseOrange} />;
   }
 };
 
@@ -53,7 +63,9 @@ export const AlertText = ({
   return (
     <Wrapper className={className} id={id} role='alert'>
       {!hideIcon && <i aria-hidden='true'>{getIcon(severity)}</i>}
-      <span>{children}</span>
+      <Text type='span' color={SEVERITY_COLORS[severity] as Colors}>
+        {children}
+      </Text>
     </Wrapper>
   );
 };
