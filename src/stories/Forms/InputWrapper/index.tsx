@@ -26,7 +26,8 @@ const Wrapper = styled.div<WrapperProps>`
     background-color: var(--color-alertRedBg);`}
 
   // apply left margin for certain input types
-  label {
+  // only to direct childs if not it breaks for example checkboxes inside selects
+  &.label {
     margin-left: ${(p) => (p.labelIsIndented ? 'var(--spacing-16)' : 0)};
   }
 `;

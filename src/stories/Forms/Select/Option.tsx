@@ -32,7 +32,6 @@ const Wrapper = styled.li`
 `;
 
 const StyledCheckbox = styled(Checkbox)`
-  margin-left: calc(var(--spacing-4) * -1);
   margin-right: var(--spacing-4);
 `;
 
