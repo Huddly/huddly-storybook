@@ -129,7 +129,7 @@ export const InputWrapper = React.forwardRef(
       >
         {childrenWithGlobalInputProps}
 
-        {severity && (
+        {severity && severityMessage && (
           <HintWrapper {...HintWrapperProps}>
             <AlertText id={ariaErrorMessageId} severity={severity} hideIcon={hasBoxyErrorStyle}>
               {severityMessage}
