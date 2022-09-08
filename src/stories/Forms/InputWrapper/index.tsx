@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { AlertText, Checkbox, Radio, Toggle } from '../../../index';
-import { ErrorSeverity } from 'src/shared/types';
+import { ErrorSeverity } from '../../../shared/types';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
