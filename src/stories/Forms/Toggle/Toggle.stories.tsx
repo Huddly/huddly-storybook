@@ -3,9 +3,14 @@ import { Toggle } from '.';
 
 export default { component: Toggle };
 
-const Template = ({ alert, hint, id, isRequired }) => {
+const Template = ({ severity, severityMessage, id, isRequired }) => {
   return (
-    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
       <Toggle hasError={true} />
     </InputWrapper>
   );
@@ -21,5 +26,6 @@ export const InWrapperWithError = Template.bind({});
 InWrapperWithError.args = {
   id: 'example',
   value: true,
-  alert: 'Warning',
+  severityMessage: 'Warning',
+  severity: 'error',
 };

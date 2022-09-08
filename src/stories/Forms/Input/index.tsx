@@ -2,23 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import { GlobalInputProps } from '../../../shared/types';
 
-interface WrapperProps {
-  hasError?: boolean;
-  isHidden?: boolean;
-}
-
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div<{ isHidden: boolean }>`
   display: ${(p) => (p.isHidden ? 'none' : 'block')};
+`;
 
-  input {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    height: var(--spacing-48);
-    padding: var(--spacing-16);
-    border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-    border-radius: var(--border-radius);
-    font-size: var(--font-size-16);
+const StyledInput = styled.input<{ hasError?: boolean }>`
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--spacing-48);
+  padding: var(--spacing-16);
+  border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-16);
+  background: var(--color-grey96);
+
+  :hover {
+    border-color: var(--color-grey76);
+  }
+
+  :focus {
+    outline: none;
+    border-color: var(--color-lavender);
   }
 `;
 
@@ -58,13 +63,8 @@ export const Input = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper
-        aria-hidden={type === 'hidden'}
-        className={className}
-        hasError={hasError}
-        isHidden={type === 'hidden'}
-      >
-        <input
+      <Wrapper aria-hidden={type === 'hidden'} className={className} isHidden={type === 'hidden'}>
+        <StyledInput
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
@@ -74,6 +74,7 @@ export const Input = React.forwardRef(
           required={isRequired}
           type={type}
           value={value}
+          hasError={hasError}
           {...additionalInputProps}
         />
       </Wrapper>

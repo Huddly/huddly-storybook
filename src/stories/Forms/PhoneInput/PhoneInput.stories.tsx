@@ -13,9 +13,14 @@ export const Primary = {
   },
 };
 
-const Template = ({ alert, hint, id, isRequired, geoLocate }) => {
+const Template = ({ severity, severityMessage, id, isRequired, geoLocate }) => {
   return (
-    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
       <Label>Label</Label>
       <PhoneInput geoLocate={geoLocate} />
     </InputWrapper>
@@ -30,11 +35,27 @@ InWrapper.args = {
 export const HasHint = Template.bind({});
 HasHint.args = {
   ...Primary.args,
-  hint: 'This is a hint.',
+  severity: 'info',
+  severityMessage: 'This is a hint',
+};
+
+export const HasWarning = Template.bind({});
+HasWarning.args = {
+  ...Primary.args,
+  severity: 'warning',
+  severityMessage: 'This is a warning message.',
 };
 
 export const HasError = Template.bind({});
 HasError.args = {
   ...Primary.args,
-  alert: 'This is an error message.',
+  severity: 'error',
+  severityMessage: 'This is an error message.',
+};
+
+export const HasSuccess = Template.bind({});
+HasSuccess.args = {
+  ...Primary.args,
+  severity: 'success',
+  severityMessage: 'This is a success message',
 };

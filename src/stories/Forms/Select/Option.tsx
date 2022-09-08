@@ -7,7 +7,8 @@ const Wrapper = styled.li`
   display: flex;
   position: relative;
   align-items: center;
-  padding: ${rem(13)} var(--spacing-16);
+  height: var(--spacing-48);
+  padding: 0 var(--spacing-16);
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
@@ -32,7 +33,6 @@ const Wrapper = styled.li`
 `;
 
 const StyledCheckbox = styled(Checkbox)`
-  margin-left: calc(var(--spacing-4) * -1);
   margin-right: var(--spacing-4);
 `;
 

@@ -11,7 +11,7 @@ export const Primary = {
     children: (
       <>
         <Flex columnGap={16}>
-          <InputWrapper id='fname' isRequired alert='Test'>
+          <InputWrapper id='fname' isRequired severityMessage='Test' severity='error'>
             <Label>First name</Label>
             <Input />
           </InputWrapper>

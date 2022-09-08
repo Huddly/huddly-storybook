@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { AlertText, Checkbox, Radio, Toggle } from '../../../index';
+import { ErrorSeverity } from 'src/shared/types';
 
 interface WrapperProps {
   boxyErrorStyle: boolean;
@@ -26,7 +27,8 @@ const Wrapper = styled.div<WrapperProps>`
     background-color: var(--color-alertRedBg);`}
 
   // apply left margin for certain input types
-  label {
+  // only to direct childs if not it breaks for example checkboxes inside selects
+  &.label {
     margin-left: ${(p) => (p.labelIsIndented ? 'var(--spacing-16)' : 0)};
   }
 `;
@@ -49,17 +51,12 @@ const HintWrapper = styled.div<WrapperProps>`
   }
 `;
 
-const HintText = styled.div`
-  color: var(--color-grayText);
-  font-size: var(--font-size-12);
-`;
-
 export interface InputWrapperProps {
   id: string;
-  alert?: string;
+  severity?: ErrorSeverity;
+  severityMessage?: string;
   children: JSX.Element | JSX.Element[];
   className?: string;
-  hint?: string;
   isRequired?: boolean;
 }
 
@@ -68,10 +65,10 @@ export interface InputWrapperProps {
  */
 export const InputWrapper = React.forwardRef(
   (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { id, alert, children, className, hint, isRequired } = props;
+    const { id, children, className, isRequired, severity, severityMessage } = props;
     // Set aria id's. These are used for inputs and the helper texts.
-    const ariaDescribedById = hint ? `${id}-hint` : undefined;
-    const ariaErrorMessageId = alert ? `${id}-error` : undefined;
+    const ariaDescribedById = severity === 'info' ? `${id}-hint` : undefined;
+    const ariaErrorMessageId = severity === ('error' || 'warning') ? `${id}-error` : undefined;
 
     /*
      * Define global child/input props.
@@ -80,7 +77,7 @@ export const InputWrapper = React.forwardRef(
     const globalInputProps = {
       ariaDescribedBy: ariaDescribedById,
       ariaErrorMessage: ariaErrorMessageId,
-      hasError: alert ? true : undefined,
+      hasError: severity === 'error' ? true : undefined,
       id,
       isRequired,
     };
@@ -120,7 +117,7 @@ export const InputWrapper = React.forwardRef(
 
     const HintWrapperProps = {
       boxyErrorStyle: hasBoxyErrorStyle,
-      hasError: !!alert,
+      hasError: severity === 'error',
     };
 
     return (
@@ -132,23 +129,10 @@ export const InputWrapper = React.forwardRef(
       >
         {childrenWithGlobalInputProps}
 
-        {hint && !alert && (
+        {severity && (
           <HintWrapper {...HintWrapperProps}>
-            <HintText id={ariaErrorMessageId} className='hint-text'>
-              {hint}
-            </HintText>
-          </HintWrapper>
-        )}
-
-        {alert && (
-          <HintWrapper {...HintWrapperProps}>
-            <AlertText
-              id={ariaErrorMessageId}
-              className='alert-text'
-              severity='error'
-              hideIcon={hasBoxyErrorStyle}
-            >
-              {alert}
+            <AlertText id={ariaErrorMessageId} severity={severity} hideIcon={hasBoxyErrorStyle}>
+              {severityMessage}
             </AlertText>
           </HintWrapper>
         )}
