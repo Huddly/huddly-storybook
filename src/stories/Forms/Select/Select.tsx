@@ -352,7 +352,7 @@ export const Select = React.forwardRef(
     }
 
     const selectName = name || id;
-    const placeholder = '- Select option -';
+    const placeholder = multiselect ? '- Select options -' : '- Select option -';
 
     const selectWrapperRef = useRef<HTMLDivElement>(null);
     const selectButtonRef = useRef<HTMLButtonElement>(null);
