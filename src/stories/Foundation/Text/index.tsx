@@ -22,7 +22,7 @@ export interface TextProps {
  */
 export const Text = ({
   size = '14',
-  color = 'black',
+  color = 'grey15',
   type = 'p',
   bold,
   children,

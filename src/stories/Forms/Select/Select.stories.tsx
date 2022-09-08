@@ -14,9 +14,14 @@ export const Primary = {
   },
 };
 
-const Template = ({ alert, hint, id, isRequired, showItems, multiselect }) => {
+const Template = ({ severity, severityMessage, id, isRequired, showItems, multiselect }) => {
   return (
-    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
       <Label>Select a color</Label>
       <Select showItems={showItems} multiselect={multiselect}>
         <Option value='red'>Red</Option>
@@ -32,7 +37,7 @@ const Template = ({ alert, hint, id, isRequired, showItems, multiselect }) => {
   );
 };
 
-const CountriesFromApiTemplate = ({ alert, hint, id, isRequired, multiselect }) => {
+const CountriesFromApiTemplate = ({ id, isRequired, multiselect, severity, severityMessage }) => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -41,9 +46,13 @@ const CountriesFromApiTemplate = ({ alert, hint, id, isRequired, multiselect }) 
       .then((data) => setCountries(data))
       .catch((error) => console.log(error));
   }, []);
-
   return (
-    <InputWrapper alert={alert} hint={hint} id={id} isRequired={isRequired}>
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
       <Label>Countries</Label>
       <Select multiselect={multiselect}>
         {countries.map(({ name, alpha2Code, flags }) => (
@@ -66,15 +75,29 @@ InWrapper.args = {
 export const HasHint = Template.bind({});
 HasHint.args = {
   ...Primary.args,
-  multiselect: false,
-  hint: 'This is a hint.',
+  severity: 'info',
+  severityMessage: 'This is a hint',
+};
+
+export const HasWarning = Template.bind({});
+HasWarning.args = {
+  ...Primary.args,
+  severity: 'warning',
+  severityMessage: 'This is a warning message.',
 };
 
 export const HasError = Template.bind({});
 HasError.args = {
   ...Primary.args,
-  multiselect: false,
-  alert: 'This is an error message.',
+  severity: 'error',
+  severityMessage: 'This is an error message.',
+};
+
+export const HasSuccess = Template.bind({});
+HasSuccess.args = {
+  ...Primary.args,
+  severity: 'success',
+  severityMessage: 'This is a success message',
 };
 
 export const Multiselect = Template.bind({});

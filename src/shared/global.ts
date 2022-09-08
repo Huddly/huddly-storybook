@@ -21,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
 
   :root {
     /* Alert colors */
-    --color-warningRed: #B24319;
+    --color-warningRed: #B1060F;
     --color-successGreen: #34C759;
 
     ${BlueTonesHtml}

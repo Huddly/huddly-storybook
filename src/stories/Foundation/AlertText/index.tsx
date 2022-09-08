@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InfoSmall, WarningSmall } from '@huddly/frokost/havre18px';
+import { InfoSmall, WarningFilled } from '@huddly/frokost/havre18px';
 import { ErrorSeverity } from '../../../shared/types';
-import { SignalScaleTonesEnum } from '../../../shared/colors';
+import { GreenTonesEnum, SignalScaleTonesEnum, YellowTonesEnum } from '../../../shared/colors';
 import { Text } from '../../../index';
 import { Colors } from '../../../shared/colors';
 
@@ -26,28 +26,14 @@ export interface AlertTextProps {
   severity: ErrorSeverity;
 }
 
-const SEVERITY_COLORS = {
-  success: 'oreganoGreen',
-  info: 'grey15',
-  warning: 'intenseOrange',
-  error: 'intenseOrange',
-};
-
-/**
- * TODO:
- * - Add actual icons.
- */
-const getIcon = (severity: AlertTextProps['severity']) => {
-  switch (severity) {
-    case 'success':
-      return <InfoSmall />;
-    case 'info':
-      return <InfoSmall />;
-    case 'warning':
-      return <WarningSmall color={SignalScaleTonesEnum.intenseOrange} />;
-    case 'error':
-      return <WarningSmall color={SignalScaleTonesEnum.intenseOrange} />;
-  }
+const SEVERITY_STYLING: { [key: string]: { color: Colors; icon: JSX.Element } } = {
+  success: { color: 'mossGreen', icon: <InfoSmall color={GreenTonesEnum.mossGreen} /> },
+  info: { color: 'grey15', icon: <InfoSmall /> },
+  warning: { color: 'autumnYellow', icon: <WarningFilled color={YellowTonesEnum.autumnYellow} /> },
+  error: {
+    color: 'intenseOrange',
+    icon: <WarningFilled color={SignalScaleTonesEnum.intenseOrange} />,
+  },
 };
 
 /**
@@ -62,8 +48,8 @@ export const AlertText = ({
 }: AlertTextProps) => {
   return (
     <Wrapper className={className} id={id} role='alert'>
-      {!hideIcon && <i aria-hidden='true'>{getIcon(severity)}</i>}
-      <Text type='span' color={SEVERITY_COLORS[severity] as Colors}>
+      {!hideIcon && <i aria-hidden='true'>{SEVERITY_STYLING[severity].icon}</i>}
+      <Text type='span' color={SEVERITY_STYLING[severity].color}>
         {children}
       </Text>
     </Wrapper>
