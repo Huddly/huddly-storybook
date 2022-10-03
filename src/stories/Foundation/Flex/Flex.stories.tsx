@@ -21,7 +21,7 @@ export const DirectionRow = {
         <div style={placeholderStyles}>3</div>
       </>
     ),
-    columnGap: 16,
+    columnGap: '16',
     direction: 'row',
   },
 };
@@ -35,7 +35,7 @@ export const DirectionColumn = {
         <div style={placeholderStyles}>3</div>
       </>
     ),
-    rowGap: 16,
+    rowGap: '16',
     direction: 'column',
   },
 };

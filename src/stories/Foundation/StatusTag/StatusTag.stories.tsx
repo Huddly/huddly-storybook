@@ -5,7 +5,7 @@ export default { component: StatusTag };
 
 const OverviewTemplate = () => {
   return (
-    <Flex direction='column' rowGap={24} align='flex-start'>
+    <Flex direction='column' rowGap='24' align='flex-start'>
       <StatusTag severity='warning'>Warning status</StatusTag>
       <StatusTag severity='error'>Error status</StatusTag>
       <StatusTag severity='success'>Success status</StatusTag>

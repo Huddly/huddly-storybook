@@ -18,7 +18,7 @@ export const Primary = {
  */
 const TitleExampleTemplate = ({ children }) => {
   return (
-    <Flex align='center' columnGap={8}>
+    <Flex align='center' columnGap='8'>
       <Text type='h2' size='28'>
         Huddly L1
       </Text>

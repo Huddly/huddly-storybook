@@ -75,7 +75,7 @@ const ButtonSpinner = styled(Spinner)`
   position: absolute;
 `;
 
-type ButtonSizes = 32 | 48;
+type ButtonSizes = 32 | 48 | '32' | '48';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -115,7 +115,7 @@ export const Button = ({
       height={size}
     >
       <ButtonLabel hide={loading}>{children}</ButtonLabel>
-      {loading && <ButtonSpinner color={secondary ? 'black' : 'white'} size={24} />}
+      {loading && <ButtonSpinner color={secondary ? 'black' : 'white'} size='24' />}
     </ButtonElement>
   );
 };

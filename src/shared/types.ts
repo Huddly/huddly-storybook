@@ -1,4 +1,6 @@
-export type Spacing8 = 0 | 4 | 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+type Spacing8String = '0' | '4' | '8' | '16' | '24' | '32' | '40' | '48' | '56' | '64';
+// will move away from number and just use string because it provid faster autocomplete
+export type Spacing8 = 0 | 4 | 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | Spacing8String;
 
 export type ErrorSeverity = 'success' | 'info' | 'warning' | 'error' | 'neutral';
 export interface GlobalInputProps {

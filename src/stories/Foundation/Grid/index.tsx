@@ -33,8 +33,8 @@ const Wrapper = styled.div<GridProps>`
 export const Grid = ({
   rows = 'none',
   columns = 'none',
-  rowGap = 0,
-  columnGap = 0,
+  rowGap = '0',
+  columnGap = '0',
   justifyItems = 'normal',
   alignItems = 'normal',
   children,

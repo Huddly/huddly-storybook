@@ -10,7 +10,7 @@ export const Primary = {
     legend: 'Personal Information',
     children: (
       <>
-        <Flex columnGap={16}>
+        <Flex columnGap='16'>
           <InputWrapper id='fname' isRequired severityMessage='Test' severity='error'>
             <Label>First name</Label>
             <Input />

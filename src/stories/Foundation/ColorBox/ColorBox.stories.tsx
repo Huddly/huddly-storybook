@@ -40,7 +40,7 @@ const StyledColor = styled(ColorBox)`
 
 const OverviewTemplate = () => {
   return (
-    <Flex columnGap={4}>
+    <Flex columnGap='4'>
       <Flex direction='column'>
         <Text size='16'>Blue Tones</Text>
         {Object.keys(BlueTonesEnum).map((key: BlueTones) => (

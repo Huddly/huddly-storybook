@@ -132,7 +132,7 @@ export const PhoneInput = React.forwardRef(
     );
 
     return (
-      <Flex className={className} columnGap={8}>
+      <Flex className={className} columnGap='8'>
         <StyledSelect
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
