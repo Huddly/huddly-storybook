@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { Spinner } from '../../Foundation/Spinner';
-import { BlueTonesEnum, DarkGrayTonesEnum } from '../../../shared/colors';
+import { BlueTonesEnum, DarkGrayTonesEnum, SignalScaleTonesEnum } from '../../../shared/colors';
 
 const ButtonStateColors = {
   lavender: {
@@ -15,12 +15,17 @@ const ButtonStateColors = {
     hover: DarkGrayTonesEnum.grey25,
     active: DarkGrayTonesEnum.grey15,
   },
+  intenseOrange: {
+    default: SignalScaleTonesEnum.intenseOrange,
+    hover: SignalScaleTonesEnum.hotOrange,
+    active: SignalScaleTonesEnum.redWine,
+  },
 };
 
 const ButtonElement = styled.button<{
   height: ButtonSizes;
   secondary: boolean;
-  color: 'black' | 'lavender';
+  color: 'black' | 'lavender' | 'intenseOrange';
   disabled: boolean;
 }>`
   --button-color: ${(p) => `var(--color-${p.color})`};
@@ -40,12 +45,12 @@ const ButtonElement = styled.button<{
   cursor: pointer;
 
   :hover {
-    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].hover)};
+    background: ${(p) => (p.secondary ? 'transparent' : ButtonStateColors[p.color].hover)};
     border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].hover}`};
   }
 
   :active {
-    background: ${(p) => (p.secondary ? 'var(--color-white)' : ButtonStateColors[p.color].active)};
+    background: ${(p) => (p.secondary ? 'transparent' : ButtonStateColors[p.color].active)};
     border: ${(p) => `solid ${rem(2)} ${ButtonStateColors[p.color].active}`};
   }
 
@@ -75,7 +80,7 @@ type ButtonSizes = 32 | 48;
 export interface ButtonProps {
   children: React.ReactNode;
   className?: string;
-  color?: 'black' | 'lavender';
+  color?: 'black' | 'lavender' | 'intenseOrange';
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
