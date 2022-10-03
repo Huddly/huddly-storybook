@@ -1,6 +1,6 @@
 export type Spacing8 = 0 | 4 | 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
 
-export type ErrorSeverity = 'success' | 'info' | 'warning' | 'error';
+export type ErrorSeverity = 'success' | 'info' | 'warning' | 'error' | 'neutral';
 export interface GlobalInputProps {
   ariaDescribedBy?: string;
   ariaErrorMessage?: string;

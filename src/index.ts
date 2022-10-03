@@ -34,6 +34,7 @@ export { IconButton } from './stories/Foundation/IconButton';
 export { PanTilt } from './stories/Foundation/PanTilt';
 export { Slider } from './stories/Foundation/Slider';
 export { Spinner } from './stories/Foundation/Spinner';
+export { StatusTag } from './stories/Foundation/StatusTag';
 export { Table } from './stories/Foundation/Table';
 export { TableRow } from './stories/Foundation/Table/TableRow';
 export { Text } from './stories/Foundation/Text';
