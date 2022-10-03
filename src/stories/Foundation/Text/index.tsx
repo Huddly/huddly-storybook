@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.p<TextProps>`
   margin: 0;
-  line-height: 1.2em;
+  line-height: 1.6;
   font-size: ${(p) => `var(--font-size-${p.size})`};
   color: ${(p) => `var(--color-${p.color})`};
   font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
