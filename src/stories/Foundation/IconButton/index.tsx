@@ -63,7 +63,7 @@ export const IconButton = ({
       type={type}
       loading={loading}
     >
-      {loading && <Spinner size={24} />}
+      {loading && <Spinner size='24' />}
       {!loading && <Icon />}
     </ButtonElement>
   );

@@ -46,7 +46,7 @@ const ButtonSpinner = styled(Spinner)`
   position: absolute;
 `;
 
-type ButtonSizes = 14 | 16 | 18;
+type ButtonSizes = '14' | '16' | '18' | 14 | 16 | 18;
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -69,7 +69,7 @@ export const TextButton = ({
   loading,
   onClick,
   type = 'button',
-  size = 16,
+  size = '16',
 }: ButtonProps) => {
   return (
     <ButtonElement
@@ -81,7 +81,7 @@ export const TextButton = ({
       fontSize={size}
     >
       <ButtonLabel hide={loading}>{children}</ButtonLabel>
-      {loading && <ButtonSpinner size={24} />}
+      {loading && <ButtonSpinner size='24' />}
     </ButtonElement>
   );
 };

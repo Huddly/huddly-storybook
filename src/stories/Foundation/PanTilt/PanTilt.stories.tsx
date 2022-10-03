@@ -27,7 +27,7 @@ export const Primary = () => {
   };
 
   return (
-    <Grid alignItems='start' columns='320px 290px' columnGap={4}>
+    <Grid alignItems='start' columns='320px 290px' columnGap='4'>
       <PanTilt updatePosition={updatePosition} zoom={zoom} width={320} />
       <nav>
         <IconButton icon={Plus} onClick={zoomIn} />

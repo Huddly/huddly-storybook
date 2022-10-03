@@ -32,6 +32,6 @@ const SpinnerElement = styled.span<SpinnerProps>`
 /**
  * Badge component
  */
-export const Spinner = ({ className, color = 'black', size = 32 }: SpinnerProps) => {
+export const Spinner = ({ className, color = 'black', size = '32' }: SpinnerProps) => {
   return <SpinnerElement className={className} color={color} size={size} />;
 };
