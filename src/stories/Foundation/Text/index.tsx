@@ -8,12 +8,14 @@ export const Wrapper = styled.p<TextProps>`
   font-size: ${(p) => `var(--font-size-${p.size})`};
   color: ${(p) => `var(--color-${p.color})`};
   font-weight: ${(p) => (p.bold ? 'bold' : 'normal')};
+  letter-spacing: ${(p) => (p.extraLetterSpacing ? '0.02em' : 'normal')};
 `;
 export interface TextProps {
   size?: '12' | '14' | '16' | '18' | '22' | '28' | '48' | '68' | '98';
   color?: Colors;
   type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   bold?: boolean;
+  extraLetterSpacing?: boolean;
   children: React.ReactNode;
   className?: string;
 }
@@ -27,6 +29,7 @@ export const Text = ({
   bold,
   children,
   className,
+  extraLetterSpacing,
 }: TextProps) => {
   return (
     <Wrapper
@@ -35,6 +38,7 @@ export const Text = ({
       size={size}
       color={color}
       className={className}
+      extraLetterSpacing={extraLetterSpacing}
     >
       {children}
     </Wrapper>
