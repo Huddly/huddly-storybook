@@ -1,9 +1,9 @@
 import { useState } from 'react';
-
 import { Grid } from '../Grid';
 import { PanTilt } from '.';
 import { Slider } from '../Slider';
 import { IconButton } from '../IconButton';
+import { Plus, Minus } from '@huddly/frokost/havre';
 
 export default { component: PanTilt };
 
@@ -27,10 +27,10 @@ export const Primary = () => {
   };
 
   return (
-    <Grid alignItems='start' columns='320px 290px' columnGap={4}>
+    <Grid alignItems='start' columns='320px 290px' columnGap='4'>
       <PanTilt updatePosition={updatePosition} zoom={zoom} width={320} />
       <nav>
-        <IconButton icon='Plus' onClick={zoomIn} />
+        <IconButton icon={Plus} onClick={zoomIn} />
         <Slider
           min={zoomMin}
           max={zoomMax}
@@ -40,7 +40,7 @@ export const Primary = () => {
           vertical={true}
           length={195}
         />
-        <IconButton icon='Minus' onClick={zoomOut} />
+        <IconButton icon={Minus} onClick={zoomOut} />
       </nav>
     </Grid>
   );

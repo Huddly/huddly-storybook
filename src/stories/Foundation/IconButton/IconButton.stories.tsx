@@ -1,7 +1,8 @@
+import styled from 'styled-components';
 import { Grid } from '../Grid';
 import { Text } from '../Text';
-import styled from 'styled-components';
 import { IconButton } from '.';
+import { Edit } from '@huddly/frokost/havre';
 
 export default { component: IconButton };
 
@@ -11,7 +12,7 @@ const Wrapper = styled(Grid)`
 
 const OverviewTemplate = (props) => {
   return (
-    <Wrapper columnGap={32} rowGap={32} columns='50px 50px' justifyItems='center'>
+    <Wrapper columnGap='32' rowGap='32' columns='50px 50px' justifyItems='center'>
       <Text size='18' bold>
         Button
       </Text>
@@ -25,9 +26,8 @@ const OverviewTemplate = (props) => {
 };
 
 export const Overview = OverviewTemplate.bind({});
+
 Overview.args = {
-  type: 'iconButton',
-  children: 'Click me',
-  icon: 'Edit',
+  icon: Edit,
   tooltipText: 'Edit',
 };

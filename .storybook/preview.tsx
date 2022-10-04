@@ -8,12 +8,12 @@ import { GlobalStyles } from '../src/shared/global';
  * https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators
  */
 export const decorators = [
-    (Story) => (
-        <>
-            <GlobalStyles />
-            <Story />
-        </>
-    ),
+  (Story) => (
+    <>
+      <GlobalStyles />
+      <Story />
+    </>
+  ),
 ];
 
 /*
@@ -21,5 +21,5 @@ export const decorators = [
  * https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
  */
 export const parameters = {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+  actions: { argTypesRegex: '^on[A-Z].*' },
 };

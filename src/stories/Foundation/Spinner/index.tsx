@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spacing8 } from '@shared/types';
-import { StandardColors } from '@shared/colors';
+import { Spacing8 } from '../../../shared/types';
+import { StandardColors } from '../../../shared/colors';
 
 export interface SpinnerProps {
   className?: string;
@@ -32,6 +32,6 @@ const SpinnerElement = styled.span<SpinnerProps>`
 /**
  * Badge component
  */
-export const Spinner = ({ className, color = 'black', size = 32 }: SpinnerProps) => {
+export const Spinner = ({ className, color = 'black', size = '32' }: SpinnerProps) => {
   return <SpinnerElement className={className} color={color} size={size} />;
 };

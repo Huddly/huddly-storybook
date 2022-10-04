@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
 import styled from 'styled-components';
 import { Text } from '../Text';
+import rem from '../../../shared/pxToRem';
 
 const Wrapper = styled.div`
   position: relative;

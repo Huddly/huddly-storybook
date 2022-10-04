@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
+import { Checkbox } from '../Checkbox';
 
 const Wrapper = styled.li`
   display: flex;
   position: relative;
   align-items: center;
-  padding: ${rem(13)} var(--spacing-16);
+  padding: ${rem(12)} var(--spacing-16);
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
@@ -28,15 +29,27 @@ const Wrapper = styled.li`
   & > *:first-child:is(figure, img, svg) {
     margin-left: ${rem(-4)};
   }
+`;
 
-  & > * {
-    pointer-events: none;
-  }
+const StyledCheckbox = styled(Checkbox)`
+  margin-right: var(--spacing-4);
 `;
 
 export interface OptionProps {
   children: React.ReactNode;
   value: string;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  selected?: boolean;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  hasCheckbox?: boolean;
+  /**
+   * This prop gets passed down from the Select component automatically.
+   */
+  onChange?: (value: string) => void;
 }
 
 /**
@@ -44,10 +57,13 @@ export interface OptionProps {
  */
 export const Option = React.forwardRef(
   (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
-    const { children, value } = props;
+    const { children, value, selected, hasCheckbox, onChange } = props;
 
     return (
-      <Wrapper ref={ref} role='option' tabIndex={0} data-value={value}>
+      <Wrapper ref={ref} role='option' tabIndex={0} onClick={() => onChange?.(value)}>
+        {hasCheckbox && (
+          <StyledCheckbox value={selected} onChange={() => onChange?.(value)} tabIndex={-1} />
+        )}
         {children}
       </Wrapper>
     );

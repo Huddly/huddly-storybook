@@ -2,10 +2,15 @@ import { TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Table } from '.';
 import { Input } from '../../Forms/Input';
-import { NativeSelect as Select } from '../../Forms/NativeSelect';
+import { Select, Option } from '../../Forms/Select';
 import { Text } from '../Text';
 import { useState } from 'react';
 import { Checkbox } from '../../Forms/Checkbox';
+
+const Wrapper = styled.div`
+  background: var(--color-grey96);
+  padding: var(--spacing-48);
+`;
 
 const UL = styled.ul`
   padding: 0;
@@ -92,9 +97,9 @@ const columns = [
           value={row.timeZone}
           onChange={(e) => onChange({ ...row, timeZone: e.target.value })}
         >
-          <option>UTC +1</option>
-          <option>UTC +2</option>
-          <option>UTC +3</option>
+          <Option value='utc1'>UTC +1</Option>
+          <Option value='utc2'>UTC +2</Option>
+          <Option value='utc3'>UTC +3</Option>
         </Select>
       );
     },
@@ -145,14 +150,16 @@ const Template = (props) => {
     setRows(rows.filter((r) => r.id !== rowId));
   };
   return (
-    <Table
-      {...props}
-      rows={rows}
-      setOrdering={setOrdering}
-      ordering={ordering}
-      columns={columns}
-      removeRow={removeRow}
-    />
+    <Wrapper>
+      <Table
+        {...props}
+        rows={rows}
+        setOrdering={setOrdering}
+        ordering={ordering}
+        columns={columns}
+        removeRow={removeRow}
+      />
+    </Wrapper>
   );
 };
 

@@ -6,6 +6,7 @@ export const Primary = {
   args: {
     type: 'button',
     children: 'Click me',
+    color: 'intenseOrange',
   },
 };
 

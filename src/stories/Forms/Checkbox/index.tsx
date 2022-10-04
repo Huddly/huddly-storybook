@@ -1,63 +1,76 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { GlobalInputProps } from '@shared/types';
+import rem from '../../../shared/pxToRem';
+import { GlobalInputProps } from '../../../shared/types';
 
-interface WrapperProps {
-  hasError?: boolean;
-}
+const FakeCheckbox = styled.label<{ hasError: boolean }>`
+  display: flex;
+  position: relative;
+  align-items: center;
+  color: var(--color-grey15);
+  font-size: var(--font-size-14);
+  cursor: pointer;
 
-const Wrapper = styled.div<WrapperProps>`
-  label {
-    display: flex;
-    font-size: var(--font-size-14);
-    cursor: pointer;
-
-    // Checkbox
-    &:before {
-      display: block;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      width: var(--spacing-16);
-      height: var(--spacing-16);
-      margin-right: var(--spacing-8);
-      border-radius: ${rem(2)};
-      content: '';
-
-      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-    }
-
-    a {
-      color: var(--color-lavender);
-    }
-  }
-
-  input[type='checkbox'] {
-    opacity: 0;
-    position: absolute;
-    left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
-
-    // Focus ring
-    &:focus + label:before {
-      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
-      outline: ${rem(5)} auto -webkit-focus-ring-color;
-      outline-offset: ${rem(3)};
-    }
-
-    // Checked checkbox style
-    &:checked + label:before {
-      border-color: var(--color-lavender);
-      background-color: var(--color-lavender);
-      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg enable-background='new 0 0 533.973 533.973' version='1.1' viewBox='0 0 533.97 533.97' xml:space='preserve' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23fff' d='m477.93 52.261c-12.821-12.821-33.605-12.821-46.427 0l-266.96 266.95-62.075-62.069c-12.821-12.821-33.604-12.821-46.426 0l-46.427 46.426c-12.821 12.821-12.821 33.604 0 46.426l131.72 131.72c12.821 12.821 33.611 12.821 46.426 0l336.6-336.6c12.821-12.821 12.821-33.605 0-46.426l-46.425-46.426z'/%3E%3C/svg%3E%0A");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
+  // The fake custom checkbox
+  &:before {
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    border: ${({ hasError }) =>
+      hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
+    border-radius: ${rem(2)};
+    content: '';
   }
 `;
 
+const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>`
+  opacity: 0;
+  position: absolute;
+  left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
+
+  // Focus ring
+  &:focus-within + ${FakeCheckbox}:before {
+    box-shadow: 0px 0px 0px ${rem(2)} white, 0px 0px 0px ${rem(4)} var(--color-lavender);
+  }
+
+  // Checked checkbox style
+  &:checked + ${FakeCheckbox}:before {
+    border-color: var(--color-lavender);
+    background-color: var(--color-lavender);
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.25 1.25L4.5 8L0.75 4.25' stroke='white' stroke-width='2'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &:hover:checked + ${FakeCheckbox}:before {
+    border-color: var(--color-salviaBlue);
+    background-color: var(--color-salviaBlue);
+  }
+
+  &:hover:not(:checked) + ${FakeCheckbox}:before {
+    border-color: var(--color-grey45);
+    background-color: var(--color-grey91);
+  }
+
+  &:active:checked + ${FakeCheckbox}:before {
+    border-color: var(--color-royalBlue);
+    background-color: var(--color-royalBlue);
+  }
+
+  &:active:not(:checked) + ${FakeCheckbox}:before {
+    border-color: var(--color-grey35);
+    background-color: var(--color-grey86);
+  }
+`;
+
+const LabelText = styled.span`
+  margin-left: var(--spacing-8);
+`;
+
 export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: boolean;
 }
 
@@ -80,8 +93,8 @@ export const Checkbox = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper className={className} hasError={hasError}>
-        <input
+      <div className={className}>
+        <CheckboxInput
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
@@ -93,11 +106,10 @@ export const Checkbox = React.forwardRef(
           type='checkbox'
           {...additionalInputProps}
         />
-
-        <label htmlFor={id}>
-          <span>{children}</span>
-        </label>
-      </Wrapper>
+        <FakeCheckbox htmlFor={id} hasError={hasError}>
+          {children && <LabelText>{children}</LabelText>}
+        </FakeCheckbox>
+      </div>
     );
   }
 );

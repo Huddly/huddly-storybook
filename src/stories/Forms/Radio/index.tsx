@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
-import { GlobalInputProps } from '@shared/types';
+import rem from '../../../shared/pxToRem';
+import { GlobalInputProps } from '../../../shared/types';
 
 interface WrapperProps {
   hasError?: boolean;
@@ -25,10 +25,6 @@ const Wrapper = styled.div<WrapperProps>`
       content: '';
 
       border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-    }
-
-    a {
-      color: var(--color-lavender);
     }
   }
 

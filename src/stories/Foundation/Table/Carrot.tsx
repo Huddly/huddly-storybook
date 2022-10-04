@@ -1,16 +1,15 @@
 import React from 'react';
-import { Direction } from '@shared/types';
+import { Direction } from '../../../shared/types';
 import styled from 'styled-components';
+import { ArrowUp, ArrowDown } from '@huddly/frokost/havre18px';
+import { BrightGrayTonesEnum, DarkGrayTonesEnum } from '../../../shared/colors';
 
 const Wrapper = styled.button<{
   currentSorting: boolean;
-  direction: Direction;
 }>`
   padding-left: var(--spacing-8);
   background: none;
   border: none;
-  transform: rotate(${(p) => (p.direction === 'ASC' || !p.currentSorting ? '0deg' : '180deg')});
-  fill: ${(p) => (p.currentSorting ? 'var(--color-lavender)' : 'black')};
 `;
 
 interface Props {
@@ -20,9 +19,12 @@ interface Props {
 }
 
 export const Carrot = ({ onClick, currentSorting, direction }: Props) => (
-  <Wrapper onClick={onClick} currentSorting={currentSorting} direction={direction}>
-    <svg height='9' width='13'>
-      <polygon points='0,0 13,0 6.5,9' />
-    </svg>
+  <Wrapper onClick={onClick} currentSorting={currentSorting}>
+    {(direction === 'DESC' || !currentSorting) && (
+      <ArrowDown color={currentSorting ? DarkGrayTonesEnum.grey35 : BrightGrayTonesEnum.grey62} />
+    )}
+    {direction === 'ASC' && currentSorting && (
+      <ArrowUp color={currentSorting ? DarkGrayTonesEnum.grey35 : BrightGrayTonesEnum.grey62} />
+    )}
   </Wrapper>
 );

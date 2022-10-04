@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { normalizeStyles } from '@shared/normalizeStyles';
+import { normalizeStyles } from './normalizeStyles';
 import {
   YellowTonesHtml,
   BlueTonesHtml,
@@ -12,8 +12,8 @@ import {
   SignalScaleTonesHtml,
   DarkGrayTonesHtml,
   WhiteHtml,
-} from '@shared/colors';
-import rem from '@shared/pxToRem';
+} from './colors';
+import rem from './pxToRem';
 
 export const GlobalStyles = createGlobalStyle`
   /* Normalize */
@@ -60,12 +60,12 @@ export const GlobalStyles = createGlobalStyle`
     --spacing-64: ${rem(64)};
 
     /* Borders */
-    --border-primary: ${rem(2)} solid var(--color-grey76);
-    --border-error: ${rem(2)} solid var(--color-hotOrange);
+    --border-primary: ${rem(2)} solid var(--color-grey86);
+    --border-error: ${rem(2)} solid var(--color-intenseOrange);
     --border-active: ${rem(2)} solid var(--color-lavender);
 
     /* Border radius */
-    --border-radius: ${rem(6)};
+    --border-radius: ${rem(3)};
 
     /* Fonts */
     --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;
@@ -80,6 +80,10 @@ export const GlobalStyles = createGlobalStyle`
   }
   body {
     font-family: var(--font-family-primary);
+    color: var(--color-grey15);
+  }
+  a {
+    color: var(--color-lavender);
   }
 
   /* Import fonts */

@@ -18,6 +18,7 @@ export { Radio } from './stories/Forms/Radio';
 export { Select, Option } from './stories/Forms/Select';
 export { TextArea } from './stories/Forms/TextArea';
 export { TextButton } from './stories/Forms/TextButton';
+export { Toggle } from './stories/Forms/Toggle';
 
 /**
  * Foundation
@@ -29,11 +30,11 @@ export { ColorBox } from './stories/Foundation/ColorBox';
 export { Flex } from './stories/Foundation/Flex';
 export { Grid } from './stories/Foundation/Grid';
 export { GridItem } from './stories/Foundation/GridItem';
-export { Icon } from './stories/Foundation/Icon';
 export { IconButton } from './stories/Foundation/IconButton';
 export { PanTilt } from './stories/Foundation/PanTilt';
 export { Slider } from './stories/Foundation/Slider';
 export { Spinner } from './stories/Foundation/Spinner';
+export { StatusTag } from './stories/Foundation/StatusTag';
 export { Table } from './stories/Foundation/Table';
 export { TableRow } from './stories/Foundation/Table/TableRow';
 export { Text } from './stories/Foundation/Text';

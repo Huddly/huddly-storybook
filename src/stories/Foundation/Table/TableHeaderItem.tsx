@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import rem from '@shared/pxToRem';
+import rem from '../../../shared/pxToRem';
 import { Flex } from '../Flex';
-import { Direction, Ordering } from '@shared/types';
+import { Direction, Ordering } from '../../../shared/types';
 import { Carrot } from './Carrot';
 
 const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`
   text-align: ${(p) => p.align};
   font-size: var(--font-size-14);
-  font-weight: normal;
+  font-weight: bold;
   color: var(--color-grey35);
   width: ${(p) => p.width ?? 'auto'};
 `;
@@ -39,7 +39,7 @@ const TableHeaderItem = ({
 }: Props) => {
   const onClick = () => {
     const isCurrentlySelected = ordering.field === columnKey;
-    const direction = isCurrentlySelected ? invertedDirection[ordering.direction] : 'ASC';
+    const direction = isCurrentlySelected ? invertedDirection[ordering.direction] : 'DESC';
     setOrdering({
       field: columnKey,
       direction: direction,

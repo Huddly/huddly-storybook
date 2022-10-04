@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors } from '@shared/colors';
+import { Colors } from '../../../shared/colors';
 
 export interface ColorProps {
   color: Colors;

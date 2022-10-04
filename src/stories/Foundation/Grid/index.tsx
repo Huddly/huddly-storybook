@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spacing8 } from '@shared/types';
+import { Spacing8 } from '../../../shared/types';
 
 export interface GridProps {
   // can be a list of px, rem, fr, percent
@@ -33,8 +33,8 @@ const Wrapper = styled.div<GridProps>`
 export const Grid = ({
   rows = 'none',
   columns = 'none',
-  rowGap = 0,
-  columnGap = 0,
+  rowGap = '0',
+  columnGap = '0',
   justifyItems = 'normal',
   alignItems = 'normal',
   children,

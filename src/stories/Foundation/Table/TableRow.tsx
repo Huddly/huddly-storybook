@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { TableColumn, TableData } from '@shared/types';
+import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
-import { Button } from '@components/Forms/Button';
+import { Button } from '../../Forms/Button';
 import { IconButton } from '../IconButton';
+import { MenuMeatball } from '@huddly/frokost/havre';
+
 interface TDProps {
   align: 'left' | 'right' | 'center';
 }
@@ -13,10 +15,9 @@ const TD = styled.td<TDProps>`
 `;
 
 const TR = styled.tr`
-  background-color: white;
   height: var(--spacing-48);
   &:hover {
-    background-color: var(--color-grey96);
+    background-color: var(--color-grey91);
   }
 `;
 
@@ -75,7 +76,14 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
         {row.isEditable && (
           <>
             {isEditing && <Button onClick={toggleEditing}>{isEditing ? 'Save' : 'Edit'}</Button>}
-            {!isEditing && <IconButton onClick={toggleEditing} icon='Edit' tooltipText='Edit' />}
+            {!isEditing && (
+              <IconButton
+                color='grey55'
+                onClick={toggleEditing}
+                icon={MenuMeatball}
+                tooltipText='Edit'
+              />
+            )}
           </>
         )}
       </TD>
