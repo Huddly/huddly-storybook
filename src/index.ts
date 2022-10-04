@@ -8,6 +8,7 @@ export * from './shared/colors';
  * Forms
  */
 export { Button } from './stories/Forms/Button';
+export { ButtonGroup } from './stories/Forms/ButtonGroup';
 export { Checkbox } from './stories/Forms/Checkbox';
 export { Fieldset } from './stories/Forms/Fieldset';
 export { Input } from './stories/Forms/Input';
