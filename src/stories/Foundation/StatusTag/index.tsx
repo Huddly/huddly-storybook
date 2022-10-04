@@ -13,7 +13,7 @@ const getColorForSeverity: {
   info: { border: 'plumbagoBlue', background: 'whisperBlue', color: 'royalBlue' },
 };
 
-const Wrapper = styled.div<{ severity: ErrorSeverity }>`
+const Wrapper = styled.span<{ severity: ErrorSeverity }>`
   border: ${(p) => `${rem(2)} solid var(--color-${getColorForSeverity[p.severity].border})`};
   background: ${(p) => `var(--color-${getColorForSeverity[p.severity].background})`};
   color: ${(p) => `var(--color-${getColorForSeverity[p.severity].color})`};
@@ -35,7 +35,7 @@ export interface StatusTagProps {
  */
 export const StatusTag = ({ className, children, severity }: StatusTagProps) => {
   return (
-    <Wrapper severity={severity} className={className}>
+    <Wrapper severity={severity} className={className} role='status'>
       {children.toUpperCase()}
     </Wrapper>
   );
