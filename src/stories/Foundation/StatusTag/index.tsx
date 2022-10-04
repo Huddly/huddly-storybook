@@ -20,6 +20,7 @@ const Wrapper = styled.div<{ severity: ErrorSeverity }>`
   padding: var(--spacing-4) var(--spacing-8);
   border-radius: var(--border-radius);
   font-size: ${rem(12)};
+  letter-spacing: 0.02em;
   font-weight: 700;
 `;
 
