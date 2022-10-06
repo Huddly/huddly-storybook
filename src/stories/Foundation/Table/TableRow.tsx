@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableColumn, TableData } from '../../../shared/types';
 import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
@@ -31,6 +31,11 @@ interface Props {
 export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
   const [isEditing, setIsEditing] = useState(row.isNewRow);
   const [rowValue, setRowValue] = useState(row);
+
+  useEffect(() => {
+    setRowValue(row);
+  }, [row]);
+
   const toggleEditing = () => {
     if (isEditing) {
       onSave(rowValue);
