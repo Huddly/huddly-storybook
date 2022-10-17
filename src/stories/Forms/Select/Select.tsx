@@ -370,6 +370,9 @@ export const Select = React.forwardRef(
     }, [value]);
 
     useEffect(() => {
+      if (!selectWrapperRef.current) return;
+      const selectWrapper = selectWrapperRef.current;
+
       const handleKeyDown = (e: KeyboardEvent) => {
         const selectList = selectListRef.current;
         const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
@@ -387,8 +390,12 @@ export const Select = React.forwardRef(
             if (activeElement === selectButtonRef.current && !isOpen) {
               setIsOpen(true);
             }
-            // Enable space to select an option when multiselect is enabled
+            // If filterSearchRef is focused, place a space in the input
+            if (activeElement === filterSearchRef.current) {
+              filterSearchRef.current.value += ' ';
+            }
             if (activeElementIndex !== -1 && multiselect) {
+              // Enable space to select an option when multiselect is enabled
               selectListChildren[activeElementIndex].click();
             }
             break;
@@ -436,12 +443,12 @@ export const Select = React.forwardRef(
         }
       };
 
-      window.addEventListener('keydown', handleKeyDown);
+      selectWrapper.addEventListener('keydown', handleKeyDown);
 
       return () => {
-        window.removeEventListener('keydown', handleKeyDown);
+        selectWrapper.removeEventListener('keydown', handleKeyDown);
       };
-    }, [isOpen]);
+    }, []);
 
     useEffect(() => {
       setSelectListHeight(getSelectListHeight(5, selectListRef));
