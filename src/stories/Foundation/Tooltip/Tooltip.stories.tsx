@@ -5,13 +5,13 @@ import { Button } from '../../Forms/Button';
 
 export default { component: Tooltip };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ pushOutOfBounds: boolean }>`
   display: flex;
   justify-content: center;
-  margin-top: var(--spacing-32);
+  margin-top: ${(p) => (p.pushOutOfBounds ? '0' : 'var(--spacing-48)')};
 `;
 
-const BasicTemplate = () => {
+const Template = ({ align, pushOutOfBounds = true }) => {
   const [veryCount, setVeryCount] = useState(1);
 
   const getRandomMore = () => {
@@ -31,12 +31,30 @@ const BasicTemplate = () => {
   const tooltipText = getTooltipText();
   const buttonText = getRandomMore();
   return (
-    <Wrapper>
-      <Tooltip text={tooltipText}>
+    <Wrapper pushOutOfBounds={pushOutOfBounds}>
+      <Tooltip text={tooltipText} align={align}>
         <Button onClick={addVery}>{buttonText} very</Button>
       </Tooltip>
     </Wrapper>
   );
 };
 
-export const Basic = BasicTemplate.bind({});
+export const Left = Template.bind({});
+Left.args = {
+  align: 'left',
+};
+
+export const Center = Template.bind({});
+Center.args = {
+  align: 'center',
+};
+
+export const Right = Template.bind({});
+Right.args = {
+  align: 'right',
+};
+
+export const OutOfBounds = Template.bind({});
+OutOfBounds.args = {
+  pushOutOfBounds: true,
+};
