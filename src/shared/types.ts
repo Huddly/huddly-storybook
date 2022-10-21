@@ -19,7 +19,7 @@ export interface GlobalInputProps {
 
 export interface TableColumn {
   columnKey: string;
-  header: React.ReactNode;
+  header: string;
   subHeader?: string;
   align?: 'left' | 'right' | 'center';
   width?: string;

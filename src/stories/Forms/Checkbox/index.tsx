@@ -31,7 +31,7 @@ const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>
   left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
 
   // Focus ring
-  &:focus-within + ${FakeCheckbox}:before {
+  &:focus-visible + ${FakeCheckbox}:before {
     box-shadow: 0px 0px 0px ${rem(2)} white, 0px 0px 0px ${rem(4)} var(--color-lavender);
   }
 

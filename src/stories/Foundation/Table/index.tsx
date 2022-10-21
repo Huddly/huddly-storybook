@@ -5,18 +5,29 @@ import rem from '../../../shared/pxToRem';
 import { TableRow } from './TableRow';
 import TableHeaderItem from './TableHeaderItem';
 import { Spinner } from '../Spinner';
+import { Checkbox } from '../../Forms/Checkbox';
 
 const StyledTable = styled.table<{ fullWidth: boolean }>`
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
   border-spacing: 0;
   font-size: var(--font-size-16);
   border-bottom: ${rem(1)} solid var(--color-grey91);
+  border-spacing: 0 ${rem(2)};
+
+  tr {
+    height: ${rem(46)};
+  }
 `;
 
 const HeaderRow = styled.thead`
   th {
     border-bottom: ${rem(1)} solid var(--color-grey91);
   }
+`;
+
+const CheckBoxCell = styled.th`
+  width: ${rem(40)};
+  padding-right: var(--spacing-16);
 `;
 
 export interface TableProps {
@@ -30,6 +41,9 @@ export interface TableProps {
   onSaveNewRow?: (row: TableData) => void;
   removeRow?: (rowId: string) => void;
   loading?: boolean;
+  withChecboxes?: boolean;
+  onClickCheckbox?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedRows?: string[];
 }
 
 /**
@@ -46,12 +60,25 @@ export const Table = ({
   onSaveRow,
   removeRow,
   loading,
+  withChecboxes,
+  selectedRows,
+  onClickCheckbox,
 }: TableProps) => (
   <StyledTable fullWidth={fullWidth} className={className}>
     <HeaderRow>
       <tr>
-        {columns.map((c) => (
+        {withChecboxes && selectedRows && (
+          <CheckBoxCell>
+            <Checkbox
+              id='all'
+              checked={selectedRows.length === rows.length}
+              onChange={onClickCheckbox}
+            />
+          </CheckBoxCell>
+        )}
+        {columns.map((c, i) => (
           <TableHeaderItem
+            index={i}
             key={`${c.columnKey}_header`}
             {...c}
             ordering={ordering}
@@ -73,6 +100,9 @@ export const Table = ({
       {!loading &&
         rows.map((r) => (
           <TableRow
+            onClickCheckbox={onClickCheckbox}
+            selectedRows={selectedRows}
+            hasCheckbox={withChecboxes}
             columns={columns}
             row={r}
             key={`row_${r.id}`}
