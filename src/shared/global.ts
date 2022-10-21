@@ -69,6 +69,7 @@ export const GlobalStyles = createGlobalStyle`
 
     /* Fonts */
     --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;
+    --extra-letter-spacing: 0.02em;
   }
 
   html, body {

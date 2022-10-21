@@ -4,20 +4,30 @@ import styled from 'styled-components';
 import { Button } from '../../Forms/Button';
 import { IconButton } from '../IconButton';
 import { MenuMeatball } from '@huddly/frokost/havre';
+import { Checkbox } from '../../Forms/Checkbox';
 
 interface TDProps {
   align: 'left' | 'right' | 'center';
+  isFirst?: boolean;
+  isLast?: boolean;
 }
 
-const TD = styled.td<TDProps>`
+const CheckboxCell = styled.td``;
+
+const TableCell = styled.td<TDProps>`
   text-align: ${(p) => p.align};
   text-align: ${(p) => `-webkit-${p.align}`};
+  padding-left: ${(p) => (p.isFirst ? 'var(--spacing-16)' : 0)};
+  padding-right: ${(p) => (p.isLast ? 'var(--spacing-16)' : 0)};
 `;
 
-const TR = styled.tr`
-  height: var(--spacing-48);
-  &:hover {
-    background-color: var(--color-grey91);
+const TR = styled.tr<{ selected?: boolean }>`
+  &:hover ${TableCell} {
+    ${(p) => !p.selected && 'background-color: var(--color-grey91)'}
+  }
+
+  ${TableCell} {
+    ${(p) => p.selected && 'background: var(--color-whisperBlue)'}
   }
 `;
 
@@ -26,9 +36,20 @@ interface Props {
   row: TableData;
   onSave?: (row: TableData) => void;
   removeRow: (rowId: string) => void;
+  hasCheckbox?: boolean;
+  selectedRows?: string[];
+  onClickCheckbox?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
+export const TableRow = ({
+  columns,
+  row,
+  onSave,
+  removeRow,
+  hasCheckbox,
+  selectedRows,
+  onClickCheckbox,
+}: Props) => {
   const [isEditing, setIsEditing] = useState(row.isNewRow);
   const [rowValue, setRowValue] = useState(row);
 
@@ -55,7 +76,16 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
   };
 
   return (
-    <TR>
+    <TR selected={selectedRows && selectedRows.includes(row.id)}>
+      {hasCheckbox && selectedRows && (
+        <CheckboxCell>
+          <Checkbox
+            id={row.id}
+            onChange={onClickCheckbox}
+            checked={selectedRows.includes(row.id)}
+          />
+        </CheckboxCell>
+      )}
       {columns.map(
         ({ align = 'left', columnKey, editFormatter, valueFormatter, isSortable }, i) => {
           let renderValue = valueFormatter ? valueFormatter(rowValue) : rowValue[columnKey] ?? '';
@@ -66,13 +96,15 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
 
           return (
             <React.Fragment key={`column_${i}_row_${row.id}}`}>
-              <TD align={align}>{renderValue}</TD>
-              {isSortable && align === 'right' && <TD align='right' />}
+              <TableCell align={align} isFirst={i === 0}>
+                {renderValue}
+              </TableCell>
+              {isSortable && align === 'right' && <TableCell align='right' />}
             </React.Fragment>
           );
         }
       )}
-      <TD align='right'>
+      <TableCell align='right' isLast>
         {isEditing && (
           <Button onClick={onCancel} secondary>
             Cancel
@@ -91,7 +123,7 @@ export const TableRow = ({ columns, row, onSave, removeRow }: Props) => {
             )}
           </>
         )}
-      </TD>
+      </TableCell>
     </TR>
   );
 };

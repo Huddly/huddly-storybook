@@ -4,10 +4,10 @@ import { Table } from '.';
 import { Input } from '../../Forms/Input';
 import { Select, Option } from '../../Forms/Select';
 import { Text } from '../Text';
-import { useState } from 'react';
-import { Checkbox } from '../../Forms/Checkbox';
+import React, { useState } from 'react';
+import { Flex } from '../Flex';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Flex)`
   background: var(--color-grey96);
   padding: var(--spacing-48);
 `;
@@ -29,16 +29,9 @@ export default { component: Table };
 const columns = [
   {
     columnKey: 'name',
-    header: (
-      <>
-        <Checkbox id='name' />
-        Name
-      </>
-    ),
+    header: 'Name',
+    isCheckable: true,
     align: 'left',
-    valueFormatter: (row: TableData) => (
-      <Checkbox id={`name_${row.name}`}>{row.name ?? ''}</Checkbox>
-    ),
     editFormatter: (row: TableData, onChange: (row: TableData) => void) => (
       <Input
         id='name'
@@ -149,11 +142,47 @@ const Template = (props) => {
   const removeRow = (rowId: string) => {
     setRows(rows.filter((r) => r.id !== rowId));
   };
+  const [selectedRows, setSelectedRows] = useState([]);
+  const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.id === 'all') {
+      if (e.target.checked) {
+        setSelectedRows(rows.map((r) => r.id));
+        return;
+      } else {
+        setSelectedRows([]);
+        return;
+      }
+    }
+    if (!e.target.checked) {
+      setSelectedRows(selectedRows.filter((r) => r !== e.target.id));
+      return;
+    }
+
+    setSelectedRows([...selectedRows, e.target.id]);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper direction='column' rowGap='64'>
+      <Text bold size='22'>
+        Table with checkboxes
+      </Text>
       <Table
         {...props}
         rows={rows}
+        setOrdering={setOrdering}
+        ordering={ordering}
+        columns={columns}
+        removeRow={removeRow}
+        withChecboxes
+        selectedRows={selectedRows}
+        onClickCheckbox={onClickCheckbox}
+      />
+      <Text bold size='22'>
+        Simple table
+      </Text>
+      <Table
+        {...props}
+        rows={rows.map((r) => ({ ...r, isEditable: false, isNewRow: false }))}
         setOrdering={setOrdering}
         ordering={ordering}
         columns={columns}

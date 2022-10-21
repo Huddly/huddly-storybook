@@ -5,20 +5,25 @@ import { Flex } from '../Flex';
 import { Direction, Ordering } from '../../../shared/types';
 import { Carrot } from './Carrot';
 
-const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string }>`
+const TH = styled.th<{ align: 'left' | 'right' | 'center'; width: string; firstItem?: boolean }>`
   text-align: ${(p) => p.align};
   font-size: var(--font-size-14);
   font-weight: bold;
   color: var(--color-grey35);
   width: ${(p) => p.width ?? 'auto'};
+  letter-spacing: var(--extra-letter-spacing);
+  padding-left: ${(p) => (p.firstItem ? 'var(--spacing-16)' : 0)};
 `;
 
 interface Props {
   ordering: Ordering;
   columnKey: string;
-  header: React.ReactNode;
+  header: string;
+  index: number;
   align?: 'left' | 'right' | 'center';
   width?: string;
+  isCheckable?: boolean;
+  onClickHeader?: () => void;
   isSortable?: boolean;
   setOrdering: (ordering: Ordering) => void;
 }
@@ -36,6 +41,7 @@ const TableHeaderItem = ({
   width,
   isSortable,
   setOrdering,
+  index,
 }: Props) => {
   const onClick = () => {
     const isCurrentlySelected = ordering.field === columnKey;
@@ -45,11 +51,12 @@ const TableHeaderItem = ({
       direction: direction,
     });
   };
+
   return (
     <React.Fragment key={`header_column_${columnKey}`}>
-      <TH align={align} width={width}>
+      <TH align={align} width={width} firstItem={index === 0}>
         <Flex justify={align === 'right' ? 'flex-end' : 'flex-start'}>
-          {header}
+          {header.toUpperCase()}
           {isSortable && align !== 'right' && (
             <Carrot
               onClick={onClick}
