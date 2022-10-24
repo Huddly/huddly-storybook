@@ -37,6 +37,11 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
     background-color: var(--color-grey96);
   }
 
+  &:focus {
+    border: var(--border-active);
+    outline: 0;
+  }
+
   &:focus,
   &:focus-within {
     background-color: var(--color-grey96);
@@ -448,7 +453,7 @@ export const Select = React.forwardRef(
       return () => {
         selectWrapper.removeEventListener('keydown', handleKeyDown);
       };
-    }, []);
+    }, [isOpen]);
 
     useEffect(() => {
       setSelectListHeight(getSelectListHeight(5, selectListRef));
@@ -553,6 +558,7 @@ export const Select = React.forwardRef(
                   hasCheckbox: multiselect,
                   selected: selectedArray.includes(child.props.value),
                   onChange: handleValueSelect,
+                  isVisible: isOpen,
                 } as OptionProps);
               })}
 
