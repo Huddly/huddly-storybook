@@ -38,7 +38,7 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
   }
 
   &:focus,
-  &:focus-within {
+  &:focus-visible {
     background-color: var(--color-grey96);
   }
 `;
@@ -92,6 +92,7 @@ const SelectListWrapper = styled.div<{ height: number; isOpen: boolean }>`
   width: 100%;
   will-change: height;
   z-index: 10;
+  box-shadow: var(--drop-shadow-significant);
 `;
 
 const SelectList = styled.ul<{ height: number }>`
@@ -104,7 +105,7 @@ const SelectList = styled.ul<{ height: number }>`
   border: var(--border-active);
 
   &:focus,
-  &:focus-within {
+  &:focus-visible {
     border: var(--border-active);
   }
 

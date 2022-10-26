@@ -40,8 +40,8 @@ const ButtonElement = styled.button<{
   color: ${(p) => (p.secondary ? 'var(--button-color)' : 'var(--color-white)')};
   font-family: var(--font-family);
   background: ${(p) => (p.secondary ? 'transparent' : 'var(--button-color)')};
-  font-size: ${(p) => (p.height === 32 ? `${rem(16)}` : `${rem(18)}`)};
-  padding: ${(p) => (p.height === 32 ? `${rem(5)} ${rem(12)}` : `${rem(12)} ${rem(20)}`)};
+  font-size: ${(p) => (p.height === '32' ? `${rem(16)}` : `${rem(18)}`)};
+  padding: ${(p) => (p.height === '32' ? `${rem(5)} ${rem(12)}` : `${rem(12)} ${rem(20)}`)};
   cursor: pointer;
 
   :hover {
@@ -75,7 +75,7 @@ const ButtonSpinner = styled(Spinner)`
   position: absolute;
 `;
 
-type ButtonSizes = 32 | 48 | '32' | '48';
+type ButtonSizes = '32' | '48';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -101,7 +101,7 @@ export const Button = ({
   onClick,
   secondary,
   type = 'button',
-  size = 32,
+  size = '32',
 }: ButtonProps) => {
   return (
     <ButtonElement
