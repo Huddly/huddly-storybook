@@ -70,6 +70,9 @@ export const GlobalStyles = createGlobalStyle`
     /* Fonts */
     --font-family-primary: "Messina sans", Helvetica, Arial, sans-serif;
     --extra-letter-spacing: 0.02em;
+
+    /* Drop shadow */
+    --drop-shadow-significant: 0px 3px 12px -3px rgba(0, 0, 0, 0.2);
   }
 
   html, body {
