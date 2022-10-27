@@ -23,7 +23,7 @@ const TableCell = styled.td<TDProps>`
 
 const TR = styled.tr<{ selected?: boolean }>`
   &:hover ${TableCell} {
-    ${(p) => !p.selected && 'background-color: var(--color-grey91)'}
+    ${(p) => !p.selected && 'background-color: var(--color-grey96)'}
   }
 
   ${TableCell} {
