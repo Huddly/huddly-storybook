@@ -37,13 +37,10 @@ const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasErro
     background-color: var(--color-grey96);
   }
 
-  &:focus {
-    border: var(--border-active);
-    outline: 0;
-  }
-
   &:focus,
   &:focus-within {
+    border: var(--border-active);
+    outline: 0;
     background-color: var(--color-grey96);
   }
 `;
