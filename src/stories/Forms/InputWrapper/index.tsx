@@ -88,6 +88,7 @@ export const InputWrapper = React.forwardRef(
      * However, if the child is not a valid react component, don't pass props at all.
      */
     const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
+      if (!child) return null; // Handle conditional rendering of children
       if (child.type === React.Fragment) {
         return React.Children.map(child.props.children, (child) => {
           if (typeof child?.type === 'string') return child;
