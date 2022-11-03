@@ -5,22 +5,78 @@
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook-huddly.azurewebsites.net/)
 [![Docker Image CI](https://github.com/Huddly/huddly-storybook/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Huddly/huddly-storybook/actions/workflows/docker-image.yml)
 
-## Development
-
-### Setup
-
-1. `git clone git@github.com:Huddly/huddly-storybook.git`
-2. `cd huddly-storybook/huddly-storybook`
-3. `npm install`
-
-### Add a new component
-
-If you have the [Huddly CLI](https://github.com/Huddly/huddly-storybook-cli) installed, you can use it to add a new component with the `storybook component` command.
-
-Example:
+## How to install the component library
 
 ```bash
-$ storybook component product-card --props title:string content:string is-large:boolean
+npm install Huddly/huddly-storybook --save
 ```
 
-The CLI will generate a folder containing the component and a story file.
+Then import GlobalStyles from the library and wrap your app in it.
+It should look something like this:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { GlobalStyles } from '@huddly/component-library';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <GlobalStyles />
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
+## How to use
+
+Here are some examples of how to use the components in your app.
+You can find more examples in [Storybook](https://storybook-huddly.azurewebsites.net/).
+
+### Button example:
+
+```jsx
+import React from 'react';
+import { Button } from '@huddly/component-library';
+
+const App = () => {
+  return (
+    <Button color='lavender' onClick={handleClick} size='48'>
+      Click me
+    </Button>
+  );
+};
+```
+
+### Form example:
+
+```jsx
+import React from 'react';
+import { Form, InputWrapper, Label, Input, Button } from '@huddly/component-library';
+
+const App = () => {
+  return (
+    <Form onSubmit={handleSubmit}>
+      <InputWrapper id='email' isRequired={true}>
+        <Label>Email</Label>
+        <Input type='email' />
+      </InputWrapper>
+
+      <InputWrapper id='password' isRequired={true}>
+        <Label>Password</Label>
+        <Input type='password' />
+      </InputWrapper>
+
+      <Button type='submit'>Submit</Button>
+    </Form>
+  );
+};
+```
+
+## How to run Storybook locally
+
+```bash
+npm install
+npm run storybook
+```
