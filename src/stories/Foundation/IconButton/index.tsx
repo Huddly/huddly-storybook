@@ -5,19 +5,19 @@ import rem from '../../../shared/pxToRem';
 import { Colors } from '../../../shared/colors';
 import { Spinner, Tooltip } from '../../../index';
 
-const ButtonElement = styled.button<{ color: Colors; loading: boolean }>`
+const ButtonElement = styled.button<{ color: Colors; loading: boolean; hoverColor: Colors }>`
   cursor: ${(p) => (p.loading ? 'not-allowed' : 'pointer')};
   border: none;
   background: none;
   padding: 0;
   width: var(--spacing-24);
   height: var(--spacing-24);
-  border-radius: ${rem(2)};
+  border-radius: ${rem(1)};
   position: relative;
 
   &:hover {
-    background: var(--color-grey91);
-    box-shadow: 0 0 0 ${rem(3)} var(--color-grey91);
+    background: ${(p) => `var(--color-${p.hoverColor})`};
+    box-shadow: 0 0 0 ${rem(3)} ${(p) => `var(--color-${p.hoverColor})`};
     div {
       display: flex;
     }
@@ -37,6 +37,7 @@ export interface IconButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   icon: React.ComponentType;
+  hoverColor?: Colors;
 }
 
 /**
@@ -51,6 +52,7 @@ export const IconButton = ({
   type = 'button',
   icon: Icon,
   tooltipText,
+  hoverColor = 'grey91',
 }: IconButtonProps) => {
   const Button = () => (
     <ButtonElement
@@ -62,6 +64,7 @@ export const IconButton = ({
       onClick={onClick}
       type={type}
       loading={loading}
+      hoverColor={hoverColor}
     >
       {loading && <Spinner size='24' />}
       {!loading && <Icon />}

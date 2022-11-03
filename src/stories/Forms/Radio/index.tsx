@@ -24,7 +24,18 @@ const Wrapper = styled.div<WrapperProps>`
       border-radius: var(--spacing-16);
       content: '';
 
-      border: ${({ hasError }) => (hasError ? 'var(--border-error)' : 'var(--border-primary)')};
+      border: ${({ hasError }) =>
+        hasError ? 'var(--border-error)' : '2px solid var(--color-grey55)'};
+    }
+
+    :hover:before {
+      border-color: var(--color-grey45);
+      background-color: var(--color-grey91);
+    }
+
+    :active:before {
+      border-color: var(--color-grey35);
+      background-color: var(--color-grey86);
     }
   }
 
@@ -34,7 +45,7 @@ const Wrapper = styled.div<WrapperProps>`
     left: ${rem(-99999)}; // This is to hide the radio without affecting screen readers
 
     // Focus ring
-    &:focus + label:before {
+    &:focus-visible + label:before {
       outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
       outline: ${rem(5)} auto -webkit-focus-ring-color;
       outline-offset: ${rem(3)};
@@ -48,6 +59,10 @@ const Wrapper = styled.div<WrapperProps>`
       background-repeat: no-repeat;
       background-position: center;
       background-size: var(--spacing-8);
+    }
+
+    &:checked:hover + label:before {
+      border: 4px solid var(--color-salviaBlue);
     }
   }
 `;

@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Flex } from '../Flex';
 
 const Wrapper = styled(Flex)`
-  background: var(--color-grey96);
+  background: var(--color-grey98);
   padding: var(--spacing-48);
 `;
 
