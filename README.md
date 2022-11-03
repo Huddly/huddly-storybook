@@ -31,8 +31,8 @@ ReactDOM.render(
 
 ## How to use
 
-Here are some examples of how to use the components in your app.
-You can find more examples in [Storybook](https://storybook-huddly.azurewebsites.net/).
+Here are some examples of how to use the components in your app.\
+You can find all the components and more examples in [Storybook](https://storybook-huddly.azurewebsites.net/).
 
 ### Button example:
 
@@ -80,3 +80,7 @@ const App = () => {
 npm install
 npm run storybook
 ```
+
+## Looking for icons?
+
+Check out our React [Icon Library](https://github.com/Huddly/frokost).
