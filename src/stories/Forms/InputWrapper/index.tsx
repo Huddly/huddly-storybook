@@ -98,7 +98,7 @@ export const InputWrapper = React.forwardRef(
 
       if (typeof child?.type === 'string') return child;
       return React.cloneElement(child, globalInputProps);
-    });
+    }).filter((child) => child !== null); // Remove all nulled components
 
     /*
      * We apply special error styles for inputs such as checkboxes and radio buttons.
