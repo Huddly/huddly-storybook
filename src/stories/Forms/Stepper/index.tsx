@@ -4,17 +4,21 @@ import rem from '../../../shared/pxToRem';
 
 const Wrapper = styled.div`
   position: relative;
+  margin-bottom: var(--spacing-32);
   --stepper-timing: 300ms;
 `;
 
-const Steps = styled.div`
+const Steps = styled.ol`
   display: grid;
   justify-content: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   grid-template-columns: repeat(auto-fit, minmax(${rem(50)}, 1fr));
   grid-gap: var(--spacing-16);
 `;
 
-const StepTitle = styled.div`
+const StepTitle = styled.span`
   max-width: 100%;
   overflow: hidden;
   color: var(--color-grey62);
@@ -29,17 +33,18 @@ const StepBall = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--spacing-32);
+  min-width: var(--spacing-32);
   height: var(--spacing-32);
-  border-radius: 50%;
+  border-radius: var(--spacing-16);
   color: var(--color-white);
   font-weight: bold;
   font-size: var(--font-size-14);
   background-color: var(--color-grey62);
   transition: background-color 100ms ease-in-out;
+  padding-inline: var(--spacing-4);
 `;
 
-const Step = styled.div<{ highlight?: boolean }>`
+const Step = styled.li<{ highlight?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,22 +96,33 @@ const StepLine = styled.span<{ step: number; totalSteps: number }>`
 export interface StepperProps {
   activeStep: number;
   className?: string;
+  hasError?: boolean;
   steps: string[];
 }
 
 /**
  * Stepper component
  */
-export const Stepper = ({ activeStep, className, steps }: StepperProps) => {
+export const Stepper = ({ activeStep, className, hasError, steps }: StepperProps) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} aria-label='progress'>
       <Steps>
-        {steps.map((step, index) => (
-          <Step key={index} highlight={index < activeStep}>
-            <StepTitle>{step}</StepTitle>
-            <StepBall>{index + 1}</StepBall>
-          </Step>
-        ))}
+        {steps.map((step, index) => {
+          const isCurrentStep = index + 1 === activeStep;
+          const isInvalid = hasError && isCurrentStep;
+
+          return (
+            <Step
+              key={index}
+              aria-current={isCurrentStep || null}
+              aria-onInvalid={isInvalid}
+              highlight={index < activeStep}
+            >
+              <StepTitle>{step}</StepTitle>
+              <StepBall aria-hidden={true}>{index + 1}</StepBall>
+            </Step>
+          );
+        })}
       </Steps>
 
       <StepLine step={activeStep} totalSteps={steps.length} />
