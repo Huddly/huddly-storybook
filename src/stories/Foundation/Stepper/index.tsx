@@ -5,9 +5,7 @@ import { Check } from '@huddly/frokost/havre';
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: var(--spacing-32);
   --step-line-timing: 300ms;
-  height: 100%;
 `;
 
 const Steps = styled.ol<{ vertical: boolean }>`
@@ -57,7 +55,7 @@ const Step = styled.li<{ alignLeft?: boolean; highlight?: boolean }>`
   display: flex;
   flex-direction: ${({ alignLeft }) => (alignLeft ? 'row-reverse' : 'column')};
   align-items: center;
-  gap: var(--spacing-8);
+  gap: ${(p) => (p.alignLeft ? 'var(--spacing-16)' : 'var(--spacing-8)')};
 
   ${(p) =>
     p.alignLeft &&
@@ -68,7 +66,7 @@ const Step = styled.li<{ alignLeft?: boolean; highlight?: boolean }>`
   ${(p) =>
     p.highlight &&
     `
-    ${StepBall} { 
+    ${StepBall} {
       color: var(--color-white);
       background-color: var(--color-lavender); 
       transition-delay: var(--step-line-timing); 
