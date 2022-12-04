@@ -87,19 +87,11 @@ const StepLine = styled.span<{ step: number; totalSteps: number; vertical?: bool
   right: ${(p) => (p.vertical ? 'auto' : `calc((100% / ${p.totalSteps}) / 2)`)};
   bottom: ${(p) => (p.vertical ? '0' : 'var(--spacing-16)')};
   left: ${(p) => (p.vertical ? 'var(--spacing-16)' : `calc((100% / ${p.totalSteps}) / 2)`)};
-  height: ${rem(6)};
+  width: ${(p) => (p.vertical ? rem(6) : 'auto')};
+  height: ${(p) => (p.vertical ? 'auto' : rem(6))};
   overflow: hidden;
   background-color: var(--color-plumbagoBlue);
-  transform: translateY(50%);
-
-  ${(p) =>
-    p.vertical &&
-    `
-    left: var(--spacing-16); // Half of the StepBall width
-    width: ${rem(6)};
-    height: auto;
-    transform: translateX(-50%);
-  `}
+  transform: ${(p) => (p.vertical ? 'translate(-50%)' : 'translateY(50%)')};
 
   &::before {
     position: absolute;
