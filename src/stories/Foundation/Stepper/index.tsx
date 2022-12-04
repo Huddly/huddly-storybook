@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import rem from '../../../shared/pxToRem';
+import devices from '../../../shared/devices';
 import { Check } from '@huddly/frokost/havre';
+import { CircularStepper } from '../CircularStepper';
 
 const Wrapper = styled.div`
   position: relative;
@@ -121,13 +124,14 @@ export interface StepperProps {
 /**
  * Stepper component
  */
-export const Stepper = ({
-  activeStep,
-  className,
-  hasError,
-  steps,
-  vertical = false,
-}: StepperProps) => {
+export const Stepper = (props: StepperProps) => {
+  const { activeStep, className, hasError, steps, vertical } = props;
+  const isMobile = useMediaQuery({ maxWidth: devices.tablet });
+
+  if (isMobile) {
+    return <CircularStepper {...props} />;
+  }
+
   return (
     <Wrapper className={className} aria-label='progress'>
       <Steps vertical={vertical}>

@@ -73,8 +73,9 @@ export const CircularStepper = ({
   return (
     <Wrapper className={className}>
       <ProgressWrapper
-        aria-valuemin={1}
+        aria-oninvalid={hasError}
         aria-valuemax={steps?.length}
+        aria-valuemin={1}
         aria-valuenow={activeStep}
         role={hasError ? 'alert' : 'progressbar'}
       >
