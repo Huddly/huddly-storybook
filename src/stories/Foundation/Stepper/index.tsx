@@ -13,6 +13,7 @@ const Wrapper = styled.div`
 
 const Steps = styled.ol<{ vertical: boolean }>`
   display: grid;
+  position: relative;
   justify-content: end;
   margin: 0;
   padding: 0;
@@ -81,8 +82,7 @@ const Step = styled.li<{ alignLeft?: boolean; highlight?: boolean }>`
   `}
 `;
 
-const StepLine = styled.span<{ step: number; totalSteps: number; vertical?: boolean }>`
-  z-index: -1;
+const StepsIndicatorLine = styled.span<{ step: number; totalSteps: number; vertical?: boolean }>`
   position: absolute;
   top: ${(p) => (p.vertical ? '0' : 'auto')};
   right: ${(p) => (p.vertical ? 'auto' : `calc((100% / ${p.totalSteps}) / 2)`)};
@@ -134,6 +134,7 @@ export const Stepper = (props: StepperProps) => {
 
   return (
     <Wrapper className={className} aria-label='progress'>
+      <StepsIndicatorLine step={activeStep} totalSteps={steps.length} vertical={vertical} />
       <Steps vertical={vertical}>
         {steps.map((step, index) => {
           const isCurrentStep = index + 1 === activeStep;
@@ -156,8 +157,6 @@ export const Stepper = (props: StepperProps) => {
           );
         })}
       </Steps>
-
-      <StepLine step={activeStep} totalSteps={steps.length} vertical={vertical} />
     </Wrapper>
   );
 };
