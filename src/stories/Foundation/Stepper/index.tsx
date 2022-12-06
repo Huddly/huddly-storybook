@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import rem from '../../../shared/pxToRem';
 import devices from '../../../shared/devices';
-import { Check } from '@huddly/frokost/havre';
+import { Check } from '@huddly/frokost/havre18px';
 import { CircularStepper } from '../CircularStepper';
 
 const Wrapper = styled.div`
