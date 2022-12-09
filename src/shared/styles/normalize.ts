@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const normalizeStyles = css`
+export const normalize = css`
   /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
   /* Document
@@ -43,6 +43,12 @@ export const normalizeStyles = css`
   h1 {
     font-size: 2em;
     margin: 0.67em 0;
+  }
+
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
   }
 
   /* Grouping content

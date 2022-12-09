@@ -1,7 +1,7 @@
 /**
  * Global
  */
-export { GlobalStyles } from './shared/global';
+export { GlobalStyles } from './shared/styles/global';
 export * from './shared/types';
 export * from './shared/colors';
 /**

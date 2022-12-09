@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GlobalStyles } from '../src/shared/global';
+import { GlobalStyles } from '../src/shared/styles/global';
 
 /*
  * Global decorator to apply the styles to all stories
