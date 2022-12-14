@@ -134,15 +134,16 @@ export const PhoneInput = React.forwardRef(
     return (
       <Flex className={className} columnGap='8'>
         <StyledSelect
-          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
+          aria-labelledby={ariaDescribedBy}
           hasError={hasError}
           id={`${id}-country-code`}
           name={`${inputName}-country-code`}
           onChange={handleCountryCodeChange}
+          placeholder='+'
           required={isRequired}
-          value={getCountryCodeForRegionCode(regionCode)}
+          value={getCountryCodeForRegionCode(regionCode).toString()}
         >
           {countryCodes.map((countryCode) => (
             <Option key={countryCode} value={countryCode}>
