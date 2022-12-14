@@ -11,10 +11,20 @@ export const Primary = {
     id: 'select',
     showItems: 5,
     isRequired: true,
+    multiselect: false,
+    placeholder: '',
   },
 };
 
-const Template = ({ severity, severityMessage, id, isRequired, showItems, multiselect }) => {
+const Template = ({
+  id,
+  isRequired,
+  multiselect,
+  placeholder,
+  severity,
+  severityMessage,
+  showItems,
+}) => {
   return (
     <InputWrapper
       severity={severity}
@@ -23,7 +33,7 @@ const Template = ({ severity, severityMessage, id, isRequired, showItems, multis
       isRequired={isRequired}
     >
       <Label>Select a color</Label>
-      <Select showItems={showItems} multiselect={multiselect}>
+      <Select showItems={showItems} multiselect={multiselect} placeholder={placeholder}>
         <Option value='red'>Red</Option>
         <Option value='green'>Green</Option>
         <Option value='blue'>Blue</Option>
@@ -37,7 +47,14 @@ const Template = ({ severity, severityMessage, id, isRequired, showItems, multis
   );
 };
 
-const CountriesFromApiTemplate = ({ id, isRequired, multiselect, severity, severityMessage }) => {
+const CountriesFromApiTemplate = ({
+  id,
+  isRequired,
+  multiselect,
+  placeholder,
+  severity,
+  severityMessage,
+}) => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -54,7 +71,7 @@ const CountriesFromApiTemplate = ({ id, isRequired, multiselect, severity, sever
       isRequired={isRequired}
     >
       <Label>Countries</Label>
-      <Select multiselect={multiselect}>
+      <Select multiselect={multiselect} placeholder={placeholder}>
         {countries.map(({ name, alpha2Code, flags }) => (
           <Option key={alpha2Code} value={alpha2Code}>
             <img src={flags.png} alt={`Flag of ${name}`} loading='lazy' />
@@ -104,12 +121,14 @@ export const Multiselect = Template.bind({});
 Multiselect.args = {
   ...Primary.args,
   multiselect: true,
-  hint: 'This select component is a multiselect.',
+  severity: 'info',
+  severityMessage: 'This select component is a multiselect.',
 };
 
 export const CountriesFromApi = CountriesFromApiTemplate.bind({});
 CountriesFromApi.args = {
   ...Primary.args,
   multiselect: false,
-  hint: 'Try filtering by country name.',
+  severity: 'info',
+  severityMessage: 'Try filtering by country name.',
 };

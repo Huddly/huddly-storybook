@@ -353,6 +353,7 @@ export const Select = React.forwardRef(
       name,
       onBlur,
       onChange,
+      placeholder,
       value,
       ...additionalInputProps
     } = props;
@@ -362,7 +363,7 @@ export const Select = React.forwardRef(
     }
 
     const selectName = name || id;
-    const placeholder = multiselect ? '- Select options -' : '- Select option -';
+    const defaultPlaceholder = multiselect ? '- Select options -' : '- Select option -';
 
     const selectWrapperRef = useRef<HTMLDivElement>(null);
     const selectButtonRef = useRef<HTMLButtonElement>(null);
@@ -540,7 +541,7 @@ export const Select = React.forwardRef(
             />
           ) : (
             <SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
-              {selectContent || placeholder}
+              {selectContent || placeholder || defaultPlaceholder}
             </SelectedContent>
           )}
           <RotatingChevron rotate={isOpen} aria-hidden='true' />
