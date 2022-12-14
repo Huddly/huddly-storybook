@@ -65,10 +65,11 @@ export const Option = React.forwardRef(
 
     return (
       <Wrapper
+        aria-selected={selected}
+        onClick={() => onChange?.(value)}
         ref={ref}
         role='option'
         tabIndex={isVisible ? 0 : -1}
-        onClick={() => onChange?.(value)}
       >
         {hasCheckbox && (
           <StyledCheckbox value={selected} onChange={() => onChange?.(value)} tabIndex={-1} />

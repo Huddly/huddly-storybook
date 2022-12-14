@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { GlobalInputProps } from '../../../shared/types';
@@ -318,7 +318,10 @@ const getChildrenByQuery = (
   });
 };
 
-export interface SelectProps extends GlobalInputProps {
+// type SelectedValueType = SelectProps['multiselect'] extends true ? string[] | null : string | null;
+type SelectedValueType = string[] | string | null;
+
+export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
   /**
    * Option components to be rendered.
    */
@@ -327,6 +330,11 @@ export interface SelectProps extends GlobalInputProps {
    * Multiselect will return a comma separated string of selected values on change.
    */
   multiselect?: boolean;
+  /**
+   * Value of the select component.
+   * If multiselect is true, this will be an array of strings.
+   */
+  value?: SelectedValueType;
 }
 
 /**
@@ -347,7 +355,7 @@ export const Select = React.forwardRef(
       onBlur,
       onChange,
       value,
-      ...additionalPhoneInputProps
+      ...additionalInputProps
     } = props;
 
     if (!validateChildren(children)) {
@@ -364,7 +372,7 @@ export const Select = React.forwardRef(
     const filterSearchRef = useRef<HTMLInputElement>(null);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState<string | null>(value);
+    const [selected, setSelected] = useState<SelectedValueType>(value);
     const [selectListHeight, setSelectListHeight] = useState(0);
     const [filterSearch, setFilterSearch] = useState('');
 
@@ -460,32 +468,39 @@ export const Select = React.forwardRef(
 
     useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
-    const selectedArray = selected ? selected.split(',').map((v) => v.trim()) : [];
-    const selectContent = getLabelFromSelectedValues(children, selectedArray);
+    const selectedAsForcedArray: string[] | null = useMemo(
+      () => (Array.isArray(selected) ? selected : [selected]).filter(Boolean),
+      [selected]
+    );
+    const selectContent = getLabelFromSelectedValues(children, selectedAsForcedArray);
     const selectContentAsString = getSelectContentAsString(selectContent);
     const filteredChildren = getChildrenByQuery(children, filterSearch);
     const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
 
     const handleValueSelect = (value: string) => {
+      let newValue: SelectedValueType = value;
+
       if (multiselect) {
-        const valueIndex = selectedArray.indexOf(value);
+        const valueIndex = selectedAsForcedArray.indexOf(value);
         if (valueIndex === -1) {
-          selectedArray.push(value);
+          selectedAsForcedArray.push(value);
         } else {
-          selectedArray.splice(valueIndex, 1);
+          selectedAsForcedArray.splice(valueIndex, 1);
         }
-        value = selectedArray.join(',');
+        newValue = selectedAsForcedArray;
       } else {
-        // Close and reset if single select
         setFilterSearch('');
         setIsOpen(false);
         selectButtonRef?.current?.focus();
+        newValue = value;
       }
 
-      setSelected(value);
+      console.log(newValue);
+      setSelected(newValue);
+
       onChange &&
         onChange({
-          target: { name: selectName, id, value },
+          target: { name: selectName, id, value: newValue },
         } as React.ChangeEvent<HTMLInputElement>);
     };
 
@@ -500,7 +515,6 @@ export const Select = React.forwardRef(
     return (
       <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
         <SelectButton
-          aria-activedescendant={selected}
           aria-errormessage={ariaErrorMessage}
           aria-expanded={isOpen}
           aria-haspopup='listbox'
@@ -537,11 +551,10 @@ export const Select = React.forwardRef(
 
         {children && (
           <SelectListWrapper
-            aria-activedescendant={selected}
             aria-errormessage={ariaErrorMessage}
             aria-expanded={isOpen}
             aria-labelledby={ariaDescribedBy}
-            aria-multiselectable='false'
+            aria-multiselectable={multiselect}
             height={selectListHeight}
             id={`${id}-select-list`}
             isOpen={isOpen}
@@ -554,7 +567,7 @@ export const Select = React.forwardRef(
                 if (!React.isValidElement(child)) return null;
                 return React.cloneElement(child, {
                   hasCheckbox: multiselect,
-                  selected: selectedArray.includes(child.props.value),
+                  selected: selectedAsForcedArray.includes(child.props.value),
                   onChange: handleValueSelect,
                   isVisible: isOpen,
                 } as OptionProps);
@@ -584,7 +597,7 @@ export const Select = React.forwardRef(
           tabIndex={-1}
           type='text'
           value={selected || ''}
-          {...additionalPhoneInputProps}
+          {...additionalInputProps}
         />
       </Wrapper>
     );
