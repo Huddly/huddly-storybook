@@ -318,7 +318,6 @@ const getChildrenByQuery = (
   });
 };
 
-// type SelectedValueType = SelectProps['multiselect'] extends true ? string[] | null : string | null;
 type SelectedValueType = string[] | string | null;
 
 export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
@@ -495,9 +494,7 @@ export const Select = React.forwardRef(
         newValue = value;
       }
 
-      console.log(newValue);
       setSelected(newValue);
-
       onChange &&
         onChange({
           target: { name: selectName, id, value: newValue },
