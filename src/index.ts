@@ -5,9 +5,9 @@ export { GlobalStyles } from './shared/styles/global';
 export { variables } from './shared/styles/variables';
 export { fonts } from './shared/styles/fonts';
 export { normalize } from './shared/styles/normalize';
-
 export * from './shared/types';
 export * from './shared/colors';
+
 /**
  * Forms
  */
