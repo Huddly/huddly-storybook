@@ -141,7 +141,7 @@ export const PhoneInput = React.forwardRef(
           id={`${id}-country-code`}
           name={`${inputName}-country-code`}
           onChange={handleCountryCodeChange}
-          placeholder='+'
+          placeholder='+00'
           required={isRequired}
           value={getCountryCodeForRegionCode(regionCode).toString()}
         >
