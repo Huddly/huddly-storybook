@@ -10,10 +10,11 @@ export const Primary = {
     id: 'phoneNumber',
     geoLocate: true,
     isRequired: true,
+    value: '',
   },
 };
 
-const Template = ({ severity, severityMessage, id, isRequired, geoLocate }) => {
+const Template = ({ severity, severityMessage, id, isRequired, geoLocate, value }) => {
   return (
     <InputWrapper
       severity={severity}
@@ -22,7 +23,7 @@ const Template = ({ severity, severityMessage, id, isRequired, geoLocate }) => {
       isRequired={isRequired}
     >
       <Label>Label</Label>
-      <PhoneInput geoLocate={geoLocate} />
+      <PhoneInput geoLocate={geoLocate} value={value} />
     </InputWrapper>
   );
 };

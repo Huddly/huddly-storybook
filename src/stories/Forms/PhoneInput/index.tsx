@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   parsePhoneNumber,
@@ -34,9 +34,8 @@ const getSplitValue = (value = ''): { regionCode?: string; phoneNumber?: string 
  */
 const geoLocateRegionCode = async (): Promise<string> => {
   try {
-    const res = await fetch('http://ip-api.com/json');
-    const { countryCode } = await res.json();
-    return countryCode;
+    const res = await fetch('https://ipapi.co/country/');
+    return await res.text();
   } catch (error) {
     console.error(error);
   }
@@ -58,6 +57,10 @@ export interface PhoneInputProps extends GlobalInputProps {
 
 /**
  * PhoneInput component
+ *
+ * For context:
+ * Country code is the international dialing code, e.g. +47 for Norway.
+ * Region code is the ISO 3166-1 alpha-2 code, e.g. NO for Norway.
  */
 export const PhoneInput = React.forwardRef(
   (props: PhoneInputProps, ref: React.RefObject<HTMLInputElement>) => {
@@ -76,9 +79,11 @@ export const PhoneInput = React.forwardRef(
     } = props;
 
     const inputName = name || id;
-    const countryCodes = getSupportedCallingCodes().filter((cc) =>
-      isNaN(Number(getRegionCodeForCountryCode(Number(cc))))
-    ); // Filter to remove toll-free, premium numbers etc...
+    const countryCodes = useMemo(() => {
+      return getSupportedCallingCodes().filter((cc) =>
+        isNaN(Number(getRegionCodeForCountryCode(Number(cc))))
+      ); // Filter to remove toll-free, premium numbers etc...
+    }, []);
     const splitValue = getSplitValue(value);
 
     const [regionCode, setRegionCode] = useState<string>(splitValue?.regionCode || '');
@@ -111,7 +116,13 @@ export const PhoneInput = React.forwardRef(
 
     useEffect(
       function handlePlaceholder(): void {
-        if (!regionCode || isNaN(Number(phoneNumber))) return;
+        if (
+          !regionCode ||
+          isNaN(Number(phoneNumber)) ||
+          getCountryCodeForRegionCode(regionCode) === 0
+        ) {
+          return;
+        }
         const example = getExample(regionCode).toJSON().number.national;
         setPlaceholder(example);
       },
