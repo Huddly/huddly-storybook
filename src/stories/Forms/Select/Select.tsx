@@ -1,339 +1,27 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import styled from 'styled-components';
-import rem from '../../../shared/pxToRem';
+import innerText from 'react-innertext';
 import { GlobalInputProps } from '../../../shared/types';
+import { OptionProps } from './Option';
+import { Search } from '@huddly/frokost/havre';
+import * as Styled from './styled';
+
+// Custom hooks
 import { useOnClickOutside } from '../../../shared/hooks';
-import { Option, OptionProps } from './Option';
-import { ChevronDown, Search } from '@huddly/frokost/havre';
 
-const Wrapper = styled.div`
-  position: relative;
+// Utility functions
+import {
+  allChildrenAreOption,
+  getSelectListHeight,
+  handleSelectHoverBackground,
+  getSelectedContentHTML,
+  filterChildrenByQuery,
+} from './select-utils';
 
-  figure,
-  img,
-  svg {
-    width: 100%;
-    max-width: var(--spacing-32);
-    max-height: var(--spacing-32);
-    object-fit: contain;
-  }
-`;
-
-const SelectButton = styled.button<{ isOpen: boolean; hasLabel: boolean; hasError: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--spacing-48);
-  padding: var(--spacing-16) var(--spacing-8) var(--spacing-16) var(--spacing-16);
-  border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-  border-radius: ${rem(3)};
-  color: ${(p) => (p.hasLabel ? 'var(--color-grey15)' : 'var(--color-grey55)')};
-  cursor: pointer;
-  background-color: ${(p) => (p.isOpen ? 'var(--color-grey96)' : 'var(--color-grey99)')};
-  column-gap: var(--spacing-8);
-  width: 100%;
-
-  &:hover {
-    background-color: var(--color-grey96);
-  }
-
-  &:focus,
-  &:focus-within {
-    border: var(--border-active);
-    outline: 0;
-    background-color: var(--color-grey96);
-  }
-`;
-
-const RotatingChevron = styled(ChevronDown)<{ rotate: boolean }>`
-  transition: 0.15s ease-in-out;
-  ${(p) => (p.rotate ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
-
-  path {
-    fill: var(--color-grey35);
-  }
-`;
-
-/**
- * The selected content inside the SelectButton.
- */
-const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
-  display: block;
-
-  ${(p) =>
-    p.hasNestedContent &&
-    `
-      display: flex;
-      align-items: center;
-      column-gap: var(--spacing-8);
-
-    `}
-
-  &,
-    & > * {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-`;
-
-const FilterSearch = styled.input`
-  all: unset;
-  width: 100%;
-  height: var(--spacing-48);
-  color: var(--color-grey15);
-  text-align: left;
-`;
-
-const SelectListWrapper = styled.div<{ height: number; isOpen: boolean }>`
-  height: ${(p) => (p.isOpen ? rem(p.height) : rem(0))};
-  margin: var(--spacing-4) 0 0 0;
-  overflow: hidden;
-  position: absolute;
-  transition: height 150ms ease-out;
-  width: 100%;
-  will-change: height;
-  z-index: 10;
-  box-shadow: var(--drop-shadow-significant);
-`;
-
-const SelectList = styled.ul<{ height: number }>`
-  height: ${(p) => rem(p.height)};
-  margin: 0;
-  padding: 0;
-  border-radius: ${rem(3)};
-  overflow-y: auto;
-  list-style: none;
-  border: var(--border-active);
-
-  &:focus,
-  &:focus-visible {
-    border: var(--border-active);
-  }
-
-  &:after {
-    z-index: -2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    content: '';
-    background-color: var(--color-grey99);
-  }
-`;
-
-/**
- * Shows up then there are no options to select.
- */
-const SelectListNoResults = styled.div`
-  padding: ${rem(12)};
-  color: var(--color-grey45);
-  pointer-events: none;
-  align-items: center;
-  display: flex;
-  column-gap: var(--spacing-8);
-
-  path {
-    fill: var(--color-grey35);
-  }
-`;
-
-/**
- * Used to animate the hover background color of the select list items.
- * It moves with the mouse cursor/focus.
- */
-const SelectListHoverBackground = styled.span`
-  opacity: 0;
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-  background-color: var(--color-whisperBlue);
-  transition: height 100ms ease-in-out, opacity 120ms ease-in-out 70ms,
-    transform 120ms ease-out 12ms;
-  will-change: height, opacity, transform;
-`;
-
-/**
- * Text input used for accissibility purposes.
- * It's hidden from the user but accessible to screen readers.
- */
-const HiddenSelectedValueInput = styled.input`
-  position: absolute;
-  width: ${rem(0)};
-  height: ${rem(0)};
-  overflow: hidden;
-  z-index: -1;
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const getSelectListHeight = (
-  showItems: number,
-  selectListRef: React.RefObject<HTMLUListElement>
-): number => {
-  const selectList = selectListRef.current;
-  const selectListChildren = selectList?.children;
-  if (!selectListChildren) return 0;
-  // get height of the first n children of the select list, and get its total height.
-  const selectListHeight = Array.from(selectListChildren)
-    .slice(0, showItems)
-    .reduce((acc, curr) => acc + curr.getBoundingClientRect().height, 0);
-  const selectListBorderWidth = parseInt(getComputedStyle(selectList).borderTopWidth, 10) * 2;
-  return selectListHeight + selectListBorderWidth;
-};
-
-const handleSelectHoverBackground = (
-  selectListRef: React.RefObject<HTMLUListElement>,
-  selectListHoverBackgroundRef: React.RefObject<HTMLSpanElement>
-) => {
-  const selectList = selectListRef.current;
-  const selectListChildren = selectListRef.current?.children;
-  if (!selectListChildren || !selectListHoverBackgroundRef.current) return;
-
-  const parentRect = selectList.getBoundingClientRect();
-  const parentRectBorder = parseInt(getComputedStyle(selectList).borderTopWidth, 10);
-
-  const moveHoverBackground = (event: FocusEvent | MouseEvent) => {
-    const target = event.target as HTMLElement;
-    if (!target.hasAttribute('role') || target.getAttribute('role') !== 'option') return; // find a better way of checking this
-    const node = event.target as HTMLElement;
-    const rect = node.getBoundingClientRect();
-    const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
-    selectListHoverBackgroundRef.current.style.opacity = '1';
-    selectListHoverBackgroundRef.current.style.height = rem(rect.height + separatorLineWidth);
-    selectListHoverBackgroundRef.current.style.transform = `translateY(${rem(
-      rect.y - parentRect.y - parentRectBorder
-    )})`;
-  };
-
-  const hideHoverBackground = () => {
-    selectListHoverBackgroundRef.current.style.opacity = '0';
-  };
-
-  Array.from(selectListChildren).forEach((child) => {
-    child.addEventListener('focus', moveHoverBackground);
-    child.addEventListener('mouseover', moveHoverBackground);
-  });
-
-  selectList.addEventListener('mouseleave', hideHoverBackground);
-
-  return () => {
-    Array.from(selectListChildren).forEach((child) => {
-      child.removeEventListener('focus', moveHoverBackground);
-      child.removeEventListener('mouseover', moveHoverBackground);
-    });
-    selectList.removeEventListener('mouseleave', hideHoverBackground);
-  };
-};
-
-/**
- * Get children in selected options, format them accordingly.
- * If there are multiple selections, we comma separate them.
- * If the value is a plain string, we wrap in in a span.
- *
- * This function is used to display content in the SelectedContent within the SelectButton Component.
- */
-const getLabelFromSelectedValues = (
-  children: SelectProps['children'],
-  selected: string[] | null
-) => {
-  if (!selected) return null;
-  // Loop through all children and find the ones that are selected
-  const selectedItems = React.Children.toArray(children).filter((child) => {
-    if (!React.isValidElement(child)) return false;
-    return selected.includes(child.props.value.toString());
-  }) as React.ReactElement<OptionProps>[] | undefined;
-  if (!selectedItems.length) return null;
-  return selectedItems
-    .map((item) => item.props.children)
-    .reduce((acc, curr, i) => {
-      // Between every selected label, splice a comma into the array
-      if (typeof curr === 'string') {
-        curr = <span key={i}>{curr}</span>; // To style strings differently, we want to wrap them in spans
-      }
-      if (i === 0) return [curr];
-      const separator = (
-        <span key={`sep-${i}`} style={{ marginLeft: rem(-8) }}>
-          ,{' '}
-        </span>
-      );
-      return [...[acc], separator, curr];
-    }, [] as React.ReactNode[]);
-};
-
-const validateChildren = (children: SelectProps['children']) => {
-  return React.Children.toArray(children).every((child) => {
-    if (!React.isValidElement(child)) return false;
-    return child.type === Option;
-  });
-};
-
-/**
- * Used to generate the button title.
- * Strips all HTML content except strings.
- */
-const getSelectContentAsString = (node: string | React.ReactNode): string | null => {
-  if (!node) return null;
-  if (typeof node === 'string') return node;
-  return React.Children.map(node, (child) => {
-    if (typeof child === 'string') return child;
-    if (!React.isValidElement(child)) return;
-    const innerChild = child.props.children;
-    if (typeof innerChild === 'string' || typeof innerChild === 'number') return innerChild;
-  }).join('');
-};
-
-/**
- * Used to filter the options in the select list.
- * We will dig a couple level of childrens deep to find the innerText in case the JSX is nested.
- */
-const getChildrenByQuery = (
-  children: SelectProps['children'],
-  query: string
-): SelectProps['children'] => {
-  return React.Children.toArray(children).filter((child: React.ReactElement<OptionProps>) => {
-    if (!React.isValidElement(child)) return true;
-
-    const searchContent = [];
-    if (typeof child.props.children === 'string') {
-      searchContent.push(child.props.children);
-    }
-    if (child.props.value) {
-      searchContent.push(child.props.value);
-    }
-    const innerSearchContent = React.Children.map(child.props.children, (subchild) => {
-      if (typeof subchild === 'string') return subchild;
-      if (!React.isValidElement(subchild)) return;
-      if (typeof subchild.props.children !== 'string') return;
-      return subchild.props.children;
-    });
-    searchContent.push(...innerSearchContent);
-
-    const searchContentString = searchContent.join(' ').toLowerCase();
-    return searchContentString.indexOf(query.toLowerCase()) !== -1;
-  });
-};
-
-type SelectedValueType = string[] | string | null;
-
-export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
+export interface SelectProps extends GlobalInputProps {
   /**
    * Option components to be rendered.
    */
   children: React.ReactNode;
-  /**
-   * Multiselect will return a comma separated string of selected values on change.
-   */
-  multiselect?: boolean;
-  /**
-   * Value of the select component.
-   * If multiselect is true, this will be an array of strings.
-   */
-  value?: SelectedValueType;
 }
 
 /**
@@ -349,7 +37,6 @@ export const Select = React.forwardRef(
       hasError,
       id,
       isRequired,
-      multiselect = false,
       name,
       onBlur,
       onChange,
@@ -358,12 +45,11 @@ export const Select = React.forwardRef(
       ...additionalInputProps
     } = props;
 
-    if (!validateChildren(children)) {
+    if (!allChildrenAreOption(children)) {
       throw new Error('Select component: children can only contain Option components.');
     }
 
     const selectName = name || id;
-    const defaultPlaceholder = multiselect ? '- Select options -' : '- Select option -';
 
     const selectWrapperRef = useRef<HTMLDivElement>(null);
     const selectButtonRef = useRef<HTMLButtonElement>(null);
@@ -372,133 +58,120 @@ export const Select = React.forwardRef(
     const filterSearchRef = useRef<HTMLInputElement>(null);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState<SelectedValueType>(value);
+    const [selected, setSelected] = useState<string>(value);
     const [selectListHeight, setSelectListHeight] = useState(0);
     const [filterSearch, setFilterSearch] = useState('');
+
+    useEffect(() => {
+      if (!selectWrapperRef.current) return;
+
+      const handleKeyDown = (e) => {
+        console.log('focused element', document.activeElement);
+
+        const selectList = selectListRef.current;
+        const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
+        const activeElement = document.activeElement as HTMLElement;
+        const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
+
+        const keyActions = {
+          13: handleEnterKey,
+          27: handleEscapeKey,
+          32: handleSpaceKey,
+          38: handleArrowUpKey,
+          40: handleArrowDownKey,
+        };
+
+        if (keyActions[e.keyCode]) {
+          e.preventDefault();
+          keyActions[e.keyCode]({
+            activeElement,
+            activeElementIndex,
+            selectList,
+            selectListChildren,
+          });
+        } else {
+          if (!/^[a-zA-Z0-9]$/.test(e.key) || !isOpen) return;
+          if (filterSearchRef.current) {
+            filterSearchRef.current.focus();
+          }
+        }
+      };
+
+      selectWrapperRef.current.addEventListener('keydown', handleKeyDown);
+      return () => {
+        selectWrapperRef.current.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isOpen]);
+
+    const handleSpaceKey = ({ activeElement }) => {
+      if (activeElement === selectButtonRef.current && !isOpen) {
+        setIsOpen(true);
+      }
+      if (activeElement === filterSearchRef.current) {
+        filterSearchRef.current.value += ' '; // If filterSearchRef is focused, place a space in the input
+      }
+    };
+
+    const handleEscapeKey = () => {
+      setIsOpen(false);
+      selectButtonRef?.current?.focus();
+    };
+
+    const handleArrowUpKey = ({ activeElementIndex, selectList, selectListChildren }) => {
+      if (activeElementIndex === 0 || activeElementIndex === -1) {
+        selectList.focus();
+      }
+      if (activeElementIndex > 0) {
+        console.log(selectListChildren[activeElementIndex - 1]);
+        selectListChildren[activeElementIndex - 1].focus();
+      }
+    };
+
+    const handleArrowDownKey = ({ activeElementIndex, selectList, selectListChildren }) => {
+      if (activeElementIndex === selectListChildren.length - 1 || activeElementIndex === -1) {
+        selectList.focus();
+      }
+      if (activeElementIndex < selectListChildren.length - 1) {
+        selectListChildren[activeElementIndex + 1].focus();
+      }
+    };
+
+    const handleEnterKey = ({ activeElementIndex, selectListChildren }) => {
+      if (activeElementIndex !== -1) {
+        selectListChildren[activeElementIndex].click();
+      }
+    };
 
     useEffect(() => {
       setSelected(value);
     }, [value]);
 
-    useEffect(() => {
-      if (!selectWrapperRef.current) return;
-      const selectWrapper = selectWrapperRef.current;
+    useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
 
-      const handleKeyDown = (e: KeyboardEvent) => {
-        const selectList = selectListRef.current;
-        const selectListChildren = selectList?.children as HTMLCollectionOf<HTMLElement>;
-        if (!selectListChildren) return;
-
-        const activeElement = document.activeElement as HTMLElement;
-        const activeElementIndex = Array.from(selectListChildren).indexOf(activeElement);
-
-        if (['Escape', 'ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
-          e.preventDefault();
-        }
-
-        switch (e.key) {
-          case ' ':
-            if (activeElement === selectButtonRef.current && !isOpen) {
-              setIsOpen(true);
-            }
-            // If filterSearchRef is focused, place a space in the input
-            if (activeElement === filterSearchRef.current) {
-              filterSearchRef.current.value += ' ';
-            }
-            if (activeElementIndex !== -1 && multiselect) {
-              // Enable space to select an option when multiselect is enabled
-              selectListChildren[activeElementIndex].click();
-            }
-            break;
-
-          case 'Escape':
-            setIsOpen(false);
-            selectButtonRef?.current?.focus();
-            break;
-
-          case 'ArrowUp':
-            if (activeElementIndex === 0 || activeElementIndex === -1) {
-              selectList.focus();
-            }
-            if (activeElementIndex > 0) {
-              selectListChildren[activeElementIndex - 1].focus();
-            }
-            break;
-
-          case 'ArrowDown':
-            if (activeElementIndex === selectListChildren.length - 1 || activeElementIndex === -1) {
-              selectList.focus();
-            }
-            if (activeElementIndex < selectListChildren.length - 1) {
-              selectListChildren[activeElementIndex + 1].focus();
-            }
-            break;
-
-          case 'Enter':
-            if (activeElementIndex !== -1) {
-              selectListChildren[activeElementIndex].click();
-            }
-            break;
-          case 'Tab':
-            filterSearchRef?.current?.setAttribute(
-              'tabindex',
-              activeElement === selectButtonRef.current ? '-1' : '0'
-            );
-            break;
-          default:
-            if ((!/^[a-zA-Z0-9]$/.test(e.key) && e.key !== 'Backspace') || !isOpen) return;
-            if (filterSearchRef.current) {
-              filterSearchRef.current.focus();
-            }
-            break;
-        }
-      };
-
-      selectWrapper.addEventListener('keydown', handleKeyDown);
-
-      return () => {
-        selectWrapper.removeEventListener('keydown', handleKeyDown);
-      };
-    }, [isOpen]);
+    const selectContent = useMemo(
+      () => getSelectedContentHTML(children, [selected]),
+      [children, selected]
+    );
+    const selectContentAsString = useMemo(() => innerText(selectContent), [selectContent]);
+    const filteredChildren = useMemo(
+      () => filterChildrenByQuery(children, filterSearch),
+      [children, filterSearch]
+    );
 
     useEffect(() => {
       setSelectListHeight(getSelectListHeight(5, selectListRef));
       handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
-    }, [selectListRef, children, filterSearch]);
-
-    useOnClickOutside(selectWrapperRef, () => setIsOpen(false));
-
-    const selectedAsForcedArray: string[] | null = useMemo(
-      () => (Array.isArray(selected) ? selected : [selected]).filter(Boolean),
-      [selected]
-    );
-    const selectContent = getLabelFromSelectedValues(children, selectedAsForcedArray);
-    const selectContentAsString = getSelectContentAsString(selectContent);
-    const filteredChildren = getChildrenByQuery(children, filterSearch);
-    const filteredChildrenEmpty: boolean = React.Children.toArray(filteredChildren).length === 0;
+    }, [selectListRef, selectListHoverBackgroundRef, filteredChildren]);
 
     const handleValueSelect = (value: string) => {
-      let newValue: SelectedValueType = value;
+      setFilterSearch('');
+      setIsOpen(false);
+      selectButtonRef?.current?.focus();
 
-      if (multiselect) {
-        const valueIndex = selectedAsForcedArray.indexOf(value);
-        if (valueIndex === -1) {
-          selectedAsForcedArray.push(value);
-        } else {
-          selectedAsForcedArray.splice(valueIndex, 1);
-        }
-        newValue = selectedAsForcedArray;
-      } else {
-        setFilterSearch('');
-        setIsOpen(false);
-        selectButtonRef?.current?.focus();
-        newValue = value;
-      }
-
-      setSelected(newValue);
+      setSelected(value);
       onChange &&
         onChange({
-          target: { name: selectName, id, value: newValue },
+          target: { name: selectName, id, value },
         } as React.ChangeEvent<HTMLInputElement>);
     };
 
@@ -511,8 +184,8 @@ export const Select = React.forwardRef(
     };
 
     return (
-      <Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
-        <SelectButton
+      <Styled.Wrapper className={className} ref={selectWrapperRef} onBlur={handleBlur}>
+        <Styled.SelectButton
           aria-errormessage={ariaErrorMessage}
           aria-expanded={isOpen}
           aria-haspopup='listbox'
@@ -529,59 +202,57 @@ export const Select = React.forwardRef(
           value={selected}
         >
           {isOpen ? (
-            <FilterSearch
+            <Styled.FilterSearch
               aria-autocomplete='list'
               aria-controls={`${id}-select-list`}
               onChange={(e) => setFilterSearch(e.target.value)}
               placeholder='Search options ...'
               ref={filterSearchRef}
               type='text'
-              tabIndex={-1}
               value={filterSearch}
             />
           ) : (
-            <SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
-              {selectContent || placeholder || defaultPlaceholder}
-            </SelectedContent>
+            <Styled.SelectedContent hasNestedContent={typeof selectContent !== 'string'}>
+              {selectContent || placeholder || '- Select option -'}
+            </Styled.SelectedContent>
           )}
-          <RotatingChevron rotate={isOpen} aria-hidden='true' />
-        </SelectButton>
+          <Styled.RotatingChevron rotate={isOpen} aria-hidden='true' />
+        </Styled.SelectButton>
 
         {children && (
-          <SelectListWrapper
+          <Styled.SelectListWrapper
             aria-errormessage={ariaErrorMessage}
             aria-expanded={isOpen}
             aria-labelledby={ariaDescribedBy}
-            aria-multiselectable={multiselect}
             height={selectListHeight}
             id={`${id}-select-list`}
             isOpen={isOpen}
             role='listbox'
             tabIndex={isOpen ? 0 : -1}
           >
-            <SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
-            <SelectList ref={selectListRef} height={selectListHeight}>
+            <Styled.SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
+            <Styled.SelectList ref={selectListRef} height={selectListHeight}>
               {React.Children.map(filteredChildren, (child) => {
                 if (!React.isValidElement(child)) return null;
                 return React.cloneElement(child, {
-                  hasCheckbox: multiselect,
-                  selected: selectedAsForcedArray.includes(child.props.value),
+                  hasCheckbox: false,
+                  selected: selected === child.props.value,
                   onChange: handleValueSelect,
                   isVisible: isOpen,
                 } as OptionProps);
               })}
 
-              {filteredChildrenEmpty && (
-                <SelectListNoResults>
+              {React.Children.count(filteredChildren) === 0 && (
+                <Styled.SelectListNoResults>
                   <Search className='search-icon' />
                   <span>No results found</span>
-                </SelectListNoResults>
+                </Styled.SelectListNoResults>
               )}
-            </SelectList>
-          </SelectListWrapper>
+            </Styled.SelectList>
+          </Styled.SelectListWrapper>
         )}
 
-        <HiddenSelectedValueInput
+        <Styled.HiddenSelectedValueInput
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
           aria-labelledby={ariaDescribedBy}
@@ -597,7 +268,7 @@ export const Select = React.forwardRef(
           value={selected || ''}
           {...additionalInputProps}
         />
-      </Wrapper>
+      </Styled.Wrapper>
     );
   }
 );
