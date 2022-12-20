@@ -9,7 +9,8 @@ import {
   getExample,
 } from 'awesome-phonenumber';
 import { GlobalInputProps } from '../../../shared/types';
-import { Select, Option } from '../Select';
+import { Select } from '../Select/Select';
+import { Option } from '../Select/Option';
 import { Input } from '../Input';
 import { Flex } from '../../Foundation/Flex';
 
