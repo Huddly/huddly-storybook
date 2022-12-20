@@ -9,7 +9,9 @@ import {
   getExample,
 } from 'awesome-phonenumber';
 import { GlobalInputProps } from '../../../shared/types';
-import { Select, Option, Input, Flex } from '../../../';
+import { Select, Option } from '../Select';
+import { Input } from '../Input';
+import { Flex } from '../../Foundation/Flex';
 
 const StyledSelect = styled(Select)`
   width: calc(var(--spacing-40) * 3);
