@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const ProgressWrapper = styled.svg`
+  flex-shrink: 0;
   width: var(--progress-size);
   height: var(--progress-size);
 
