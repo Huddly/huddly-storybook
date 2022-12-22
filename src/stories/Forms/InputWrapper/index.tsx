@@ -11,7 +11,9 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   width: 100%;
   max-width: ${rem(400)};
   margin-bottom: var(--spacing-32);
