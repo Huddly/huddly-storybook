@@ -103,7 +103,16 @@ export const PhoneInput = React.forwardRef(
     };
 
     const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const phoneNumber = sanitizeAndFormatPhoneNumber(e.target.value, regionCode);
+      let value = e.target.value;
+      let _regionCode = regionCode;
+
+      const parsedValue = parsePhoneNumber(value, regionCode);
+      if (parsedValue.isValid()) {
+        value = parsedValue.getNumber('national');
+        _regionCode = parsedValue.getRegionCode();
+        setRegionCode(_regionCode);
+      }
+      const phoneNumber = sanitizeAndFormatPhoneNumber(value, _regionCode);
       setPhoneNumber(phoneNumber);
     };
 

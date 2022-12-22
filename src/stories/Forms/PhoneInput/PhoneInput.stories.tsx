@@ -7,7 +7,7 @@ export default {
 
 export const Primary = {
   args: {
-    id: 'phoneNumber',
+    id: 'phone',
     geoLocate: true,
     isRequired: true,
     value: '',
