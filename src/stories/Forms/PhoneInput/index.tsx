@@ -104,6 +104,7 @@ export const PhoneInput = React.forwardRef(
 
     const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       let value = e.target.value;
+      if (value === undefined) return;
       let _regionCode = regionCode;
 
       const parsedValue = parsePhoneNumber(value, regionCode);
