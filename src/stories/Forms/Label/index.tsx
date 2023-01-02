@@ -17,6 +17,10 @@ const StyledLabel = styled.label`
   line-height: 1;
 `;
 
+const OptionalIndicator = styled(Text)`
+  line-height: 1;
+`;
+
 const HelpLink = styled.a`
   margin-bottom: var(--spacing-8);
   color: var(--color-lavender);
@@ -56,9 +60,9 @@ export const Label = ({
       <StyledLabel htmlFor={htmlFor || id}>
         {children}{' '}
         {isRequired === false && (
-          <Text type='span' size='12'>
+          <OptionalIndicator type='span' size='12'>
             (optional)
-          </Text>
+          </OptionalIndicator>
         )}
       </StyledLabel>
 
