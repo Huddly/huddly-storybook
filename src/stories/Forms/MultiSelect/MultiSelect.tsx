@@ -292,7 +292,7 @@ export const MultiSelect = React.forwardRef(
           ref={ref}
           required={isRequired}
           type='hidden'
-          value={localValue}
+          value={localValue.join(',')}
           {...additionalInputProps}
         />
       </Styled.Wrapper>
