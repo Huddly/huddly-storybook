@@ -11,6 +11,12 @@ const Wrapper = styled.li`
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  /* &:hover,
+  &:focus {
+    background-color: var(--color-whisperBlue);
+  } */
 
   &:not(:last-child) {
     border-bottom: ${rem(1)} solid var(--color-grey91);
@@ -53,7 +59,7 @@ export interface OptionProps {
   /**
    * This prop gets passed down from the Select component automatically.
    */
-  isVisible?: boolean;
+  isFocusable?: boolean;
 }
 
 /**
@@ -61,7 +67,7 @@ export interface OptionProps {
  */
 export const Option = React.forwardRef(
   (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
-    const { children, value, selected, hasCheckbox, onChange, isVisible } = props;
+    const { children, value, selected, hasCheckbox, onChange, isFocusable } = props;
 
     return (
       <Wrapper
@@ -69,7 +75,7 @@ export const Option = React.forwardRef(
         onClick={() => onChange?.(value)}
         ref={ref}
         role='option'
-        tabIndex={isVisible ? 0 : -1}
+        tabIndex={isFocusable ? 0 : -1}
       >
         {hasCheckbox && (
           <StyledCheckbox value={selected} onChange={() => onChange?.(value)} tabIndex={-1} />

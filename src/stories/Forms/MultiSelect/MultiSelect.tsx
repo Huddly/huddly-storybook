@@ -3,10 +3,10 @@ import innerText from 'react-innertext';
 import { GlobalInputProps } from '../../../shared/types';
 import { OptionProps } from './Option';
 import { Search } from '@huddly/frokost/havre';
-import * as Styled from './styled';
+import * as Styled from '../Select/styled';
 
 // Custom hooks
-import { useOnClickOutside } from '../../../shared/hooks';
+import { useOnClickOutside } from '../../../shared/hooks/index';
 
 // Utility functions
 import {
@@ -15,19 +15,20 @@ import {
   handleSelectHoverBackground,
   getSelectedContentHTML,
   filterChildrenByQuery,
-} from './select-utils';
+} from '../Select/select-utils';
 
-export interface SelectProps extends GlobalInputProps {
+export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
   /**
    * Option components to be rendered.
    */
   children: React.ReactNode;
+  value: Array<string>;
 }
 
 /**
  * Select component
  */
-export const Select = React.forwardRef(
+export const MultiSelect = React.forwardRef(
   (props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
@@ -58,7 +59,7 @@ export const Select = React.forwardRef(
     const filterSearchRef = useRef<HTMLInputElement>(null);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [localValue, setLocalValue] = useState<string>(value);
+    const [localValue, setLocalValue] = useState<Array<string>>(value);
     const [selectListHeight, setSelectListHeight] = useState(0);
     const [filterSearch, setFilterSearch] = useState('');
 
@@ -114,7 +115,7 @@ export const Select = React.forwardRef(
       }
     };
 
-    const handleSpaceKey = ({ activeElement }) => {
+    const handleSpaceKey = ({ activeElement, activeOptionIndex, selectListChildren }) => {
       // If select button is focused and the dropdown is closed, open it
       if (activeElement === selectButtonRef.current && !isOpen) {
         setIsOpen(true);
@@ -131,6 +132,10 @@ export const Select = React.forwardRef(
         // Move the cursor position to the position after the space
         filterSearchRef.current.selectionStart = cursorPosition + 1;
         filterSearchRef.current.selectionEnd = cursorPosition + 1;
+      }
+      // If an option is active, select it.
+      if (activeOptionIndex !== -1) {
+        selectListChildren[activeOptionIndex].click();
       }
     };
 
@@ -169,7 +174,7 @@ export const Select = React.forwardRef(
     };
 
     const selectContent = useMemo(
-      () => getSelectedContentHTML(children, [localValue]),
+      () => getSelectedContentHTML(children, localValue),
       [children, localValue]
     );
     const selectContentAsString = useMemo(() => innerText(selectContent), [selectContent]);
@@ -186,17 +191,23 @@ export const Select = React.forwardRef(
       handleSelectHoverBackground(selectListRef, selectListHoverBackgroundRef);
     }, [selectListRef, selectListHoverBackgroundRef, filteredChildren]);
 
-    const handleValueSelect = (newValue: string) => {
-      setIsOpen(false); // Close select
-      setFilterSearch(''); // Reset filter search
-      selectButtonRef?.current?.focus(); // Focus back to select button
-      // Only update value/localValue if it's different from newValue to avoid extra renders
-      if (localValue === newValue) return;
-      setLocalValue(newValue);
+    const handleValueSelect = (value: string) => {
+      const newLocalValue = localValue ? [...localValue] : [];
+      if (newLocalValue.includes(value)) {
+        newLocalValue.splice(newLocalValue.indexOf(value), 1);
+      } else {
+        newLocalValue.push(value);
+      }
+
+      setLocalValue(newLocalValue);
       onChange &&
         onChange({
-          target: { name: selectName, id, value: newValue },
-        } as React.ChangeEvent<HTMLInputElement>);
+          target: {
+            name: selectName,
+            id,
+            value: newLocalValue,
+          } as unknown as React.ChangeEvent<HTMLInputElement>,
+        });
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -204,7 +215,7 @@ export const Select = React.forwardRef(
       onBlur &&
         onBlur({
           target: { name: selectName, id, value: localValue },
-        } as React.FocusEvent<HTMLInputElement>);
+        } as unknown as React.FocusEvent<HTMLInputElement>);
     };
 
     return (
@@ -259,8 +270,8 @@ export const Select = React.forwardRef(
               {React.Children.map(filteredChildren, (child) => {
                 if (!React.isValidElement(child)) return null;
                 return React.cloneElement(child, {
-                  hasCheckbox: false,
-                  selected: localValue === child.props.value,
+                  hasCheckbox: true,
+                  selected: localValue?.includes(child.props.value),
                   onChange: handleValueSelect,
                   isFocusable: isOpen,
                 } as OptionProps);

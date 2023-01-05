@@ -156,17 +156,3 @@ export const SelectListHoverBackground = styled.span`
     transform 120ms ease-out 12ms;
   will-change: height, opacity, transform;
 `;
-
-/**
- * Text input used for accissibility purposes.
- * It's hidden from the user but accessible to screen readers.
- */
-export const HiddenSelectedValueInput = styled.input`
-  position: absolute;
-  width: ${rem(0)};
-  height: ${rem(0)};
-  overflow: hidden;
-  z-index: -1;
-  opacity: 0;
-  pointer-events: none;
-`;

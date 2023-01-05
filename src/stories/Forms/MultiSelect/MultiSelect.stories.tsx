@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from './Select';
+import { MultiSelect } from './MultiSelect';
 import { Option } from './Option';
 import { InputWrapper, Label } from '../../../index';
 
 export default {
-  component: Select,
+  component: MultiSelect,
 };
 
 export const Primary = {
@@ -16,7 +16,7 @@ export const Primary = {
   },
 };
 
-const Template = ({ id, isRequired, multiselect, placeholder, severity, severityMessage }) => {
+const Template = ({ id, isRequired, placeholder, severity, severityMessage }) => {
   return (
     <InputWrapper
       severity={severity}
@@ -25,7 +25,7 @@ const Template = ({ id, isRequired, multiselect, placeholder, severity, severity
       isRequired={isRequired}
     >
       <Label>Select a color</Label>
-      <Select placeholder={placeholder}>
+      <MultiSelect placeholder={placeholder}>
         <Option value='red'>Red</Option>
         <Option value='green'>Green</Option>
         <Option value='blue'>Blue</Option>
@@ -34,7 +34,7 @@ const Template = ({ id, isRequired, multiselect, placeholder, severity, severity
         <Option value='orange'>Orange</Option>
         <Option value='pink'>Pink</Option>
         <Option value='brown'>Brown</Option>
-      </Select>
+      </MultiSelect>
     </InputWrapper>
   );
 };
@@ -56,14 +56,14 @@ const CountriesFromApiTemplate = ({ id, isRequired, placeholder, severity, sever
       isRequired={isRequired}
     >
       <Label>Countries</Label>
-      <Select placeholder={placeholder}>
+      <MultiSelect placeholder={placeholder}>
         {countries.map(({ name, alpha2Code, flags }) => (
           <Option key={alpha2Code} value={alpha2Code}>
             <img src={flags.png} alt={`Flag of ${name}`} loading='lazy' />
             <span>{name}</span>
           </Option>
         ))}
-      </Select>
+      </MultiSelect>
     </InputWrapper>
   );
 };

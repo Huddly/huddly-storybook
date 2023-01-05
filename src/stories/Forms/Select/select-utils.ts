@@ -11,7 +11,7 @@ export const allChildrenAreOption = (children: React.ReactNode) => {
 };
 
 export const getSelectListHeight = (
-  showItems: number,
+  showMaxItems: number,
   selectListRef: React.RefObject<HTMLUListElement>
 ): number => {
   const selectList = selectListRef.current;
@@ -19,7 +19,7 @@ export const getSelectListHeight = (
   if (!selectListChildren) return 0;
   // get height of the first n children of the select list, and get its total height.
   const selectListHeight = Array.from(selectListChildren)
-    .slice(0, showItems)
+    .slice(0, showMaxItems)
     .reduce((acc, curr) => acc + curr.getBoundingClientRect().height, 0);
   const selectListBorderWidth = parseInt(getComputedStyle(selectList).borderTopWidth, 10) * 2;
   return selectListHeight + selectListBorderWidth;
@@ -31,26 +31,26 @@ export const handleSelectHoverBackground = (
 ) => {
   const selectList = selectListRef.current;
   const selectListChildren = selectListRef.current?.children;
-  if (!selectListChildren || !selectListHoverBackgroundRef.current) return;
+  const bgEl = selectListHoverBackgroundRef.current;
+  if (!selectListChildren || !bgEl) return;
 
   const parentRect = selectList.getBoundingClientRect();
   const parentRectBorder = parseInt(getComputedStyle(selectList).borderTopWidth, 10);
 
   const moveHoverBackground = (event: FocusEvent | MouseEvent) => {
-    const target = event.target as HTMLElement;
-    if (!target.hasAttribute('role') || target.getAttribute('role') !== 'option') return; // find a better way of checking this
-    const node = event.target as HTMLElement;
-    const rect = node.getBoundingClientRect();
-    const separatorLineWidth = parseInt(getComputedStyle(node).borderBottomWidth, 10);
-    selectListHoverBackgroundRef.current.style.opacity = '1';
-    selectListHoverBackgroundRef.current.style.height = rem(rect.height + separatorLineWidth);
-    selectListHoverBackgroundRef.current.style.transform = `translateY(${rem(
-      rect.y - parentRect.y - parentRectBorder
-    )})`;
+    const option = event.target as HTMLElement;
+    // Check if option is a valid option
+    if (!option.hasAttribute('role') || option.getAttribute('role') !== 'option') return;
+    const rect = option.getBoundingClientRect();
+    const separatorLineWidth = parseInt(getComputedStyle(option).borderBottomWidth, 10);
+    // Apply styles to the hover background
+    bgEl.style.opacity = '1';
+    bgEl.style.height = rem(rect.height + separatorLineWidth);
+    bgEl.style.transform = `translate3d(0, ${rem(rect.y - parentRect.y - parentRectBorder)}, 0)`;
   };
 
   const hideHoverBackground = () => {
-    selectListHoverBackgroundRef.current.style.opacity = '0';
+    bgEl.style.opacity = '0';
   };
 
   Array.from(selectListChildren).forEach((child) => {
