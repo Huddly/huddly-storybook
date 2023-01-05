@@ -3,72 +3,74 @@ import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { GlobalInputProps } from '../../../shared/types';
 
-interface WrapperProps {
-  hasError?: boolean;
-}
+const FakeRadio = styled.label<{ hasError: boolean }>`
+  display: flex;
+  position: relative;
+  align-items: center;
+  color: var(--color-grey15);
+  font-size: var(--font-size-14);
+  cursor: pointer;
 
-const Wrapper = styled.div<WrapperProps>`
-  label {
-    display: flex;
-    font-size: var(--font-size-14);
-    cursor: pointer;
-
-    // Radio
-    &:before {
-      display: block;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      width: var(--spacing-16);
-      height: var(--spacing-16);
-      margin-right: var(--spacing-8);
-      border-radius: var(--spacing-16);
-      content: '';
-
-      border: ${({ hasError }) =>
-        hasError ? 'var(--border-error)' : '2px solid var(--color-grey55)'};
-    }
-
-    :hover:before {
-      border-color: var(--color-grey45);
-      background-color: var(--color-grey91);
-    }
-
-    :active:before {
-      border-color: var(--color-grey35);
-      background-color: var(--color-grey86);
-    }
-  }
-
-  input[type='radio'] {
-    opacity: 0;
-    position: absolute;
-    left: ${rem(-99999)}; // This is to hide the radio without affecting screen readers
-
-    // Focus ring
-    &:focus-visible + label:before {
-      outline: ${rem(1)} dotted #212121; // Fallback to non-webkit browsers
-      outline: ${rem(5)} auto -webkit-focus-ring-color;
-      outline-offset: ${rem(3)};
-    }
-
-    // Checked radio style
-    &:checked + label:before {
-      border-color: var(--color-lavender);
-      background-color: var(--color-lavender);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23fff'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: var(--spacing-8);
-    }
-
-    &:checked:hover + label:before {
-      border: 4px solid var(--color-salviaBlue);
-    }
+  // The fake custom checkbox
+  &:before {
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    border: ${({ hasError }) =>
+      hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
+    border-radius: 50%;
+    content: '';
   }
 `;
 
+const RadioInput = styled.input.attrs({ type: 'radio' })<GlobalInputProps>`
+  opacity: 0;
+  position: absolute;
+  left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
+
+  // Focus ring
+  &:focus-visible + ${FakeRadio}:before {
+    box-shadow: 0px 0px 0px ${rem(2)} white, 0px 0px 0px ${rem(4)} var(--color-lavender);
+  }
+
+  // Checked checkbox style
+  &:checked + ${FakeRadio}:before {
+    border-color: var(--color-lavender);
+    background-color: var(--color-lavender);
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='6' cy='6' r='6' fill='white'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &:hover:checked + ${FakeRadio}:before {
+    border-color: var(--color-salviaBlue);
+    background-color: var(--color-salviaBlue);
+  }
+
+  &:hover:not(:checked) + ${FakeRadio}:before {
+    border-color: var(--color-grey45);
+    background-color: var(--color-grey91);
+  }
+
+  &:active:checked + ${FakeRadio}:before {
+    border-color: var(--color-royalBlue);
+    background-color: var(--color-royalBlue);
+  }
+
+  &:active:not(:checked) + ${FakeRadio}:before {
+    border-color: var(--color-grey35);
+    background-color: var(--color-grey86);
+  }
+`;
+
+const LabelText = styled.span`
+  margin-left: var(--spacing-8);
+`;
+
 export interface RadioProps extends Omit<GlobalInputProps, 'value'> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: boolean;
 }
 
@@ -91,8 +93,8 @@ export const Radio = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper className={className} hasError={hasError}>
-        <input
+      <div className={className}>
+        <RadioInput
           aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
@@ -101,14 +103,13 @@ export const Radio = React.forwardRef(
           name={name || id}
           ref={ref}
           required={isRequired}
-          type='radio'
+          type='checkbox'
           {...additionalInputProps}
         />
-
-        <label htmlFor={id}>
-          <span>{children}</span>
-        </label>
-      </Wrapper>
+        <FakeRadio htmlFor={id} hasError={hasError}>
+          {children && <LabelText>{children}</LabelText>}
+        </FakeRadio>
+      </div>
     );
   }
 );
