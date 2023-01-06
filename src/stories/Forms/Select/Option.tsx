@@ -13,11 +13,6 @@ const Wrapper = styled.li`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 
-  /* &:hover,
-  &:focus {
-    background-color: var(--color-whisperBlue);
-  } */
-
   &:not(:last-child) {
     border-bottom: ${rem(1)} solid var(--color-grey91);
   }
