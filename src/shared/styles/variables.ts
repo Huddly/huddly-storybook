@@ -69,7 +69,6 @@ export const variables = css`
     /* Input sizing */
     --input-toggle-size: var(--spacing-24);
     --input-height: var(--spacing-48);
-    --input-padding: var(--spacing-16);
     --input-radius: var(--border-radius);
     --input-font-size: var(--font-size-16);
   }

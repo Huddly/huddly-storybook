@@ -25,7 +25,7 @@ export const SelectButton = styled.button<{
   align-items: center;
   width: 100%;
   height: var(--input-height);
-  padding: var(--input-padding);
+  padding: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: var(--input-radius);
   column-gap: var(--spacing-8);
@@ -103,7 +103,7 @@ export const SelectList = styled.ul<{ height: number }>`
   height: ${(p) => rem(p.height)};
   margin: 0;
   padding: 0;
-  border-radius: ${rem(3)};
+  border-radius: var(--input-radius);
   overflow-y: auto;
   list-style: none;
   border: var(--border-active);

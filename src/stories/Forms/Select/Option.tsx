@@ -7,7 +7,7 @@ const Wrapper = styled.li`
   display: flex;
   position: relative;
   align-items: center;
-  padding: ${rem(12)} var(--input-padding);
+  padding: ${rem(12)} var(--spacing-16);
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
