@@ -11,12 +11,11 @@ export const Primary = {
   args: {
     id: 'select',
     isRequired: true,
-    multiselect: false,
     placeholder: '',
   },
 };
 
-const Template = ({ id, isRequired, multiselect, placeholder, severity, severityMessage }) => {
+const Template = ({ id, isRequired, placeholder, severity, severityMessage }) => {
   return (
     <InputWrapper
       severity={severity}

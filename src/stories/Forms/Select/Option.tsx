@@ -12,6 +12,7 @@ const Wrapper = styled.li`
   column-gap: var(--spacing-8);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  font-size: var(--input-font-size);
 
   &:not(:last-child) {
     border-bottom: ${rem(1)} solid var(--color-grey91);

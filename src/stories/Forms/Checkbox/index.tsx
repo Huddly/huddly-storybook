@@ -7,8 +7,6 @@ const FakeCheckbox = styled.label<{ hasError: boolean }>`
   display: flex;
   position: relative;
   align-items: center;
-  color: var(--color-grey15);
-  font-size: var(--font-size-14);
   cursor: pointer;
 
   // The fake custom checkbox
@@ -16,8 +14,8 @@ const FakeCheckbox = styled.label<{ hasError: boolean }>`
     display: block;
     flex-shrink: 0;
     box-sizing: border-box;
-    width: var(--spacing-24);
-    height: var(--spacing-24);
+    width: var(--input-toggle-size);
+    height: var(--input-toggle-size);
     border: ${({ hasError }) =>
       hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
     border-radius: ${rem(2)};
@@ -42,6 +40,7 @@ const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.25 1.25L4.5 8L0.75 4.25' stroke='white' stroke-width='2'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 50%;
   }
 
   &:hover:checked + ${FakeCheckbox}:before {
@@ -67,6 +66,8 @@ const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>
 
 const LabelText = styled.span`
   margin-left: var(--spacing-8);
+  color: var(--color-grey15);
+  font-size: var(--input-font-size);
 `;
 
 export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {

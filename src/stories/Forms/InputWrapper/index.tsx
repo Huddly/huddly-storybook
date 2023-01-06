@@ -8,6 +8,7 @@ interface WrapperProps {
   boxyErrorStyle: boolean;
   hasError: boolean;
   labelIsIndented?: boolean;
+  disableWidthConstraint?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -15,7 +16,7 @@ const Wrapper = styled.div<WrapperProps>`
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
-  max-width: ${rem(400)};
+  max-width: ${(p) => (p.disableWidthConstraint ? 'none' : rem(400))};
   margin-bottom: var(--spacing-32);
 
   // Apply special styling when boxyErrorStyle is true and the input has an error.
@@ -60,6 +61,7 @@ export interface InputWrapperProps {
   children: JSX.Element | JSX.Element[];
   className?: string;
   isRequired?: boolean;
+  disableWidthConstraint?: boolean;
 }
 
 /**
@@ -67,7 +69,15 @@ export interface InputWrapperProps {
  */
 export const InputWrapper = React.forwardRef(
   (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { id, children, className, isRequired, severity, severityMessage } = props;
+    const {
+      id,
+      severity,
+      severityMessage,
+      children,
+      className,
+      isRequired,
+      disableWidthConstraint,
+    } = props;
     // Set aria id's. These are used for inputs and the helper texts.
     const ariaDescribedById = severity === 'info' ? `${id}-hint` : undefined;
     const ariaErrorMessageId = severity === ('error' || 'warning') ? `${id}-error` : undefined;
@@ -129,6 +139,7 @@ export const InputWrapper = React.forwardRef(
         {...HintWrapperProps}
         ref={ref}
         labelIsIndented={labelIsIndented}
+        disableWidthConstraint={disableWidthConstraint}
       >
         {childrenWithGlobalInputProps}
 

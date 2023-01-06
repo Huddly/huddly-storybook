@@ -23,15 +23,16 @@ export const SelectButton = styled.button<{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: var(--spacing-48);
-  padding: var(--spacing-16) var(--spacing-8) var(--spacing-16) var(--spacing-16);
+  width: 100%;
+  height: var(--input-height);
+  padding: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-  border-radius: ${rem(3)};
+  border-radius: var(--input-radius);
+  column-gap: var(--spacing-8);
   color: ${(p) => (p.hasLabel ? 'var(--color-grey15)' : 'var(--color-grey55)')};
+  font-size: var(--input-font-size);
   cursor: pointer;
   background-color: ${(p) => (p.isOpen ? 'var(--color-grey96)' : 'var(--color-grey99)')};
-  column-gap: var(--spacing-8);
-  width: 100%;
 
   &:hover {
     background-color: var(--color-grey96);
@@ -71,6 +72,7 @@ export const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
 export const RotatingChevron = styled(ChevronDown)<{ rotate: boolean }>`
   transition: 0.15s ease-in-out;
   ${(p) => (p.rotate ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
+  margin-right: ${rem(-8)};
 
   path {
     fill: var(--color-grey35);
@@ -101,7 +103,7 @@ export const SelectList = styled.ul<{ height: number }>`
   height: ${(p) => rem(p.height)};
   margin: 0;
   padding: 0;
-  border-radius: ${rem(3)};
+  border-radius: var(--input-radius);
   overflow-y: auto;
   list-style: none;
   border: var(--border-active);

@@ -4,17 +4,18 @@ import { GlobalInputProps } from '../../../shared/types';
 
 const Wrapper = styled.div<{ isHidden: boolean }>`
   display: ${(p) => (p.isHidden ? 'none' : 'block')};
+  flex: 1;
 `;
 
 const StyledInput = styled.input<{ hasError?: boolean }>`
   display: block;
   box-sizing: border-box;
   width: 100%;
-  height: var(--spacing-48);
+  height: var(--input-height);
   padding: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-16);
+  border-radius: var(--input-radius);
+  font-size: var(--input-font-size);
   background: var(--color-grey96);
 
   :hover {

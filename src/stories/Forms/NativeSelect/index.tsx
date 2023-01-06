@@ -11,11 +11,11 @@ const Wrapper = styled.div<WrapperProps>`
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: var(--spacing-48);
-    padding: 0 var(--spacing-16);
+    height: var(--input-height);
+    padding-inline: var(--spacing-16);
     border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-    border-radius: var(--border-radius);
-    font-size: var(--font-size-16);
+    border-radius: var(--input-radius);
+    font-size: var(--input-font-size);
     font-family: var(--font-family-primary);
     cursor: pointer;
     // This is to get a custom arrow on the select element
