@@ -7,11 +7,12 @@ const Wrapper = styled.li`
   display: flex;
   position: relative;
   align-items: center;
-  padding: ${rem(12)} var(--spacing-16);
+  padding: ${rem(12)} var(--input-padding);
   outline: 0;
   column-gap: var(--spacing-8);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  font-size: var(--input-font-size);
 
   &:not(:last-child) {
     border-bottom: ${rem(1)} solid var(--color-grey91);

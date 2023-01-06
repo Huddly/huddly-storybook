@@ -7,8 +7,6 @@ const FakeRadio = styled.label<{ hasError: boolean }>`
   display: flex;
   position: relative;
   align-items: center;
-  color: var(--color-grey15);
-  font-size: var(--font-size-14);
   cursor: pointer;
 
   // The fake custom checkbox
@@ -16,8 +14,8 @@ const FakeRadio = styled.label<{ hasError: boolean }>`
     display: block;
     flex-shrink: 0;
     box-sizing: border-box;
-    width: var(--spacing-24);
-    height: var(--spacing-24);
+    width: var(--input-toggle-size);
+    height: var(--input-toggle-size);
     border: ${({ hasError }) =>
       hasError ? 'var(--border-error)' : `${rem(2)} solid var(--color-grey55);`};
     border-radius: 50%;
@@ -42,6 +40,7 @@ const RadioInput = styled.input.attrs({ type: 'radio' })<GlobalInputProps>`
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='6' cy='6' r='6' fill='white'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 50%;
   }
 
   &:hover:checked + ${FakeRadio}:before {
@@ -67,6 +66,8 @@ const RadioInput = styled.input.attrs({ type: 'radio' })<GlobalInputProps>`
 
 const LabelText = styled.span`
   margin-left: var(--spacing-8);
+  color: var(--color-grey15);
+  font-size: var(--input-font-size);
 `;
 
 export interface RadioProps extends Omit<GlobalInputProps, 'value'> {

@@ -65,5 +65,12 @@ export const variables = css`
 
     /* Drop shadow */
     --drop-shadow-significant: 0px 3px 12px -3px rgba(0, 0, 0, 0.2);
+
+    /* Input sizing */
+    --input-toggle-size: var(--spacing-24);
+    --input-height: var(--spacing-48);
+    --input-padding: var(--spacing-16);
+    --input-radius: var(--border-radius);
+    --input-font-size: var(--font-size-16);
   }
 `;

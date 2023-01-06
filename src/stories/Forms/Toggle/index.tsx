@@ -24,6 +24,7 @@ const StyledInput = styled.input<{ hasError?: boolean }>`
   background: var(--color-grey55);
   appearance: none;
   outline: none;
+  cursor: pointer;
 
   // the before element is adding the circle to the toggle button
   ::before {

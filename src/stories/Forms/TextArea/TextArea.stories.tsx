@@ -10,10 +10,11 @@ export default {
 export const Primary = {
   args: {
     id: 'example',
+    height: 120,
   },
 };
 
-const Template = ({ severity, severityMessage, id, isRequired }) => {
+const Template = ({ severity, severityMessage, id, isRequired, height }) => {
   return (
     <InputWrapper
       severity={severity}
@@ -22,7 +23,7 @@ const Template = ({ severity, severityMessage, id, isRequired }) => {
       isRequired={isRequired}
     >
       <Label>Label</Label>
-      <TextArea />
+      <TextArea height={height} />
     </InputWrapper>
   );
 };

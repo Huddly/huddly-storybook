@@ -2,13 +2,21 @@ import { InputWrapper } from '.';
 
 export default { component: InputWrapper };
 
-const Template = ({ severity, severityMessage, children, id, isRequired }) => {
+const Template = ({
+  severity,
+  severityMessage,
+  children,
+  id,
+  isRequired,
+  disableWidthConstraint,
+}) => {
   return (
     <InputWrapper
       severity={severity}
       severityMessage={severityMessage}
       id={id}
       isRequired={isRequired}
+      disableWidthConstraint={disableWidthConstraint}
     >
       {children}
     </InputWrapper>
@@ -27,6 +35,7 @@ Primary.args = {
       </p>
     </>
   ),
+  disableWidthConstraint: false,
 };
 
 export const HasHint = Template.bind({});
