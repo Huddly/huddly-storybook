@@ -19,6 +19,7 @@ export { Form } from './stories/Forms/Form';
 export { Input } from './stories/Forms/Input';
 export { InputWrapper } from './stories/Forms/InputWrapper';
 export { Label } from './stories/Forms/Label';
+export { MultiSelect } from './stories/Forms/MultiSelect';
 export { NativeSelect } from './stories/Forms/NativeSelect';
 export { PhoneInput } from './stories/Forms/PhoneInput';
 export { Radio } from './stories/Forms/Radio';
