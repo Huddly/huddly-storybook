@@ -16,8 +16,6 @@ export const Primary = {
 };
 
 const Template = ({ id, isRequired, placeholder, severity, severityMessage }) => {
-  const [value, setValue] = useState('');
-
   return (
     <InputWrapper
       severity={severity}
@@ -26,7 +24,7 @@ const Template = ({ id, isRequired, placeholder, severity, severityMessage }) =>
       isRequired={isRequired}
     >
       <Label>Select a color</Label>
-      <Select placeholder={placeholder} value={value} onChange={(e) => setValue(e.target.value)}>
+      <Select placeholder={placeholder}>
         <Option value='red'>Red</Option>
         <Option value='green'>Green</Option>
         <Option value='blue'>Blue</Option>
