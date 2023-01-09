@@ -25,7 +25,7 @@ export const SelectButton = styled.button<{
   align-items: center;
   width: 100%;
   height: var(--input-height);
-  padding: var(--spacing-16);
+  padding-inline: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: var(--input-radius);
   column-gap: var(--spacing-8);

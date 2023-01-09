@@ -66,6 +66,7 @@ export const Select = React.forwardRef(
      * Update localValue when value prop changes.
      */
     useEffect(() => {
+      if (value === localValue) return;
       setLocalValue(value);
     }, [value]);
 

@@ -12,7 +12,7 @@ const StyledInput = styled.input<{ hasError?: boolean }>`
   box-sizing: border-box;
   width: 100%;
   height: var(--input-height);
-  padding: var(--spacing-16);
+  padding-inline: var(--spacing-16);
   border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
   border-radius: var(--input-radius);
   font-size: var(--input-font-size);
