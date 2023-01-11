@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { GlobalInputProps } from '../../../shared/types';
 
-const FakeCheckbox = styled.label<{ hasError: boolean }>`
+export const FakeCheckbox = styled.label<{ hasError: boolean }>`
   display: flex;
   position: relative;
   align-items: center;
@@ -23,7 +23,7 @@ const FakeCheckbox = styled.label<{ hasError: boolean }>`
   }
 `;
 
-const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>`
+export const CheckboxInput = styled.input<GlobalInputProps>`
   opacity: 0;
   position: absolute;
   left: ${rem(-99999)}; // This is to hide the checkbox without affecting screen readers
@@ -64,7 +64,7 @@ const CheckboxInput = styled.input.attrs({ type: 'checkbox' })<GlobalInputProps>
   }
 `;
 
-const LabelText = styled.span`
+export const LabelText = styled.span`
   margin-left: var(--spacing-8);
   color: var(--color-grey15);
   font-size: var(--input-font-size);
