@@ -2,25 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { GlobalInputProps } from '../../../shared/types';
+import { StyledInput } from '../Input';
 
-interface WrapperProps {
-  hasError?: boolean;
-  height: number;
-}
+const Wrapper = styled.div`
+  flex: 1;
+`;
 
-const Wrapper = styled.div<WrapperProps>`
-  textarea {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    height: ${(p) => rem(p.height)};
-    padding: var(--spacing-16);
-    border: ${(p) => (p.hasError ? 'var(--border-error)' : 'var(--border-primary)')};
-    border-radius: var(--input-radius);
-    font-size: var(--input-font-size);
-    font-family: var(--font-family-primary);
-    resize: vertical;
-  }
+const StyledTextArea = styled(StyledInput)<{ hasError?: boolean; height: number }>`
+  padding-block: var(--spacing-16);
+  height: ${(p) => rem(p.height)};
+  resize: vertical;
 `;
 
 export interface TextAreaProps extends GlobalInputProps {
@@ -50,11 +41,14 @@ export const TextArea = React.forwardRef(
     } = props;
 
     return (
-      <Wrapper className={className} hasError={hasError} height={height}>
-        <textarea
-          aria-labelledby={ariaDescribedBy}
+      <Wrapper className={className}>
+        <StyledTextArea
+          as='textarea'
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
+          aria-labelledby={ariaDescribedBy}
+          hasError={hasError}
+          height={height}
           id={id}
           name={name || id}
           ref={ref}
