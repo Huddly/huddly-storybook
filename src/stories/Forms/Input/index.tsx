@@ -7,7 +7,7 @@ const Wrapper = styled.div<{ isHidden: boolean }>`
   flex: 1;
 `;
 
-const StyledInput = styled.input<{ hasError?: boolean }>`
+export const StyledInput = styled.input<{ hasError?: boolean }>`
   display: block;
   box-sizing: border-box;
   width: 100%;
