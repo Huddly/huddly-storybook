@@ -9,9 +9,9 @@ const Wrapper = styled.div`
 `;
 
 const StyledTextArea = styled(StyledInput)<{ hasError?: boolean; height: number }>`
-  padding-block: var(--spacing-16);
   height: ${(p) => rem(p.height)};
   resize: vertical;
+  padding-block: var(--spacing-16);
 `;
 
 export interface TextAreaProps extends GlobalInputProps {
