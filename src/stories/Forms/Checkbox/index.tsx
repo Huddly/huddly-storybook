@@ -70,9 +70,9 @@ export const LabelText = styled.span`
   font-size: var(--input-font-size);
 `;
 
-export interface CheckboxProps extends Omit<GlobalInputProps, 'value'> {
+export interface CheckboxProps extends GlobalInputProps {
+  checked?: boolean;
   children?: React.ReactNode;
-  value?: boolean;
 }
 
 /**
@@ -83,6 +83,7 @@ export const Checkbox = React.forwardRef(
     const {
       ariaDescribedBy,
       ariaErrorMessage,
+      checked,
       children,
       className,
       hasError,
@@ -96,15 +97,16 @@ export const Checkbox = React.forwardRef(
     return (
       <div className={className}>
         <CheckboxInput
-          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
-          checked={value}
+          aria-labelledby={ariaDescribedBy}
+          checked={checked}
           id={id}
           name={name || id}
           ref={ref}
           required={isRequired}
           type='checkbox'
+          value={value}
           {...additionalInputProps}
         />
         <FakeCheckbox htmlFor={id} hasError={hasError}>
