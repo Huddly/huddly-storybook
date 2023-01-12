@@ -19,7 +19,7 @@ const Wrapper = styled.fieldset`
   }
 `;
 
-interface FieldsetProps {
+export interface FieldsetProps {
   ariaDescribedBy?: string;
   ariaErrorMessage?: string;
   children: React.ReactNode;
