@@ -99,7 +99,7 @@ export const Toggle = React.forwardRef(
           aria-invalid={hasError}
           checked={value}
           id={id}
-          name={name || id}
+          name={name}
           ref={ref}
           required={isRequired}
           {...additionalInputProps}

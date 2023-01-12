@@ -1,67 +1,55 @@
-import React from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
-import { AlertText, Checkbox, Radio, Toggle } from '../../../index';
+import { AlertText, Fieldset, Checkbox, Radio, Toggle } from '../../../index';
 import { ErrorSeverity } from '../../../shared/types';
 
-interface WrapperProps {
-  boxyErrorStyle: boolean;
-  hasError: boolean;
-  labelIsIndented?: boolean;
-  disableWidthConstraint?: boolean;
-}
-
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div<{ disableWidthConstraint?: boolean; indentLabel?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
-  max-width: ${(p) => (p.disableWidthConstraint ? 'none' : rem(400))};
+  max-width: ${({ disableWidthConstraint }) => (disableWidthConstraint ? 'none' : rem(400))};
   margin-bottom: var(--spacing-32);
 
-  // Apply special styling when boxyErrorStyle is true and the input has an error.
-  ${({ boxyErrorStyle, hasError }) =>
-    boxyErrorStyle &&
-    hasError &&
-    `box-sizing: content-box;
-    margin: calc(var(--spacing-8) * -1); // Negative margin to account for the padding, this is so the rest of the elements don't move
-    padding: var(--spacing-8);
-    border-radius: var(--border-radius);
-    background-color: var(--color-alertRedBg);`}
-
-  // apply left margin for certain input types
-  // only to direct childs if not it breaks for example checkboxes inside selects
   label:first-child {
-    margin-left: ${(p) => (p.labelIsIndented ? 'var(--spacing-16)' : 0)};
+    margin-left: ${({ indentLabel }) => (indentLabel ? 'var(--spacing-16)' : '0')};
   }
 `;
 
-const HintWrapper = styled.div<WrapperProps>`
-  position: relative;
+const CheckboxFieldset = styled(Fieldset)`
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--spacing-8);
+  margin-bottom: 0;
+`;
 
+const AlertTextContianer = styled.div`
+  position: relative;
   & > * {
     position: absolute;
     margin-top: var(--spacing-4);
-
-    ${({ boxyErrorStyle }) =>
-      boxyErrorStyle &&
-      `position: static; // The hint/error should take up space in the box when boxyErrorStyle is true
-      margin-left: var(--spacing-32); // Align with checkbox/radio label
-    `}
-
-    ${({ boxyErrorStyle, hasError }) =>
-      boxyErrorStyle && hasError && `color: var(--color-warningRed);`}
   }
 `;
 
+const childrenContainsTogglableInputs = (children: React.ReactNode, minCount = 1): boolean => {
+  const TOGGLABLE_INPUTS = [Checkbox, Radio, Toggle];
+  if (Array.isArray(children)) {
+    const count = children.filter((child) => TOGGLABLE_INPUTS.includes(child?.type)).length;
+    return count >= minCount;
+  }
+  return false;
+};
+
 export interface InputWrapperProps {
-  id: string;
-  severity?: ErrorSeverity;
-  severityMessage?: string;
   children: JSX.Element | JSX.Element[];
   className?: string;
-  isRequired?: boolean;
   disableWidthConstraint?: boolean;
+  id: string;
+  isRequired?: boolean;
+  name?: string;
+  severity?: ErrorSeverity;
+  severityMessage?: string;
 }
 
 /**
@@ -70,85 +58,68 @@ export interface InputWrapperProps {
 export const InputWrapper = React.forwardRef(
   (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
     const {
-      id,
-      severity,
-      severityMessage,
       children,
       className,
-      isRequired,
       disableWidthConstraint,
+      id,
+      isRequired,
+      name = id,
+      severity = 'neutral',
+      severityMessage,
     } = props;
     // Set aria id's. These are used for inputs and the helper texts.
-    const ariaDescribedById = severity === 'info' ? `${id}-hint` : undefined;
-    const ariaErrorMessageId = severity === ('error' || 'warning') ? `${id}-error` : undefined;
+    const ariaDescribedById = severityMessage && severity !== 'error' ? `${id}-hint` : undefined;
+    const ariaErrorMessageId = severityMessage && severity === 'error' ? `${id}-error` : undefined;
 
-    /*
-     * Define global child/input props.
-     * These are used to pass down to the children.
-     */
-    const globalInputProps = {
+    // If there are no togglable inputs, indent the label to align with the input.
+    const indentLabel = !childrenContainsTogglableInputs(children);
+    // If there are more than 2 togglable inputs, wrap them in a fieldset.
+    const isFieldset = childrenContainsTogglableInputs(children, 2);
+
+    // These are props or attributes passed down to semantically link the children together.
+    const forwardedInputProps = {
       ariaDescribedBy: ariaDescribedById,
       ariaErrorMessage: ariaErrorMessageId,
       hasError: severity === 'error' ? true : undefined,
       id,
       isRequired,
+      name,
     };
 
-    /**
-     * Pass globalInputProps to children.
-     * If the component is a fragment, we need to pass props to each child inside the fragment.
-     * However, if the child is not a valid react component, don't pass props at all.
-     */
-    const childrenWithGlobalInputProps = React.Children.map(children, (child) => {
-      if (!child) return null; // Handle conditional rendering of children
+    const handleForwardingProps = (child) => {
+      if (!child) return null;
       if (child.type === React.Fragment) {
-        return React.Children.map(child.props.children, (child) => {
-          if (typeof child?.type === 'string') return child;
-          return React.cloneElement(child, globalInputProps);
-        });
+        return React.Children.map(child.props.children, handleForwardingProps);
       }
-
       if (typeof child?.type === 'string') return child;
-      return React.cloneElement(child, globalInputProps);
-    }).filter((child) => child !== null); // Remove all nulled components
-
-    /*
-     * We apply special error styles for inputs such as checkboxes and radio buttons.
-     */
-    const hasBoxyErrorStyle = childrenWithGlobalInputProps?.some((child) => {
-      const componentsThatApply = [Checkbox, Radio];
-      return componentsThatApply.includes(child?.type);
-    });
-
-    /*
-     * We apply special left margin to labels of components that looks like "text fields" and not to Checkbox, Radio and Slack
-     */
-    const inputsWithoutIndentedLabels = [Checkbox, Radio, Toggle];
-    const labelIsIndented = childrenWithGlobalInputProps?.some(
-      (child) => !inputsWithoutIndentedLabels.includes(child.type)
-    );
-
-    const HintWrapperProps = {
-      boxyErrorStyle: hasBoxyErrorStyle,
-      hasError: severity === 'error',
+      // Id has to be unique for each toggleable input, so we generate one if fieldset is used.
+      if (isFieldset) forwardedInputProps.id = useId();
+      return React.cloneElement(child, forwardedInputProps);
     };
+
+    const childrenWithForwardedProps = React.Children.map(children, handleForwardingProps).filter(
+      (child) => child !== null
+    );
 
     return (
       <Wrapper
         className={className}
-        {...HintWrapperProps}
         ref={ref}
-        labelIsIndented={labelIsIndented}
         disableWidthConstraint={disableWidthConstraint}
+        indentLabel={indentLabel}
       >
-        {childrenWithGlobalInputProps}
+        {isFieldset ? (
+          <CheckboxFieldset {...forwardedInputProps}>{childrenWithForwardedProps}</CheckboxFieldset>
+        ) : (
+          childrenWithForwardedProps
+        )}
 
         {severity && severityMessage && (
-          <HintWrapper {...HintWrapperProps}>
-            <AlertText id={ariaErrorMessageId} severity={severity} hideIcon={hasBoxyErrorStyle}>
+          <AlertTextContianer>
+            <AlertText id={ariaDescribedById || ariaErrorMessageId} severity={severity}>
               {severityMessage}
             </AlertText>
-          </HintWrapper>
+          </AlertTextContianer>
         )}
       </Wrapper>
     );
