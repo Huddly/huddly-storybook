@@ -32,10 +32,10 @@ const AlertTextContianer = styled.div`
   }
 `;
 
-const childrenContainsTogglableInputs = (children: React.ReactNode, minCount = 1): boolean => {
-  const TOGGLABLE_INPUTS = [Checkbox, Radio, Toggle];
+const childrenContainsToggleableInputs = (children: React.ReactNode, minCount = 1): boolean => {
+  const TOGGLEABLE_INPUTS = [Checkbox, Radio, Toggle];
   if (Array.isArray(children)) {
-    const count = children.filter((child) => TOGGLABLE_INPUTS.includes(child?.type)).length;
+    const count = children.filter((child) => TOGGLEABLE_INPUTS.includes(child?.type)).length;
     return count >= minCount;
   }
   return false;
@@ -71,10 +71,10 @@ export const InputWrapper = React.forwardRef(
     const ariaDescribedById = severityMessage && severity !== 'error' ? `${id}-hint` : undefined;
     const ariaErrorMessageId = severityMessage && severity === 'error' ? `${id}-error` : undefined;
 
-    // If there are no togglable inputs, indent the label to align with the input.
-    const indentLabel = !childrenContainsTogglableInputs(children);
-    // If there are more than 2 togglable inputs, wrap them in a fieldset.
-    const isFieldset = childrenContainsTogglableInputs(children, 2);
+    // If there are no toggleable inputs, indent the label to align with the input.
+    const indentLabel = !childrenContainsToggleableInputs(children);
+    // If there are more than 2 toggleable inputs, wrap them in a fieldset.
+    const isFieldset = childrenContainsToggleableInputs(children, 2);
 
     // These are props or attributes passed down to semantically link the children together.
     const forwardedInputProps = {
