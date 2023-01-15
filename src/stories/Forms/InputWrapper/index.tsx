@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { isValidElement, useId } from 'react';
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { AlertText, Fieldset, Checkbox, Radio, Toggle } from '../../../index';
@@ -31,6 +31,17 @@ const AlertTextContianer = styled.div`
     margin-top: var(--spacing-4);
   }
 `;
+
+const stripFragments = (children: React.ReactNode): React.ReactNode => {
+  if (Array.isArray(children)) {
+    return children.flatMap((child) => stripFragments(child));
+  }
+  if (!isValidElement(children)) return children;
+  if (children?.type === React.Fragment) {
+    return stripFragments(children.props.children);
+  }
+  return children;
+};
 
 const childrenContainsToggleableInputs = (children: React.ReactNode, minCount = 1): boolean => {
   const TOGGLEABLE_INPUTS = [Checkbox, Radio, Toggle];
@@ -71,10 +82,12 @@ export const InputWrapper = React.forwardRef(
     const ariaDescribedById = severityMessage && severity !== 'error' ? `${id}-hint` : undefined;
     const ariaErrorMessageId = severityMessage && severity === 'error' ? `${id}-error` : undefined;
 
+    // Flatten children and remove React Fragments.
+    const flatChildren = stripFragments(children);
     // If there are no toggleable inputs, indent the label to align with the input.
-    const indentLabel = !childrenContainsToggleableInputs(children);
+    const indentLabel = childrenContainsToggleableInputs(flatChildren) === false;
     // If there are more than 2 toggleable inputs, wrap them in a fieldset.
-    const isFieldset = childrenContainsToggleableInputs(children, 2);
+    const isFieldset = childrenContainsToggleableInputs(flatChildren, 2);
 
     // These are props or attributes passed down to semantically link the children together.
     const forwardedInputProps = {
@@ -86,20 +99,12 @@ export const InputWrapper = React.forwardRef(
       name,
     };
 
-    const handleForwardingProps = (child) => {
-      if (!child) return null;
-      if (child.type === React.Fragment) {
-        return React.Children.map(child.props.children, handleForwardingProps);
-      }
+    const childrenWithForwardedProps = React.Children.map(flatChildren, (child) => {
+      if (!React.isValidElement(child)) return null;
       if (typeof child?.type === 'string') return child;
-      // Id has to be unique for each toggleable input, so we generate one if fieldset is used.
       if (isFieldset) forwardedInputProps.id = useId();
       return React.cloneElement(child, forwardedInputProps);
-    };
-
-    const childrenWithForwardedProps = React.Children.map(children, handleForwardingProps).filter(
-      (child) => child !== null
-    );
+    }).filter((child) => child !== null);
 
     return (
       <Wrapper
