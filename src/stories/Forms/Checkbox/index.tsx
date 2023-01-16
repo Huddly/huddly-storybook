@@ -79,7 +79,7 @@ export interface CheckboxProps extends GlobalInputProps {
  * Checkbox component
  */
 export const Checkbox = React.forwardRef(
-  (props: CheckboxProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: CheckboxProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

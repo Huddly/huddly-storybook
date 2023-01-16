@@ -49,7 +49,7 @@ export interface InputProps extends GlobalInputProps {
  * Input component
  */
 export const Input = React.forwardRef(
-  (props: InputProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

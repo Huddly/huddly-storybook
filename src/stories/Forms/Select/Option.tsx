@@ -62,7 +62,7 @@ export interface OptionProps {
  * Option component
  */
 export const Option = React.forwardRef(
-  (props: OptionProps, ref: React.RefObject<HTMLLIElement>) => {
+  (props: OptionProps, ref: React.ForwardedRef<HTMLLIElement>) => {
     const { children, value, selected, hasCheckbox, onChange, isFocusable } = props;
 
     return (

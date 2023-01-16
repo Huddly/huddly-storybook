@@ -28,7 +28,7 @@ export interface RadioProps extends GlobalInputProps {
  * Radio component
  */
 export const Radio = React.forwardRef(
-  (props: RadioProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: RadioProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

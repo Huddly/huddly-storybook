@@ -78,7 +78,7 @@ export interface ToggleProps extends GlobalInputProps {
  * Toggle component
  */
 export const Toggle = React.forwardRef(
-  (props: ToggleProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: ToggleProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

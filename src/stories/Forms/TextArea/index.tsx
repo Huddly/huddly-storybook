@@ -26,7 +26,7 @@ export interface TextAreaProps extends GlobalInputProps {
  * TextArea component
  */
 export const TextArea = React.forwardRef(
-  (props: TextAreaProps, ref: React.RefObject<HTMLTextAreaElement>) => {
+  (props: TextAreaProps, ref: React.ForwardedRef<HTMLTextAreaElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
