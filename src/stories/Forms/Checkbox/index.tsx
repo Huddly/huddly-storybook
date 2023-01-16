@@ -3,10 +3,15 @@ import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
 import { GlobalInputProps } from '../../../shared/types';
 
-export const FakeCheckbox = styled.label<{ hasError: boolean }>`
+export const Wrapper = styled.div`
   display: flex;
+  flex: 1;
+`;
+
+export const FakeCheckbox = styled.label<{ hasError: boolean }>`
+  display: inline-flex;
   position: relative;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 
   // The fake custom checkbox
@@ -65,9 +70,12 @@ export const CheckboxInput = styled.input<GlobalInputProps>`
 `;
 
 export const LabelText = styled.span`
+  --line-height: 1.5;
   margin-left: var(--spacing-8);
   color: var(--color-grey15);
   font-size: var(--input-font-size);
+  line-height: var(--line-height);
+  margin-top: calc((var(--input-toggle-size) - var(--input-font-size) * var(--line-height)) / 2);
 `;
 
 export const LabelLoading = styled.span`
@@ -120,7 +128,7 @@ export const Checkbox = React.forwardRef(
     } = props;
 
     return (
-      <div className={className}>
+      <Wrapper className={className}>
         <CheckboxInput
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
@@ -138,7 +146,7 @@ export const Checkbox = React.forwardRef(
           {children && !loading && <LabelText>{children}</LabelText>}
           {loading && <LabelLoading aria-label='Loading checkbox label ...' />}
         </FakeCheckbox>
-      </div>
+      </Wrapper>
     );
   }
 );
