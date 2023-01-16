@@ -74,7 +74,12 @@ export const Option = React.forwardRef(
         tabIndex={isFocusable ? 0 : -1}
       >
         {hasCheckbox && (
-          <StyledCheckbox value={selected} onChange={() => onChange?.(value)} tabIndex={-1} />
+          <StyledCheckbox
+            checked={selected}
+            onChange={() => onChange?.(value)}
+            tabIndex={-1}
+            value={value}
+          />
         )}
         {children}
       </Wrapper>
