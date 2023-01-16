@@ -66,7 +66,7 @@ export interface PhoneInputProps extends GlobalInputProps {
  * Region code is the ISO 3166-1 alpha-2 code, e.g. NO for Norway.
  */
 export const PhoneInput = React.forwardRef(
-  (props: PhoneInputProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: PhoneInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

@@ -1,5 +1,5 @@
 import { Radio } from '.';
-import { InputWrapper } from '../../../index';
+import { InputWrapper, Label } from '../../../index';
 
 export default {
   component: Radio,
@@ -68,4 +68,27 @@ HasSuccess.args = {
   ...Primary.args,
   severity: 'success',
   severityMessage: 'This is a success message',
+};
+
+const Multiple = ({ severity, severityMessage, id, isRequired }) => {
+  return (
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
+      <Label>This label automatically gets transformed into a Fieldset legend! 🤯</Label>
+      <Radio value='one'>One</Radio>
+      <Radio value='two'>Two</Radio>
+      <Radio value='three'>Three</Radio>
+    </InputWrapper>
+  );
+};
+
+export const MultipleRadios = Multiple.bind({});
+MultipleRadios.args = {
+  ...Primary.args,
+  severity: 'info',
+  severityMessage: 'Same old API for everything',
 };

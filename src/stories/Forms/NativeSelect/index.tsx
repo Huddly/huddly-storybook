@@ -35,7 +35,7 @@ export interface NativeSelectProps extends GlobalInputProps {
  * Select component
  */
 export const NativeSelect = React.forwardRef(
-  (props: NativeSelectProps, ref: React.RefObject<HTMLSelectElement>) => {
+  (props: NativeSelectProps, ref: React.ForwardedRef<HTMLSelectElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

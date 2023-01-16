@@ -70,18 +70,19 @@ const StyledInput = styled.input<{ hasError?: boolean }>`
   }
 `;
 
-export interface ToggleProps extends Omit<GlobalInputProps, 'value'> {
-  value?: boolean;
+export interface ToggleProps extends GlobalInputProps {
+  checked?: boolean;
 }
 
 /**
  * Toggle component
  */
 export const Toggle = React.forwardRef(
-  (props: ToggleProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: ToggleProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
+      checked,
       className,
       hasError,
       id,
@@ -93,15 +94,16 @@ export const Toggle = React.forwardRef(
     return (
       <Wrapper className={className} hasError={hasError}>
         <StyledInput
-          type='checkbox'
-          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
-          checked={value}
+          aria-labelledby={ariaDescribedBy}
+          checked={checked}
           id={id}
-          name={name || id}
+          name={name}
           ref={ref}
           required={isRequired}
+          type='checkbox'
+          value={value}
           {...additionalInputProps}
         />
       </Wrapper>

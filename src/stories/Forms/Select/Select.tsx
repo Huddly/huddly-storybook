@@ -28,7 +28,7 @@ export interface SelectProps extends GlobalInputProps {
  * Select component
  */
 export const Select = React.forwardRef(
-  (props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: SelectProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,

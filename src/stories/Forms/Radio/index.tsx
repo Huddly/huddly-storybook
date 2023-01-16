@@ -19,19 +19,20 @@ const RadioInput = styled(CheckboxInput)<GlobalInputProps>`
   }
 `;
 
-export interface RadioProps extends Omit<GlobalInputProps, 'value'> {
+export interface RadioProps extends GlobalInputProps {
+  checked?: boolean;
   children?: React.ReactNode;
-  value?: boolean;
 }
 
 /**
  * Radio component
  */
 export const Radio = React.forwardRef(
-  (props: RadioProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: RadioProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
+      checked,
       children,
       className,
       hasError,
@@ -45,15 +46,16 @@ export const Radio = React.forwardRef(
     return (
       <div className={className}>
         <RadioInput
-          aria-labelledby={ariaDescribedBy}
           aria-errormessage={ariaErrorMessage}
           aria-invalid={hasError}
-          checked={value}
+          aria-labelledby={ariaDescribedBy}
+          checked={checked}
           id={id}
-          name={name || id}
+          name={name}
           ref={ref}
           required={isRequired}
           type='radio'
+          value={value}
           {...additionalInputProps}
         />
         <FakeRadio htmlFor={id} hasError={hasError}>

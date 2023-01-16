@@ -1,5 +1,5 @@
 import { Checkbox } from '.';
-import { InputWrapper } from '../../../index';
+import { InputWrapper, Label } from '../../../index';
 
 export default {
   component: Checkbox,
@@ -20,7 +20,7 @@ export const Primary = {
 export const Checked = {
   args: {
     ...Primary.args,
-    value: true,
+    checked: true,
   },
 };
 
@@ -63,4 +63,27 @@ HasSuccess.args = {
   ...Primary.args,
   severity: 'success',
   severityMessage: 'This is a success message',
+};
+
+const Multiple = ({ severity, severityMessage, id, isRequired }) => {
+  return (
+    <InputWrapper
+      severity={severity}
+      severityMessage={severityMessage}
+      id={id}
+      isRequired={isRequired}
+    >
+      <Label>This label automatically gets transformed into a Fieldset legend! 🤯</Label>
+      <Checkbox value='one'>One</Checkbox>
+      <Checkbox value='two'>Two</Checkbox>
+      <Checkbox value='three'>Three</Checkbox>
+    </InputWrapper>
+  );
+};
+
+export const MultipleCheckboxes = Multiple.bind({});
+MultipleCheckboxes.args = {
+  ...Primary.args,
+  severity: 'info',
+  severityMessage: 'Same pulchritudinous API for everything',
 };

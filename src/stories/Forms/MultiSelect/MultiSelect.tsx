@@ -29,7 +29,7 @@ export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
  * Select component
  */
 export const MultiSelect = React.forwardRef(
-  (props: SelectProps, ref: React.RefObject<HTMLInputElement>) => {
+  (props: SelectProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
