@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GlobalInputProps } from '../../../shared/types';
-import { FakeCheckbox, CheckboxInput, LabelText } from '../Checkbox';
+import { FakeCheckbox, CheckboxInput, LabelText, LabelLoading } from '../Checkbox';
 
 // Inherited from Checkbox, element is a <label />
 const FakeRadio = styled(FakeCheckbox)<{ hasError: boolean }>`
@@ -22,6 +22,7 @@ const RadioInput = styled(CheckboxInput)<GlobalInputProps>`
 export interface RadioProps extends GlobalInputProps {
   checked?: boolean;
   children?: React.ReactNode;
+  loading?: boolean;
 }
 
 /**
@@ -38,6 +39,7 @@ export const Radio = React.forwardRef(
       hasError,
       id,
       isRequired,
+      loading,
       name,
       value,
       ...additionalInputProps
@@ -59,7 +61,8 @@ export const Radio = React.forwardRef(
           {...additionalInputProps}
         />
         <FakeRadio htmlFor={id} hasError={hasError}>
-          {children && <LabelText>{children}</LabelText>}
+          {children && !loading && <LabelText>{children}</LabelText>}
+          {loading && <LabelLoading aria-label='Loading radio label ...' />}
         </FakeRadio>
       </div>
     );

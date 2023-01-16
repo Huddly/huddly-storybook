@@ -70,9 +70,33 @@ export const LabelText = styled.span`
   font-size: var(--input-font-size);
 `;
 
+export const LabelLoading = styled.span`
+  --loading-label-width: ${() => Math.floor(Math.random() * 150 + 150)}px;
+  width: var(--loading-label-width);
+  height: var(--input-font-size);
+  margin-left: var(--spacing-8);
+  border-radius: var(--input-radius);
+  background: linear-gradient(
+    90deg,
+    var(--color-grey91) 0px,
+    var(--color-grey86) 50px,
+    var(--color-grey91) 100px
+  );
+  animation: loading-label-animation 3s ease-in-out infinite;
+  @keyframes loading-label-animation {
+    from {
+      background-position: calc(var(--loading-label-width) * -1) 0;
+    }
+    to {
+      background-position: var(--loading-label-width) 0;
+    }
+  }
+`;
+
 export interface CheckboxProps extends GlobalInputProps {
   checked?: boolean;
   children?: React.ReactNode;
+  loading?: boolean;
 }
 
 /**
@@ -89,6 +113,7 @@ export const Checkbox = React.forwardRef(
       hasError,
       id,
       isRequired,
+      loading,
       name,
       value,
       ...additionalInputProps
@@ -110,7 +135,8 @@ export const Checkbox = React.forwardRef(
           {...additionalInputProps}
         />
         <FakeCheckbox htmlFor={id} hasError={hasError}>
-          {children && <LabelText>{children}</LabelText>}
+          {children && !loading && <LabelText>{children}</LabelText>}
+          {loading && <LabelLoading aria-label='Loading checkbox label ...' />}
         </FakeCheckbox>
       </div>
     );
