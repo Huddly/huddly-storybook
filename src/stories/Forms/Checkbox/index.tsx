@@ -80,6 +80,7 @@ export const LabelText = styled.span`
 
 export const LabelLoading = styled.span`
   --loading-label-width: ${() => Math.floor(Math.random() * 150 + 150)}px;
+  align-self: center;
   width: var(--loading-label-width);
   height: var(--input-font-size);
   margin-left: var(--spacing-8);
@@ -91,6 +92,7 @@ export const LabelLoading = styled.span`
     var(--color-grey91) 100px
   );
   animation: loading-label-animation 3s ease-in-out infinite;
+
   @keyframes loading-label-animation {
     from {
       background-position: calc(var(--loading-label-width) * -1) 0;
