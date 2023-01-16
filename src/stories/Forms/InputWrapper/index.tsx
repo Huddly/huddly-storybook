@@ -48,6 +48,7 @@ export interface InputWrapperProps {
   disableWidthConstraint?: boolean;
   id: string;
   isRequired?: boolean;
+  loading?: boolean;
   name?: string;
   severity?: ErrorSeverity;
   severityMessage?: string;
@@ -63,6 +64,7 @@ export const InputWrapper = React.forwardRef(
       disableWidthConstraint,
       id,
       isRequired,
+      loading,
       name = id,
       severity = 'neutral',
       severityMessage,
@@ -85,6 +87,7 @@ export const InputWrapper = React.forwardRef(
       hasError: severity === 'error' ? true : undefined,
       id,
       isRequired,
+      loading,
       name,
     };
 

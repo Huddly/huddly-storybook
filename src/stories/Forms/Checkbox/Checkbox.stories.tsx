@@ -14,6 +14,7 @@ export const Primary = {
         <a href='#'>Terms of Service</a>.
       </>
     ),
+    loading: false,
   },
 };
 
@@ -24,7 +25,7 @@ export const Checked = {
   },
 };
 
-const Template = ({ severity, severityMessage, children, id, isRequired }) => {
+const Template = ({ severity, severityMessage, children, id, isRequired, loading }) => {
   return (
     <InputWrapper
       severity={severity}
@@ -32,7 +33,7 @@ const Template = ({ severity, severityMessage, children, id, isRequired }) => {
       id={id}
       isRequired={isRequired}
     >
-      <Checkbox>{children}</Checkbox>
+      <Checkbox loading={loading}>{children}</Checkbox>
     </InputWrapper>
   );
 };
@@ -65,13 +66,14 @@ HasSuccess.args = {
   severityMessage: 'This is a success message',
 };
 
-const Multiple = ({ severity, severityMessage, id, isRequired }) => {
+const Multiple = ({ severity, severityMessage, id, isRequired, loading }) => {
   return (
     <InputWrapper
       severity={severity}
       severityMessage={severityMessage}
       id={id}
       isRequired={isRequired}
+      loading={loading}
     >
       <Label>This label automatically gets transformed into a Fieldset legend! 🤯</Label>
       <Checkbox value='one'>One</Checkbox>
