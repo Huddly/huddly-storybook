@@ -1,5 +1,6 @@
-import React, { isValidElement, useId } from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
+import flattenChildren from 'react-flatten-children';
 import rem from '../../../shared/pxToRem';
 import { AlertText, Fieldset, Checkbox, Radio, Toggle } from '../../../index';
 import { ErrorSeverity } from '../../../shared/types';
@@ -32,17 +33,6 @@ const AlertTextContianer = styled.div`
   }
 `;
 
-const stripFragments = (children: React.ReactNode): React.ReactNode => {
-  if (Array.isArray(children)) {
-    return children.flatMap((child) => stripFragments(child));
-  }
-  if (!isValidElement(children)) return children;
-  if (children?.type === React.Fragment) {
-    return stripFragments(children.props.children);
-  }
-  return children;
-};
-
 const childrenContainsToggleableInputs = (children: React.ReactNode, minCount = 1): boolean => {
   const TOGGLEABLE_INPUTS = [Checkbox, Radio, Toggle];
   if (Array.isArray(children)) {
@@ -67,9 +57,8 @@ export interface InputWrapperProps {
  * InputWrapper component
  */
 export const InputWrapper = React.forwardRef(
-  (props: InputWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
+  (props: InputWrapperProps, ref: React.ForwardedRef<HTMLDivElement>) => {
     const {
-      children,
       className,
       disableWidthConstraint,
       id,
@@ -78,16 +67,16 @@ export const InputWrapper = React.forwardRef(
       severity = 'neutral',
       severityMessage,
     } = props;
+    // Flatten children and remove React Fragments.
+    const children = flattenChildren(props.children);
+    // If there are no toggleable inputs, indent the label to align with the input.
+    const indentLabel = childrenContainsToggleableInputs(children) === false;
+    // If there are more than 2 toggleable inputs, wrap them in a fieldset.
+    const isFieldset = childrenContainsToggleableInputs(children, 2);
+
     // Set aria id's. These are used for inputs and the helper texts.
     const ariaDescribedById = severityMessage && severity !== 'error' ? `${id}-hint` : undefined;
     const ariaErrorMessageId = severityMessage && severity === 'error' ? `${id}-error` : undefined;
-
-    // Flatten children and remove React Fragments.
-    const flatChildren = stripFragments(children);
-    // If there are no toggleable inputs, indent the label to align with the input.
-    const indentLabel = childrenContainsToggleableInputs(flatChildren) === false;
-    // If there are more than 2 toggleable inputs, wrap them in a fieldset.
-    const isFieldset = childrenContainsToggleableInputs(flatChildren, 2);
 
     // These are props or attributes passed down to semantically link the children together.
     const forwardedInputProps = {
@@ -99,7 +88,7 @@ export const InputWrapper = React.forwardRef(
       name,
     };
 
-    const childrenWithForwardedProps = React.Children.map(flatChildren, (child) => {
+    const childrenWithForwardedProps = React.Children.map(children, (child) => {
       if (!React.isValidElement(child)) return null;
       if (typeof child?.type === 'string') return child;
       if (isFieldset) forwardedInputProps.id = useId();

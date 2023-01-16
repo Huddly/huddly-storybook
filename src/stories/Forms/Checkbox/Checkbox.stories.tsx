@@ -85,5 +85,5 @@ export const MultipleCheckboxes = Multiple.bind({});
 MultipleCheckboxes.args = {
   ...Primary.args,
   severity: 'info',
-  severityMessage: 'Same old API for everything',
+  severityMessage: 'Same pulchritudinous API for everything',
 };
