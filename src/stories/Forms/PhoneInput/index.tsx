@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import {
   parsePhoneNumber,
@@ -30,33 +30,11 @@ const getSplitValue = (value = ''): { regionCode?: string; phoneNumber?: string 
   return { regionCode, phoneNumber: number?.national };
 };
 
-/**
- * Get a region code from a users IP.
- *
- * @returns A region code.
- */
-const geoLocateRegionCode = async (): Promise<string> => {
-  try {
-    const res = await fetch('https://ipapi.co/country/');
-    return await res.text();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const sanitizeAndFormatPhoneNumber = (value: string, regionCode: string): string => {
   value = value.replace(/\D/g, ''); // remove all non-numeric characters
   value = getAsYouType(regionCode).reset(value); // format the phone number
   return value;
 };
-
-export interface PhoneInputProps extends GlobalInputProps {
-  /**
-   * Whether to use the users IP to determine the region code. Defaults to false.
-   * Use this with caution as it may not be GDPR compliant and/or licensed.
-   */
-  geoLocate?: boolean;
-}
 
 /**
  * PhoneInput component
@@ -66,12 +44,11 @@ export interface PhoneInputProps extends GlobalInputProps {
  * Region code is the ISO 3166-1 alpha-2 code, e.g. NO for Norway.
  */
 export const PhoneInput = React.forwardRef(
-  (props: PhoneInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+  (props: GlobalInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
       className,
-      geoLocate = false,
       hasError,
       id,
       isRequired,
@@ -87,20 +64,23 @@ export const PhoneInput = React.forwardRef(
         isNaN(Number(getRegionCodeForCountryCode(Number(cc))))
       ); // Filter to remove toll-free, premium numbers etc...
     }, []);
-    const splitValue = getSplitValue(value);
+    const splitValue = useMemo(() => getSplitValue(value), [value]);
 
     const [regionCode, setRegionCode] = useState<string>(splitValue?.regionCode || '');
     const [phoneNumber, setPhoneNumber] = useState<string>(splitValue?.phoneNumber || '');
     const [placeholder, setPlaceholder] = useState<string>('');
 
-    const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-      const countryCode = Number(e.target.value);
-      const regionCode = getRegionCodeForCountryCode(countryCode);
-      setRegionCode(regionCode);
-      // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
-      const newPhoneNumber = sanitizeAndFormatPhoneNumber(phoneNumber, regionCode);
-      setPhoneNumber(newPhoneNumber);
-    };
+    const handleCountryCodeChange = useCallback(
+      (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const countryCode = Number(e.target.value);
+        const regionCode = getRegionCodeForCountryCode(countryCode);
+        setRegionCode(regionCode);
+        // We also want to trigger an update to the phone number input when the country code changes, so the formatting updates.
+        const newPhoneNumber = sanitizeAndFormatPhoneNumber(phoneNumber, regionCode);
+        setPhoneNumber(newPhoneNumber);
+      },
+      [phoneNumber]
+    );
 
     const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       let value = e.target.value;
@@ -116,16 +96,6 @@ export const PhoneInput = React.forwardRef(
       const phoneNumber = sanitizeAndFormatPhoneNumber(value, _regionCode);
       setPhoneNumber(phoneNumber);
     };
-
-    useEffect(function handleInitialRegionCode(): void {
-      if (regionCode) return;
-      if (geoLocate) {
-        geoLocateRegionCode().then((r) => setRegionCode(r));
-      } else {
-        const firstCountryCode = Number(countryCodes[0]);
-        setRegionCode(getRegionCodeForCountryCode(firstCountryCode));
-      }
-    }, []);
 
     useEffect(
       function handlePlaceholder(): void {
