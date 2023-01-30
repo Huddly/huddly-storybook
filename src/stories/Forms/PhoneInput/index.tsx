@@ -36,6 +36,10 @@ const sanitizeAndFormatPhoneNumber = (value: string, regionCode: string): string
   return value;
 };
 
+export interface PhoneInputProps extends Omit<GlobalInputProps, 'type'> {
+  type: never;
+}
+
 /**
  * PhoneInput component
  *
@@ -44,7 +48,7 @@ const sanitizeAndFormatPhoneNumber = (value: string, regionCode: string): string
  * Region code is the ISO 3166-1 alpha-2 code, e.g. NO for Norway.
  */
 export const PhoneInput = React.forwardRef(
-  (props: GlobalInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+  (props: PhoneInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const {
       ariaDescribedBy,
       ariaErrorMessage,
