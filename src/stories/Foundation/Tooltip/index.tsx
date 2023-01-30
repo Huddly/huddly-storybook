@@ -21,6 +21,7 @@ const ToolTipWrapper = styled.div<{
   align-items: center;
   // clamp auto width, max 400px but no more than 80vw
   width: clamp(1px, 80vw, ${rem(400)});
+  // Get alignment from map
   ${(p) => alignMap[p.alignY][p.alignX]}
 
   // Tooltip arrow
@@ -34,6 +35,7 @@ const ToolTipWrapper = styled.div<{
     border-color: var(--color-black) transparent transparent transparent;
     content: '';
     margin-inline: ${(p) => p.alignY === 'center' && 'calc(var(--height) * -1)'};
+    // Get alignment from arrow-map
     ${(p) => arrowAlignMap[p.alignY][p.alignX]}
   }
 `;
@@ -41,8 +43,8 @@ const ToolTipWrapper = styled.div<{
 const ToolTipText = styled(Text)`
   position: relative;
   background: var(--color-black);
-  padding: 6px 12px;
-  border-radius: 3px;
+  padding: ${rem(6)} ${rem(12)};
+  border-radius: ${rem(3)};
 `;
 
 export interface Props {
@@ -133,7 +135,12 @@ export const Tooltip = ({
       }, 200);
     };
 
-    const mouseLeave = () => {
+    const touchEnter = () => {
+      leaveTimeout ? clearTimeout(leaveTimeout) : handleAlignIfOutOfViewport();
+      setIsVisible(true);
+    };
+
+    const reset = () => {
       clearTimeout(enterTimeout);
       leaveTimeout = setTimeout(() => {
         handleAlignReset();
@@ -141,11 +148,19 @@ export const Tooltip = ({
       }, 200);
     };
 
+    // Mouse events
     wrapper.addEventListener('mouseenter', mouseEnter);
-    wrapper.addEventListener('mouseleave', mouseLeave);
+    wrapper.addEventListener('mouseleave', reset);
+    // Touch events
+    wrapper.addEventListener('touchstart', touchEnter);
+    wrapper.addEventListener('touchend', reset);
     return () => {
+      // Mouse events
       wrapper.removeEventListener('mouseenter', mouseEnter);
-      wrapper.removeEventListener('mouseleave', mouseLeave);
+      wrapper.removeEventListener('mouseleave', reset);
+      // Touch events
+      wrapper.removeEventListener('touchstart', touchEnter);
+      wrapper.removeEventListener('touchend', reset);
     };
   }, [text, children, localAlignX, localAlignY]);
 
