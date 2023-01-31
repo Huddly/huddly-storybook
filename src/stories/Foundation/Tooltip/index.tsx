@@ -98,27 +98,21 @@ export const Tooltip = ({
     // When alignY is center, the tooltip is displayed inline with the trigger
     const inline = localAlignY === 'center';
 
-    const leftOrRight = () => {
-      if (tooltipRect.left < 0) {
-        setLocalAlignX(inline ? 'right' : 'left');
-      } else if (tooltipRect.right > window.innerWidth) {
-        setLocalAlignX(inline ? 'left' : 'right');
-      }
-    };
+    // If inline and aout of bounds then set localAlignX to center
+    if (inline && (tooltipRect.top < 0 || tooltipRect.bottom > window.innerHeight)) {
+      setLocalAlignX('center');
+    }
 
-    const topOrBottom = () => {
-      if (tooltipRect.top < 0) {
-        setLocalAlignY('bottom');
-      } else if (tooltipRect.bottom > window.innerHeight) {
-        setLocalAlignY('top');
-      }
-    };
+    if (tooltipRect.top < 0) {
+      setLocalAlignY('bottom');
+    } else if (tooltipRect.bottom > window.innerHeight) {
+      setLocalAlignY('top');
+    }
 
-    if (localAlignY === 'center') {
-      leftOrRight();
-    } else {
-      leftOrRight();
-      topOrBottom();
+    if (tooltipRect.left < 0) {
+      setLocalAlignX(inline ? 'right' : 'left');
+    } else if (tooltipRect.right > window.innerWidth) {
+      setLocalAlignX(inline ? 'left' : 'right');
     }
   };
 
