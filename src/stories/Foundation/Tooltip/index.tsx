@@ -19,8 +19,8 @@ const ToolTipWrapper = styled.div<{
   visibility: ${(p) => (p.visible ? 'visible' : 'hidden')};
   position: absolute;
   align-items: center;
-  // clamp auto width, max 400px but no more than 80vw
-  width: clamp(1px, 80vw, ${rem(400)});
+  width: clamp(1rem, 80vw, 25rem);
+  max-width: max-content;
   // Get alignment from map
   ${(p) => alignMap[p.alignY][p.alignX]}
 
@@ -45,6 +45,7 @@ const ToolTipText = styled(Text)`
   background: var(--color-black);
   padding: ${rem(6)} ${rem(12)};
   border-radius: ${rem(3)};
+  width: 100%;
 `;
 
 export interface Props {
@@ -143,6 +144,7 @@ export const Tooltip = ({
     const reset = () => {
       clearTimeout(enterTimeout);
       leaveTimeout = setTimeout(() => {
+        leaveTimeout = undefined;
         handleAlignReset();
         setIsVisible(false);
       }, 200);
@@ -163,8 +165,6 @@ export const Tooltip = ({
       wrapper.removeEventListener('touchend', reset);
     };
   }, [text, children, localAlignX, localAlignY]);
-
-  console.log('render');
 
   return (
     <Wrapper className={className} role='tooltip'>
