@@ -87,9 +87,14 @@ export const FilterSearch = styled.input`
   text-align: left;
 `;
 
-export const SelectListWrapper = styled.div<{ height: number; isOpen: boolean }>`
+export const SelectListWrapper = styled.div<{
+  height: number;
+  isOpen: boolean;
+  placeOver: boolean;
+}>`
+  ${(p) => p.placeOver && 'top: 0; transform: translateY(calc(-100% - var(--spacing-4)));'}
+  ${(p) => !p.placeOver && 'margin-top: var(--spacing-4);'}
   height: ${(p) => (p.isOpen ? rem(p.height) : rem(0))};
-  margin: var(--spacing-4) 0 0 0;
   overflow: hidden;
   position: absolute;
   transition: height 150ms ease-out;
