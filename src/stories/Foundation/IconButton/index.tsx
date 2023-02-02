@@ -34,7 +34,7 @@ export interface IconButtonProps {
   color?: Colors;
   disabled?: boolean;
   loading?: boolean;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   icon: React.ComponentType;
   hoverColor?: Colors;

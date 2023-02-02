@@ -21,7 +21,8 @@ const TableCell = styled.td<TDProps>`
   padding-right: ${(p) => (p.isLast ? 'var(--spacing-16)' : 0)};
 `;
 
-const TR = styled.tr<{ selected?: boolean }>`
+const TR = styled.tr<{ selected?: boolean; clickable?: boolean }>`
+  cursor: ${(p) => (p.clickable ? 'pointer' : 'default')};
   &:hover ${TableCell} {
     ${(p) => !p.selected && 'background-color: var(--color-grey96)'}
   }
@@ -39,6 +40,7 @@ interface Props {
   hasCheckbox?: boolean;
   selectedRows?: string[];
   onClickCheckbox?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickRow?: (rowId: string) => void;
 }
 
 export const TableRow = ({
@@ -49,6 +51,7 @@ export const TableRow = ({
   hasCheckbox,
   selectedRows,
   onClickCheckbox,
+  onClickRow,
 }: Props) => {
   const [isEditing, setIsEditing] = useState(row.isNewRow);
   const [rowValue, setRowValue] = useState(row);
@@ -75,10 +78,25 @@ export const TableRow = ({
     setIsEditing(false);
   };
 
+  const onClick = () => {
+    if (!onClickRow) return;
+
+    onClickRow(row.id);
+  };
+
+  // stop click event to prevent the click event on the row to be called
+  const stopClickEvent = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <TR selected={selectedRows && selectedRows.includes(row.id)}>
+    <TR
+      selected={selectedRows && selectedRows.includes(row.id)}
+      onClick={onClick}
+      clickable={!!onClickRow}
+    >
       {hasCheckbox && selectedRows && (
-        <CheckboxCell>
+        <CheckboxCell onClick={stopClickEvent}>
           <Checkbox
             id={row.id}
             onChange={onClickCheckbox}
@@ -104,7 +122,7 @@ export const TableRow = ({
           );
         }
       )}
-      <TableCell align='right' isLast>
+      <TableCell align='right' isLast onClick={stopClickEvent}>
         {isEditing && (
           <Button onClick={onCancel} secondary>
             Cancel
