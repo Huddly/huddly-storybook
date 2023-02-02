@@ -22,6 +22,10 @@ export interface SelectProps extends GlobalInputProps {
    * Option components to be rendered.
    */
   children: React.ReactNode;
+  /**
+   * Specify to open option list over the component
+   */
+  openOver: boolean;
 }
 
 /**
@@ -42,6 +46,7 @@ export const Select = React.forwardRef(
       onChange,
       placeholder,
       value,
+      openOver,
       ...additionalInputProps
     } = props;
 
@@ -254,6 +259,7 @@ export const Select = React.forwardRef(
             isOpen={isOpen}
             role='listbox'
             tabIndex={isOpen ? 0 : -1}
+            placeOver={openOver}
           >
             <Styled.SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
             <Styled.SelectList ref={selectListRef} height={selectListHeight}>

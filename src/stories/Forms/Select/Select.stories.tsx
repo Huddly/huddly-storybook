@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Select } from './Select';
 import { Option } from './Option';
 import { InputWrapper, Label } from '../../../index';
+import styled from 'styled-components';
 
 export default {
   component: Select,
@@ -15,26 +16,32 @@ export const Primary = {
   },
 };
 
-const Template = ({ id, isRequired, placeholder, severity, severityMessage }) => {
+const Wrapper = styled.div<{ openOver: boolean }>`
+  ${(p) => p.openOver && 'margin-top: 300px;'}
+`;
+
+const Template = ({ id, isRequired, placeholder, severity, severityMessage, openOver }) => {
   return (
-    <InputWrapper
-      severity={severity}
-      severityMessage={severityMessage}
-      id={id}
-      isRequired={isRequired}
-    >
-      <Label>Select a color</Label>
-      <Select placeholder={placeholder}>
-        <Option value='red'>Red</Option>
-        <Option value='green'>Green</Option>
-        <Option value='blue'>Blue</Option>
-        <Option value='yellow'>Yellow</Option>
-        <Option value='purple'>Purple</Option>
-        <Option value='orange'>Orange</Option>
-        <Option value='pink'>Pink</Option>
-        <Option value='brown'>Brown</Option>
-      </Select>
-    </InputWrapper>
+    <Wrapper openOver={openOver}>
+      <InputWrapper
+        severity={severity}
+        severityMessage={severityMessage}
+        id={id}
+        isRequired={isRequired}
+      >
+        <Label>Select a color</Label>
+        <Select placeholder={placeholder} openOver={openOver}>
+          <Option value='red'>Red</Option>
+          <Option value='green'>Green</Option>
+          <Option value='blue'>Blue</Option>
+          <Option value='yellow'>Yellow</Option>
+          <Option value='purple'>Purple</Option>
+          <Option value='orange'>Orange</Option>
+          <Option value='pink'>Pink</Option>
+          <Option value='brown'>Brown</Option>
+        </Select>
+      </InputWrapper>
+    </Wrapper>
   );
 };
 
@@ -105,4 +112,10 @@ CountriesFromApi.args = {
   ...Primary.args,
   severity: 'info',
   severityMessage: 'Try filtering by country name.',
+};
+
+export const OpenOver = Template.bind({});
+OpenOver.args = {
+  ...Primary.args,
+  openOver: true,
 };

@@ -23,6 +23,7 @@ export interface SelectProps extends Omit<GlobalInputProps, 'value'> {
    */
   children: React.ReactNode;
   value: Array<string>;
+  openOver: boolean;
 }
 
 /**
@@ -43,6 +44,7 @@ export const MultiSelect = React.forwardRef(
       onChange,
       placeholder,
       value,
+      openOver,
       ...additionalInputProps
     } = props;
 
@@ -263,6 +265,7 @@ export const MultiSelect = React.forwardRef(
             id={`${id}-select-list`}
             isOpen={isOpen}
             role='listbox'
+            placeOver={openOver}
             tabIndex={isOpen ? 0 : -1}
           >
             <Styled.SelectListHoverBackground ref={selectListHoverBackgroundRef} aria-hidden />
