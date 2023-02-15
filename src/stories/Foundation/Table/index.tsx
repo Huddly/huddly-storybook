@@ -71,7 +71,7 @@ export const Table = ({
           <CheckBoxCell>
             <Checkbox
               id='all'
-              checked={selectedRows.length === rows.length}
+              checked={selectedRows.length === rows.length && rows.length > 0}
               onChange={onClickCheckbox}
             />
           </CheckBoxCell>
