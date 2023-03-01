@@ -18,7 +18,7 @@ const Wrapper = styled.div<{ disableWidthConstraint?: boolean; indentLabel?: boo
   }
 `;
 
-const CheckboxFieldset = styled(Fieldset)`
+const CheckboxFieldset = styled((props) => <Fieldset {...props} />)`
   display: flex;
   flex-direction: column;
   row-gap: var(--spacing-8);
