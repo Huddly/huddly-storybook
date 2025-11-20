@@ -7,10 +7,10 @@ export const Horizontal = {
   args: {
     children: (
       <>
-        <Button secondary color='lavender'>
+        <Button secondary color='black'>
           Cancel
         </Button>
-        <Button color='lavender'>Save</Button>
+        <Button color='black'>Save</Button>
       </>
     ),
     align: 'right',
