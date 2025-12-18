@@ -1,0 +1,27 @@
+# Development files
+.prettierrc
+.eslintrc*
+.editorconfig
+
+# Build files
+src/
+.storybook/
+stories/
+
+# Git files
+.git/
+.gitignore
+
+# CI/CD
+.github/
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+coverage/
+
+# Other
+*.log
+node_modules/
