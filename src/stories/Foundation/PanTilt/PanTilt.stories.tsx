@@ -3,7 +3,7 @@ import { Grid } from '../Grid';
 import { PanTilt } from '.';
 import { Slider } from '../Slider';
 import { IconButton } from '../IconButton';
-import { Plus, Minus } from '@huddly/frokost/havre';
+import { Plus, Minus } from 'src/frokost/havre';
 
 export default { component: PanTilt };
 

@@ -10,4 +10,27 @@ module.exports = {
     builder: '@storybook/builder-vite',
     disableTelemetry: true,
   },
+  async viteFinal(config) {
+    const { mergeConfig } = await import('vite');
+    const svgr = await import('vite-plugin-svgr');
+
+    return mergeConfig(config, {
+      plugins: [
+        svgr.default({
+          svgrOptions: {
+            exportType: 'default',
+            ref: true,
+            svgo: false,
+            titleProp: true,
+          },
+          include: '**/*.svg?react',
+        }),
+      ],
+      resolve: {
+        alias: {
+          src: '/src',
+        },
+      },
+    });
+  },
 };

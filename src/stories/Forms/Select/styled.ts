@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import rem from '../../../shared/pxToRem';
-import { ChevronDown } from '@huddly/frokost/havre';
+import { ChevronDown } from 'src/frokost/havre';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -69,15 +69,18 @@ export const SelectedContent = styled.span<{ hasNestedContent: boolean }>`
   }
 `;
 
-export const RotatingChevron = styled(ChevronDown)<{ rotate: boolean }>`
+export const RotatingChevron = styled.span<{ rotate: boolean }>`
+  display: inline-flex;
   transition: 0.15s ease-in-out;
   ${(p) => (p.rotate ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);')}
   margin-right: ${rem(-8)};
 
-  path {
+  svg path {
     fill: var(--color-grey35);
   }
 `;
+
+export { ChevronDown };
 
 export const FilterSearch = styled.input`
   all: unset;

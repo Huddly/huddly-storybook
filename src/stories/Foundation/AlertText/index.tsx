@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InfoSmall, WarningFilled } from '@huddly/frokost/havre18px';
+import { InfoSmall, WarningFilled } from 'src/frokost/havre18px';
 import { ErrorSeverity } from '../../../shared/types';
 import { GreenTonesEnum, SignalScaleTonesEnum, YellowTonesEnum } from '../../../shared/colors';
 import { Text } from '../../../index';

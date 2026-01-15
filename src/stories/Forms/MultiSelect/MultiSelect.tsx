@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import innerText from 'react-innertext';
 import { GlobalInputProps } from '../../../shared/types';
 import { OptionProps } from './Option';
-import { Search } from '@huddly/frokost/havre';
+import { Search } from 'src/frokost/havre';
 import * as Styled from '../Select/styled';
 
 // Custom hooks
@@ -253,7 +253,9 @@ export const MultiSelect = React.forwardRef(
               {selectContent || placeholder || '- Select option -'}
             </Styled.SelectedContent>
           )}
-          <Styled.RotatingChevron rotate={isOpen} aria-hidden='true' />
+          <Styled.RotatingChevron rotate={isOpen} aria-hidden='true'>
+            <Styled.ChevronDown />
+          </Styled.RotatingChevron>
         </Styled.SelectButton>
 
         {children && (

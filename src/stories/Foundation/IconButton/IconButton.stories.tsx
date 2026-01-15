@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Grid } from '../Grid';
 import { Text } from '../Text';
 import { IconButton } from '.';
-import { Edit } from '@huddly/frokost/havre';
+import { Edit } from 'src/frokost/havre';
 
 export default { component: IconButton };
 
