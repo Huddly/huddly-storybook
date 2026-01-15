@@ -1,0 +1,1 @@
+{"version":3,"file":"Label.stories.js","sourceRoot":"","sources":["../../../../src/stories/Forms/Label/Label.stories.tsx"],"names":[],"mappings":";;;AAAA,wBAA0B;AAE1B,kBAAe,EAAE,SAAS,EAAE,QAAK,EAAE,CAAC;AAEvB,QAAA,OAAO,GAAG;IACrB,IAAI,EAAE;QACJ,OAAO,EAAE,MAAM;QACf,QAAQ,EAAE,WAAW;QACrB,UAAU,EAAE,IAAI;QAChB,SAAS,EAAE,aAAa;QACxB,QAAQ,EAAE,GAAG;KACd;CACF,CAAC"}
