@@ -83,7 +83,7 @@ export interface ButtonProps {
   color?: 'black' | 'lavender' | 'intenseOrange';
   disabled?: boolean;
   loading?: boolean;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   secondary?: boolean;
   size?: ButtonSizes;
   type?: 'button' | 'submit' | 'reset';

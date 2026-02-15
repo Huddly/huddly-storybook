@@ -44,6 +44,7 @@ export interface TableProps {
   withChecboxes?: boolean;
   onClickCheckbox?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedRows?: string[];
+  onClickRow?: (rowId: string) => void;
 }
 
 /**
@@ -63,6 +64,7 @@ export const Table = ({
   withChecboxes,
   selectedRows,
   onClickCheckbox,
+  onClickRow,
 }: TableProps) => (
   <StyledTable fullWidth={fullWidth} className={className}>
     <HeaderRow>
@@ -100,6 +102,7 @@ export const Table = ({
       {!loading &&
         rows.map((r) => (
           <TableRow
+            onClickRow={onClickRow}
             onClickCheckbox={onClickCheckbox}
             selectedRows={selectedRows}
             hasCheckbox={withChecboxes}

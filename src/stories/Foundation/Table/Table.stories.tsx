@@ -144,6 +144,7 @@ const Template = (props) => {
   };
   const [selectedRows, setSelectedRows] = useState([]);
   const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
     if (e.target.id === 'all') {
       if (e.target.checked) {
         setSelectedRows(rows.map((r) => r.id));
@@ -161,6 +162,10 @@ const Template = (props) => {
     setSelectedRows([...selectedRows, e.target.id]);
   };
 
+  const onClickRow = (rowId: string) => {
+    console.log('you clicked row:', rowId);
+  };
+
   return (
     <Wrapper direction='column' rowGap='64'>
       <Text bold size='22'>
@@ -176,6 +181,7 @@ const Template = (props) => {
         withChecboxes
         selectedRows={selectedRows}
         onClickCheckbox={onClickCheckbox}
+        onClickRow={onClickRow}
       />
       <Text bold size='22'>
         Simple table
